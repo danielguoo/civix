@@ -2,6 +2,6 @@ Civix- Voting Awareness App
 Team Members: 
 Daniel Guo 
 Michael Grieve 
-Jane Duan
+Michelle Duan
 Deven Agrawal
 Kunjan Patel
