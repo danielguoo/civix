@@ -1,0 +1,14 @@
+.Navbar li {
+  /* padding: 20px 20px 20px 20px; */
+  margin: 10px 20px;
+  display: inline-block;
+}
+
+Link {
+  text-decoration: None;
+  color: white;
+}
+
+.Navbar ul {
+  background-color: white;
+}
