@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 //Some code for main dashboard
 
@@ -24,7 +25,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button variant="contained" style={style.Button} color="primary">
+        <Button variant="contained" style={style.Button} color="primary" component={Link} to="/Calendar">
           Community Calendar
           <EventIcon style={style.Icon}></EventIcon>
         </Button>
@@ -33,7 +34,7 @@ export default props => (
     
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button variant="contained" style={style.Button} color="secondary">
+        <Button variant="contained" style={style.Button} color="secondary" component={Link} to="/Calendar">
           My Calendar
           <EventAvailableIcon style={style.Icon}></EventAvailableIcon>
         </Button>
@@ -42,7 +43,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button variant="contained" style={style.Button} color="primary">
+        <Button variant="contained" style={style.Button} color="primary" component={Link} to="/Issues">
           Ballot Board
           <ChatBubbleOutlineIcon style={style.Icon}></ChatBubbleOutlineIcon>
         </Button>
@@ -51,7 +52,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button variant="contained" style={style.Button} color="secondary">
+        <Button variant="contained" style={style.Button} color="secondary" component={Link} to="/Contact">
            Representatives Hub
           <ContactsIcon style={style.Icon}></ContactsIcon>
         </Button>
