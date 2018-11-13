@@ -17,6 +17,7 @@ const Index = () => <MainMenu />
 const Navbar = () => (
   <Router>
     <div className="Navbar">
+      <DrawerMenu />
       <nav>
         <DrawerMenu />
         <ul>
@@ -25,8 +26,7 @@ const Navbar = () => (
           </li>
         </ul>
       </nav>
-      <Route path="/" exact component={MainMenu} />
-      <Route path="/Account/" component={Account} />
+      <Route path="/" exact component={Index} />
       <Route path="/Issues/" component={IssuesBoard} />
       <Route path="/Calendar/" component={Calendar} />
       <Route path="/Contact/" component={Contact} />
