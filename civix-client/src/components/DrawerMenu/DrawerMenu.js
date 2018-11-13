@@ -2,9 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import Drawer from "@material-ui/core/Drawer"
-import Button from "@material-ui/core/Button"
 import List from "@material-ui/core/List"
-import Divider from "@material-ui/core/Divider"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -14,10 +12,11 @@ import EventIcon from "@material-ui/icons/Event"
 import EventAvailableIcon from "@material-ui/icons/EventAvailable"
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline"
 import ContactsIcon from "@material-ui/icons/Contacts"
-import { Link } from "react-router-dom"
-import MenuItem from "@material-ui/core/MenuItem"
 
-import Calendar from "../Calendar/Calendar"
+import { Link } from "react-router-dom"
+import IconButton from "@material-ui/core/IconButton"
+import PlayArrowIcon from "@material-ui/icons/PlayArrow"
+import MenuIcon from "@material-ui/icons/Menu"
 
 const styles = {
   list: {
@@ -25,7 +24,7 @@ const styles = {
   }
 }
 
-class TemporaryDrawer extends React.Component {
+class PopupMenu extends React.Component {
   state = {
     top: false,
     left: false,
@@ -46,7 +45,16 @@ class TemporaryDrawer extends React.Component {
       <EventIcon />,
       <EventAvailableIcon />,
       <ChatBubbleOutlineIcon />,
-      <ContactsIcon />
+      <ContactsIcon />,
+      <MenuIcon />
+    ]
+
+    const linkList = [
+      "/Calendar",
+      "/Calendar",
+      "/Issues",
+      "/Contact",
+      "/MainMenu"
     ]
 
     const fullList = (
@@ -56,9 +64,10 @@ class TemporaryDrawer extends React.Component {
             "Community Calendar",
             "My Calendar",
             "Ballot Board",
-            "Representatives Hub"
+            "Representatives Hub",
+            "Main Menu"
           ].map((text, index) => (
-            <ListItem button key={text} component={Link} to="/Calendar">
+            <ListItem button key={text} component={Link} to={linkList[index]}>
               <ListItemIcon>{iconList[index]}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -69,21 +78,20 @@ class TemporaryDrawer extends React.Component {
 
     return (
       <div>
-        <Button
-          variant="contained"
-          color="primary"
+        <IconButton
           onClick={this.toggleDrawer("left", true)}
+          style={{ float: "left" }}
         >
-          Menu
-        </Button>
+          <PlayArrowIcon
+            color="secondary"
+            style={{ transform: "scale(1.5)" }}
+          />
+        </IconButton>
         <Drawer
           open={this.state.left}
           onClose={this.toggleDrawer("left", false)}
         >
-          <MenuItem component={Link} to="/Calendar">
-            Doodah Day
-          </MenuItem>
-          <div tabIndex={0} role="button" component={Link} to="/Calendar">
+          <div tabIndex={0} role="button">
             {fullList}
           </div>
         </Drawer>
@@ -92,8 +100,8 @@ class TemporaryDrawer extends React.Component {
   }
 }
 
-TemporaryDrawer.propTypes = {
+PopupMenu.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(TemporaryDrawer)
+export default withStyles(styles)(PopupMenu)

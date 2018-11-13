@@ -12,8 +12,6 @@ import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Divider from "@material-ui/core/Divider"
 
-import DrawerMenu from "../DrawerMenu/DrawerMenu"
-
 const styles = theme => ({
   root: {
     width: "100%",
@@ -45,6 +43,7 @@ class AttendingButton extends React.Component {
             float: "right",
             backgroundColor: bgColor
           }}
+          color="secondary"
           onClick={this.changeColor.bind(this)}
         >
           Attending
@@ -171,11 +170,10 @@ class EventsList extends React.Component {
   render() {
     return (
       <div>
-        <DrawerMenu />
         <List style={{ overflow: "auto" }}>
           <Event
             eventTitle="Westwood Forward Public Forum"
-            eventDate="November 20, 2018"
+            eventDate="November 9, 2018"
             eventTime="5:00PM-8:00PM"
             eventPlace="10880 Wilshire Blvd #117, Los Angeles, CA 90024"
             briefDescription="The Westwood Village Improvement Association will be hosting a public forum to discuss the separation of UCLA from Westwood Village and North Village."

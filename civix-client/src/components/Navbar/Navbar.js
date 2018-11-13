@@ -1,43 +1,38 @@
-import React from "react";
-import './Navbar.css'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from "react"
+import "./Navbar.css"
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import Calendar from "../Calendar/Calendar"
-import IssuesBoard from '../IssuesBoard/IssuesBoard'
-import Contact from '../Contact/Contact'
-import MainMenu from '../MainMenu/MainMenu'
+import IssuesBoard from "../IssuesBoard/IssuesBoard"
+import Contact from "../Contact/Contact"
+import MainMenu from "../MainMenu/MainMenu"
+import DrawerMenu from "../DrawerMenu/DrawerMenu"
+import Account from "../Account/Account"
 
-const Index = () => <h2>Home</h2>
+//Homepage is Main Menu
+const Index = () => <MainMenu />
 
+//Tentative plan:
+//Remove navbar links; popup menu handles
+//Start from main menu buttons; then use popup menu to navigate
 const Navbar = () => (
   <Router>
     <div className="Navbar">
       <nav>
+        <DrawerMenu />
         <ul>
           <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Issues/">Issues</Link>
-          </li>
-          <li>
-            <Link to="/Calendar/">Calendar</Link>
-          </li>
-          <li>
-            <Link to="/Contact/">Contact</Link>
-          </li>
-          <li>
-            <Link to="/MainMenu/">MainMenu</Link>
+            <Link to="/Account/">Account</Link>
           </li>
         </ul>
       </nav>
-
-      <Route path="/" exact component={Index} />
+      <Route path="/" exact component={MainMenu} />
+      <Route path="/Account/" component={Account} />
       <Route path="/Issues/" component={IssuesBoard} />
       <Route path="/Calendar/" component={Calendar} />
       <Route path="/Contact/" component={Contact} />
       <Route path="/MainMenu/" component={MainMenu} />
     </div>
   </Router>
-);
+)
 
-export default Navbar;
+export default Navbar
