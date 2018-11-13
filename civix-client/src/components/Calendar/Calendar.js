@@ -1,9 +1,3 @@
-/*import React from 'react'
-
-const Calendar = () => <h2>Calendar</h2>;
-
-export default Calendar*/
-
 import React from "react"
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
@@ -13,36 +7,17 @@ import ListItemText from "@material-ui/core/ListItemText"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
+import Divider from "@material-ui/core/Divider"
+
+import DrawerMenu from "../DrawerMenu/DrawerMenu"
 
 const styles = theme => ({
   root: {
     width: "100%",
     backgroundColor: theme.palette.background.paper
-  },
-
-  eventcardtitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "left"
-  },
-
-  eventcarddate: {
-    fontSize: 14,
-    textAlign: "left"
-  },
-
-  eventcarddescription: {
-    fontSize: 14,
-    padding: 5
-  },
-
-  selectionbuttons: {
-    textTransform: "none",
-    fontWeight: "bold"
   }
 })
 
@@ -129,10 +104,11 @@ class EventDialog extends React.Component {
           </DialogContentText>
           <DialogContentText
             id="event-location"
-            style={{ textAlign: "center", fontSize: 14 }}
+            style={{ textAlign: "center", fontSize: 14, marginBottom: 5 }}
           >
             {this.props.eventPlace}
           </DialogContentText>
+          <Divider />
           <DialogContent>
             <DialogContentText id="event-description" style={{ fontSize: 12 }}>
               {this.props.fullDescription}
@@ -153,16 +129,6 @@ const EventStyles = {
   eventcarddate: {
     fontSize: 14,
     textAlign: "left"
-  },
-
-  eventcarddescription: {
-    fontSize: 14,
-    padding: 5
-  },
-
-  selectionbuttons: {
-    textTransform: "none",
-    fontWeight: "bold"
   }
 }
 
@@ -205,6 +171,7 @@ class EventsList extends React.Component {
   render() {
     return (
       <div>
+        <DrawerMenu />
         <List style={{ overflow: "auto" }}>
           <Event
             eventTitle="Westwood Forward Public Forum"
@@ -290,33 +257,6 @@ class EventsList extends React.Component {
     )
   }
 }
-
-/*
-function EventsList(props) {
-
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <List style={{overflow: 'auto'}}>
-        
-        <ListItem>
-          <ListItemText
-            classes={{ primary: props.classes.eventcardtitle, secondary: props.classes.eventcarddate }} 
-            primary="Westwood Forward Public Forum"
-            secondary="November 20, 2018"
-          />
-          <Typography style={{marginTop: 10, marginBottom: 10}}>
-          The Westwood Village Improvement Association will be hosting a public forum to discuss the separation of UCLA from Westwood Village and North Village.
-          </Typography>
-
-         <AttendingButton/>
-         <Button variant="contained" color="primary" style={{textTransform: "none", fontWeight: "bold", float: "right", marginRight: 10}}>Learn More</Button>
-        
-        </ListItem>
-      </List>
-    </div>
-  );
-}*/
 
 EventsList.propTypes = {
   classes: PropTypes.object.isRequired
