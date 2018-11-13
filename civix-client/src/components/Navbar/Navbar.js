@@ -6,6 +6,7 @@ import IssuesBoard from "../IssuesBoard/IssuesBoard"
 import Contact from "../Contact/Contact"
 import MainMenu from "../MainMenu/MainMenu"
 import DrawerMenu from "../DrawerMenu/DrawerMenu"
+import Account from "../Account/Account"
 
 //Homepage is Main Menu
 const Index = () => <MainMenu />
@@ -18,18 +19,10 @@ const Navbar = () => (
     <div className="Navbar">
       <DrawerMenu />
       <nav>
+        <DrawerMenu />
         <ul>
           <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/Issues/">Issues</Link>
-          </li>
-          <li>
-            <Link to="/Calendar/">Calendar</Link>
-          </li>
-          <li>
-            <Link to="/Contact/">Contact</Link>
+            <Link to="/Account/">Account</Link>
           </li>
         </ul>
       </nav>
