@@ -12,8 +12,6 @@ import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Divider from "@material-ui/core/Divider"
 
-import DrawerMenu from "../DrawerMenu/DrawerMenu"
-
 const styles = theme => ({
   root: {
     width: "100%",
@@ -171,7 +169,6 @@ class EventsList extends React.Component {
   render() {
     return (
       <div>
-        <DrawerMenu />
         <List style={{ overflow: "auto" }}>
           <Event
             eventTitle="Westwood Forward Public Forum"
