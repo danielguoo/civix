@@ -1,16 +1,46 @@
 import React from "react"
-import "./Navbar.css"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import Calendar from "../Calendar/Calendar"
-import IssuesBoard from "../IssuesBoard/IssuesBoard"
-import Contact from "../Contact/Contact"
-import MainMenu from "../MainMenu/MainMenu"
-import DrawerMenu from "../DrawerMenu/DrawerMenu"
-import Account from "../Account/Account"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+import AppBar from "material-ui/AppBar"
+import AppBarDrawer from "./AppBarDrawer.js"
+import Button from "@material-ui/core/Button"
 
-//Homepage is Main Menu
-const Index = () => <MainMenu />
+class Navbar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { open: false }
+  }
 
+  handleAppMenuClick() {
+    this.setState({ open: !this.state.open })
+  }
+
+  render() {
+    return (
+      <div>
+        <MuiThemeProvider>
+          <AppBar
+            title={"Civix"}
+            onLeftIconButtonClick={this.handleAppMenuClick.bind(this)}
+            onClick={this.handleAppMenuClick.bind(this)}
+          >
+            <Button
+              style={{
+                textTransform: "none",
+                fontWeight: "bold",
+                color: "white"
+              }}
+            >
+              Account
+            </Button>
+          </AppBar>
+          <AppBarDrawer open={this.state.open} />
+        </MuiThemeProvider>
+      </div>
+    )
+  }
+}
+export default Navbar
+/*
 //Tentative plan:
 //Remove navbar links; popup menu handles
 //Start from main menu buttons; then use popup menu to navigate
@@ -35,4 +65,4 @@ const Navbar = () => (
   </Router>
 )
 
-export default Navbar
+export default Navbar*/

@@ -25,7 +25,8 @@ import rongalperin from "./images/ron-galperin.jpg"
 
 const styles = theme => ({
   card: {
-    width: 250
+    width: 250,
+    height: 420
   },
   media: {
     height: 200,
