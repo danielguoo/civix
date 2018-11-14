@@ -13,7 +13,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline"
 import ContactsIcon from "@material-ui/icons/Contacts"
 
 const style = {
-  Grid: { marginBottom: 10 },
+  Grid: { marginBottom: 10, marginTop: 10 },
   Button: {
     width: "85%",
     padding: 40,
@@ -29,13 +29,7 @@ export default props => (
   <fragment>
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button
-          variant="contained"
-          style={style.Button}
-          color="primary"
-          component={Link}
-          to="/Calendar"
-        >
+        <Button variant="contained" style={style.Button} color="primary">
           Community Calendar
           <EventIcon style={style.Icon} />
         </Button>
@@ -44,13 +38,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button
-          variant="contained"
-          style={style.Button}
-          color="secondary"
-          component={Link}
-          to="/Calendar"
-        >
+        <Button variant="contained" style={style.Button} color="secondary">
           My Calendar
           <EventAvailableIcon style={style.Icon} />
         </Button>
@@ -59,13 +47,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button
-          variant="contained"
-          style={style.Button}
-          color="primary"
-          component={Link}
-          to="/Issues"
-        >
+        <Button variant="contained" style={style.Button} color="primary">
           Ballot Board
           <ChatBubbleOutlineIcon style={style.Icon} />
         </Button>
@@ -74,13 +56,7 @@ export default props => (
 
     <Grid container style={style.Grid}>
       <Grid item xs={12}>
-        <Button
-          variant="contained"
-          style={style.Button}
-          color="secondary"
-          component={Link}
-          to="/Contact"
-        >
+        <Button variant="contained" style={style.Button} color="secondary">
           Representatives Hub
           <ContactsIcon style={style.Icon} />
         </Button>
