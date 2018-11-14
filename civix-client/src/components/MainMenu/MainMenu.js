@@ -13,7 +13,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline"
 import ContactsIcon from "@material-ui/icons/Contacts"
 
 const style = {
-  Grid: { marginBottom: 10, marginTop: 10 },
+  Grid: { marginBottom: 10, marginTop: 30 },
   Button: {
     width: "85%",
     padding: 40,
