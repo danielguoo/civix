@@ -1,24 +1,24 @@
 # Setting up the Django Backend
 
-### Make sure you are in the cixix-backend directory
+### Requirements
 
-### Make sure you have Python version 3 or greater
+* Python version 3 or greater
 
-### set up your virtual environment
+### Set up a virtual environment
 
-#### creates your virtual environment 
+#### Create a virtual environment 
 
 ```
-virtualenv env
+/civix/civix-backend$ virtualenv env
 ```
 
-#### activates your virtual environment
+#### Activates the virtual environment
 
 ```
 source env/bin/activate
 ```
 
-#### install dependencies
+#### Install dependencies
 
 ```
 pip install django
@@ -38,3 +38,16 @@ python3 manage.py migrate
 ```
 python3 manage.py runserver
 ```
+
+#### Create a superuser
+
+```
+python manage.py createsuperuser
+```
+
+### Special Endpoints
+
+* http://localhost:8000/admin/ - Manage objects in the database
+* http://localhost:8000/docs/ - Generated documentation for API, lists all API endpoints
+
+
