@@ -1,54 +1,46 @@
-from django.shortcuts import render
+from rest_framework import generics
+from django.contrib.auth.models import User
+from core.models import Profile, Event, Item, Post
+from core.serializers import ProfileSerializer, EventSerializer, ItemSerializer, PostSerializer
 
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from core.models import Event, Item, Post
-from core.serializers import EventSerializer, ItemSerializer, PostSerializer
+class EventList(generics.ListCreateAPIView):
+    """
+    Get all events or Create a new event.
+    """
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
-def event_list(request):
+class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Lists all events.
+    Get, Update, or Delete a specific event.
     """
-    if request.method == 'GET':
-        events = Event.objects.all()
-        serializer = EventSerializer(events, many=True)
-        return JsonResponse(serializer.data, safe=False)
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
-@csrf_exempt
-def event_detail(request, pk):
+class ItemList(generics.ListCreateAPIView):
     """
-    Retrieve an event by ID.
+    Get all events or Create a new item.
     """
-    try:
-        event = Event.objects.get(pk=pk)
-    except Event.DoesNotExist:
-        return HttpResponse(status=404)
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
-    if request.method == 'GET':
-        serializer = EventSerializer(event)
-        return JsonResponse(serializer.data)
+class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Get, Update, or Delete a specific item.
+    """
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
-def item_list(request, pk):
+class PostList(generics.ListCreateAPIView):
     """
-    List all items for an event.
+    Get all events or Create a new post.
     """
-    if request.method == 'GET':
-        event = Event.objects.get(pk=pk)
-        items = event.item_set.all()
-        serializer = ItemSerializer(items, many=True)
-        return JsonResponse(serializer.data, safe=False)
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-def item_detail(request, pk):
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieve an Item by ID.
+    Get, Update, or Delete a specific post.
     """
-    try:
-        item = Event.objects.get(pk=pk)
-    except Event.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = EventSerializer(event)
-        return JsonResponse(serializer.data)
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

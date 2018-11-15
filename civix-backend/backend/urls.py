@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework_swagger.views import get_swagger_view
+schema_view = get_swagger_view(title='Civix API')
 
 urlpatterns = [
+    path('docs/', schema_view),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('', include('core.urls')),
+    path('rest-auth/', include(('rest_auth.urls','rest-auth'), namespace='Authentication')),
+    path('', include(('core.urls','core'), namespace='Core API')),
 ]
