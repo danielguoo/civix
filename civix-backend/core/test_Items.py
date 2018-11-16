@@ -29,6 +29,7 @@ class CivixItemTest(TestCase):
         body = res.json()
 
         #Success is status = 200, 3 objects in reply and the respective titles below.
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(body), 3)
         self.assertEqual(body[0]["title"], 'Extinguish fire')
@@ -39,6 +40,7 @@ class CivixItemTest(TestCase):
         res = self.client.post('/items/', newItem, content_type='application/json', follow=True)
 
         #Success indicates status code of 201, 4 objects in the DB, and title of "Prop 60" in the new object
+        #Anything else is failure
         self.assertEqual(res.status_code, 201)
         self.assertEqual(self.getItemsInDB('/items/'), 4)
         res = self.client.get('/items/4/')
@@ -49,6 +51,7 @@ class CivixItemTest(TestCase):
         res = self.client.delete('/items/3/')
 
         #Success indicates status code of 204, 2 objects in the DB
+        #Anything else is failure
         self.assertEqual(res.status_code, 204)
         self.assertEqual(self.getItemsInDB('/items/'), 2)
 
@@ -57,6 +60,7 @@ class CivixItemTest(TestCase):
         res = self.client.put('/items/1/', updateEvent, content_type='application/json', follow=True)
 
         #Success indicates status code of 200, 3 objects in the DB, and title of "No fire"        
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(self.getItemsInDB('/items/'), 3)
         res = self.client.get('/items/1/')
@@ -68,8 +72,8 @@ class CivixItemTest(TestCase):
     '''
 
     # 2 test cases
-    # 1) Wrong URL
-    # 2) Missing item
+    # 1) Wrong URL - Results in 404
+    # 2) Missing item - Results in 404
     def test_Items_retrieve_failure(self):
         res1 = self.client.get('/item/', follow=True)
         res2 = self.client.get('/items/5', follow=True)
@@ -77,10 +81,9 @@ class CivixItemTest(TestCase):
         self.assertEqual(res2.status_code, 404)
 
     # 3 test cases
-    # 1) Bad request body - missing non-nullable field
-    # 2) Bad request body - foreign key error
-    # 3) Trying to push to an event to particular URL inaccessible to POST requests
-    # Returns a bad request body and doesn't change the number of objects in the table
+    # 1) Bad request body - missing non-nullable field - Results in 400
+    # 2) Bad request body - foreign key error - Results in 400
+    # 3) Trying to push to an event to particular URL inaccessible to POST requests - Results in 404
     def test_Items_create_failure(self):
         newMissingItem = {'title': 'Prop 60', 'description': 'Legalize ranch'}
         newFKItem = {'title': 'Prop 60', 'description': 'Legalize ranch', 'event':2}
@@ -95,7 +98,9 @@ class CivixItemTest(TestCase):
         self.assertEqual(res3.status_code, 404)
         self.assertEqual(self.getItemsInDB('/items/'), 3)
 
-    # Post doesn't exist
+    # 2 test cases
+    # 1) Post doesn't exist - Results in 404
+    # 2) Put sent to wrong url - Results in 405
     # Returns a missing request message/doesn't accept that HTTP method and doesn't change the number of objects in the table
     def test_Items_delete_failure(self):
         res1 = self.client.delete('/items/333/')
@@ -105,8 +110,8 @@ class CivixItemTest(TestCase):
         self.assertEqual(self.getItemsInDB('/items/'), 3)
 
     # 2 test cases
-    # 1) Inserting data into Item that doesn't exist
-    # 2) Inserting data into wrong url
+    # 1) Inserting data into Item that doesn't exist - Results in 404
+    # 2) Inserting data into wrong url - Results in 405
     def test_Items_update_failure(self):
         rightUpdateItem = {'title': 'No fire', 'description': 'Meh'}
 

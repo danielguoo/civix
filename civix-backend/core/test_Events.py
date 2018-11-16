@@ -27,6 +27,7 @@ class CivixEventsTest(TestCase):
         body = res.json()
 
         #Success indicates status code of 200, 3 objects in the reply and title of "Fire in the disco"
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(body), 3)
         self.assertEqual(body[0]["title"], 'Fire in the disco')
@@ -36,6 +37,7 @@ class CivixEventsTest(TestCase):
         res = self.client.post('/events/', newEvent, content_type='application/json', follow=True)
 
         #Success indicates status code of 201, 4 objects in the DB, and title of "Prop 60" in the new object
+        #Anything else is failure
         self.assertEqual(res.status_code, 201)
         self.assertEqual(self.getItemsInDB('/events/'), 4)
         res = self.client.get('/events/4/')
@@ -46,6 +48,7 @@ class CivixEventsTest(TestCase):
         res = self.client.delete('/events/3/')
 
         #Success indicates status code of 204, 2 objects in the DB
+        #Anything else is failure
         self.assertEqual(res.status_code, 204)
         self.assertEqual(self.getItemsInDB('/events/'), 2)
 
@@ -54,6 +57,7 @@ class CivixEventsTest(TestCase):
         res = self.client.put('/events/1/', updateEvent, content_type='application/json', follow=True)
         
         #Success indicates status code of 200, 3 objects in the DB, and title of "No fire"        
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(self.getItemsInDB('/events/'), 3)
         res = self.client.get('/events/1/')
@@ -65,8 +69,8 @@ class CivixEventsTest(TestCase):
     '''
 
     # 2 test cases
-    # 1) Wrong URL
-    # 2) Missing user
+    # 1) Wrong URL - Results in 404
+    # 2) Missing user - Results in 404
     def test_Events_retrieve_failure(self):
         res1 = self.client.get('/event/', follow=True)
         res2 = self.client.get('/events/5', follow=True)
@@ -74,8 +78,8 @@ class CivixEventsTest(TestCase):
         self.assertEqual(res2.status_code, 404)
 
     # 2 test cases
-    # 1) Bad request body - missing non-nullable field
-    # 2) Trying to push to an event to particular URL inaccessible to POST requests
+    # 1) Bad request body - missing non-nullable field - Results in 400
+    # 2) Trying to push to an event to particular URL inaccessible to POST requests - Results in 404
     #Returns a bad request body and doesn't change the number of objects in the table
     def test_Events_create_failure(self):
         newEvent = {'title': 'Prop 60', 'description': 'Legalize ranch'}
@@ -88,16 +92,18 @@ class CivixEventsTest(TestCase):
 
         self.assertEqual(self.getItemsInDB('/events/'), 3)
 
-    #Post doesn't exist
-    #Returns a missing request message and doesn't change the number of objects in the table
+    # 1) Inserting data into Post that doesn't exist - Results in 404
+    # 2) Inserting data into wrong url - Results in 405
     def test_Events_delete_failure(self):
-        res = self.client.delete('/events/333/')
-        self.assertEqual(res.status_code, 404)
+        res1 = self.client.delete('/events/333/')
+        res2 = self.client.delete('/events/')
+        self.assertEqual(res1.status_code, 404)
+        self.assertEqual(res2.status_code, 405)
         self.assertEqual(self.getItemsInDB('/events/'), 3)
 
     # 2 test cases
-    # 1) Inserting data into Event that doesn't exist
-    # 2) Inserting data into wrong url
+    # 1) Inserting data into Event that doesn't exist - Results in 404
+    # 2) Inserting data into wrong url - Results in 405
     def test_Events_update_failure(self):
         rightUpdateEvent = {'title': 'No fire', 'date':timezone.now(), 'description': 'Meh'}
 

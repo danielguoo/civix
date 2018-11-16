@@ -31,7 +31,8 @@ class CivixPostTest(TestCase):
         res = self.client.get('/posts/', follow=True)
         body = res.json()
 
-        #Success is status = 200, 3 objects in reply and the respective titles below.
+        #Success is status = 200, 3 objects in reply and content[0]=coughcough, content[2]=Ouch.
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(body), 3)
         self.assertEqual(body[0]["content"], 'coughcough')
@@ -42,6 +43,7 @@ class CivixPostTest(TestCase):
         res = self.client.post('/posts/', newPost, content_type='application/json', follow=True)
 
         #Success indicates status code of 201, 4 objects in the DB, and title of "I disagree" in the new object
+        #Anything else is failure
         self.assertEqual(res.status_code, 201)
         self.assertEqual(self.getpostsInDB('/posts/'), 4)
         res = self.client.get('/posts/4/')
@@ -52,6 +54,7 @@ class CivixPostTest(TestCase):
         res = self.client.delete('/posts/3/')
 
         #Success indicates status code of 204, 2 objects in the DB
+        #Anything else is failure
         self.assertEqual(res.status_code, 204)
         self.assertEqual(self.getpostsInDB('/posts/'), 2)
 
@@ -60,6 +63,7 @@ class CivixPostTest(TestCase):
         res = self.client.put('/posts/1/', updateEvent, content_type='application/json', follow=True)
 
         #Success indicates status code of 200, 3 objects in the DB, and title of "I disagree"        
+        #Anything else is failure
         self.assertEqual(res.status_code, 200)
         self.assertEqual(self.getpostsInDB('/posts/'), 3)
         res = self.client.get('/posts/1/')
@@ -72,7 +76,7 @@ class CivixPostTest(TestCase):
 
     # 2 test cases
     # 1) Wrong URL
-    # 2) Missing item
+    # 2) Missing Post
     def test_Posts_retrieve_failure(self):
         res1 = self.client.get('/post/', follow=True)
         res2 = self.client.get('/posts/5', follow=True)
@@ -80,9 +84,9 @@ class CivixPostTest(TestCase):
         self.assertEqual(res2.status_code, 404)
 
     # 3 test cases
-    # 1) Bad request body - missing non-nullable field
-    # 2) Bad request body - foreign key error
-    # 3) Trying to push to an event to particular URL inaccessible to POST requests
+    # 1) Bad request body - missing non-nullable field - Results in 400
+    # 2) Bad request body - foreign key error - Results in 400
+    # 3) Trying to push to an event to particular URL inaccessible to POST requests - Results in 404
     # Returns a bad request body and doesn't change the number of objects in the table
     def test_Posts_create_failure(self):
         newMissingPost = {'content': 'I disagree'}
@@ -98,8 +102,8 @@ class CivixPostTest(TestCase):
         self.assertEqual(res3.status_code, 404)
         self.assertEqual(self.getpostsInDB('/posts/'), 3)
 
-    # Post doesn't exist
-    # Returns a missing request message/doesn't accept that HTTP method and doesn't change the number of objects in the table
+    # 1) Inserting data into Post that doesn't exist - Results in 404
+    # 2) Inserting data into wrong url - Results in 405
     def test_Posts_delete_failure(self):
         res1 = self.client.delete('/posts/333/')
         res2 = self.client.delete('/posts/')
@@ -108,13 +112,13 @@ class CivixPostTest(TestCase):
         self.assertEqual(self.getpostsInDB('/posts/'), 3)
 
     # 3 test cases
-    # 1) Inserting data into Item that doesn't exist
-    # 2) Inserting data into wrong url
+    # 1) Inserting data into Post that doesn't exist - Results in 404
+    # 2) Inserting data into wrong url - Results in 405
     def test_Posts_update_failure(self):
-        rightUpdateItem = {'content': 'what am i doin', 'item':1, 'user':1}
+        rightUpdatePost = {'content': 'what am i doin', 'item':1, 'user':1}
 
-        res1 = self.client.put('/posts/666/', rightUpdateItem, content_type='application/json', follow=True)
-        res2 = self.client.put('/posts/', rightUpdateItem, content_type='application/json', follow=True)
+        res1 = self.client.put('/posts/666/', rightUpdatePost, content_type='application/json', follow=True)
+        res2 = self.client.put('/posts/', rightUpdatePost, content_type='application/json', follow=True)
         self.assertEqual(res1.status_code, 404)
         self.assertEqual(res2.status_code, 405)
 

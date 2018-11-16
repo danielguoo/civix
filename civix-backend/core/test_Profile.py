@@ -19,9 +19,10 @@ class CivixProfileTest(TestCase):
         p = Profile.objects.create(user = self.usr, dob=timezone.now(), poliID = 1, 
         address="10 Downing St", city="NYC", zipcode = "90210", state="WY")
 
-
+    # Login client return true if the profile logs in, false otherwise
     def test_Profile_login(self):
         self.assertEqual(self.client.login(username='theBurn', password='banana'), True)
-
+    
+    # Logout client returns None if successful else throws an error
     def test_Profile_logout(self):
         self.assertEqual(self.client.logout(), None)
