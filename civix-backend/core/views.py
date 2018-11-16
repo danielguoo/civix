@@ -5,42 +5,66 @@ from core.serializers import ProfileSerializer, EventSerializer, ItemSerializer,
 
 class EventList(generics.ListCreateAPIView):
     """
-    Get all events or Create a new event.
+    get:
+        Return a list of all events.
+    post:
+        Create a new event instance.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
 class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Get, Update, or Delete a specific event.
+    get:
+        Return an event instance.
+    put:
+        Update an event instance.
+    delete:
+        Delete an event instance.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
 class ItemList(generics.ListCreateAPIView):
     """
-    Get all events or Create a new item.
+    get:
+        Return a list of all items.
+    post:
+        Create a new item instance.
     """
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
 class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Get, Update, or Delete a specific item.
+    get:
+        Return an item instance.
+    put:
+        Update an item instance.
+    delete:
+        Delete an item instance.
     """
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
 class PostList(generics.ListCreateAPIView):
     """
-    Get all events or Create a new post.
+    get:
+        Return a list of all posts.
+    post:
+        Create a new post instance.
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Get, Update, or Delete a specific post.
+    get:
+        Return a post instance.
+    put:
+        Update a post instance.
+    delete:
+        Delete a post instance.
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
