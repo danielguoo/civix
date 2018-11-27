@@ -166,7 +166,7 @@ class Event extends React.Component {
 }
 
 //Scrollable list of events
-class EventsList extends React.Component {
+class PersonalCalendar extends React.Component {
   render() {
     return (
       <div>
@@ -256,8 +256,8 @@ class EventsList extends React.Component {
   }
 }
 
-EventsList.propTypes = {
+PersonalCalendar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(EventsList)
+export default withStyles(styles)(PersonalCalendar)

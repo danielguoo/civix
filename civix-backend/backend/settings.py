@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Bypassing CORS restrictions so we can run app/server on different domains
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 
 # Application definition
 
@@ -43,9 +48,11 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_auth',
     'core',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
