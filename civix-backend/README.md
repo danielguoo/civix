@@ -42,7 +42,7 @@ python3 manage.py runserver
 #### Create a superuser
 
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 ### Special Endpoints
