@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     path('rest-auth/', include(('rest_auth.urls','rest-auth'), namespace='Authentication')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('', include(('core.urls','core'), namespace='Core API')),
 ]
