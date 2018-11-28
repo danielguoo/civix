@@ -1,0 +1,102 @@
+/**/
+.shareCommentContainer {
+  background: none repeat scroll 0 0 #f5f5f5d7;
+  border: 1px solid #1a19193a;
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 40px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.shareCommentContainer textarea {
+  height: 100px;
+  padding: 20px;
+  width: 100%;
+  border: 1px solid #f2f2f2;
+  outline: none;
+  border-radius: 0 0 0 0;
+}
+
+.shareCommentContainer .btn-success {
+  padding: 6px 15px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  margin-left: 9px;
+  border: medium none;
+  border-radius: 4px;
+  background-color: #5cb85c;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.shareCommentContainer button:hover {
+  cursor: pointer;
+  background-color: #008000;
+}
+
+/*Comment*/
+.commentContainer {
+  position: relative;
+  height: auto;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #1a19193a;
+  border-radius: 2px;
+}
+
+.commentText {
+  min-height: 30px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.commentText > textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #f2f2f2;
+  border-radius: 4px 4px 0 0;
+}
+
+.commentContainer button-upvote {
+  margin-right: 10px;
+  margin-top: 20px;
+  padding: 6px 12px;
+  color: #fff;
+  background-color: #33ff00;
+  border: medium none;
+  outline: none;
+}
+
+.badgesuccess-style {
+  color: #fff;
+  background-color: #ff0000;
+}
+
+.badgesuccess-style:hover {
+  cursor: pointer;
+  background-color: #0b920b;
+}
+
+.commentContainer button-upvote:hover {
+  cursor: pointer;
+  background-color: #0b920b;
+}
+
+.commentContainer button-downvote:hover {
+  cursor: pointer;
+  background-color: #920b0b;
+}
+
+.commentContainer button-downvote {
+  margin-right: 10px;
+  margin-top: 20px;
+  padding: 6px 12px;
+  color: #fff;
+  background-color: #ff0000;
+  border: medium none;
+  outline: none;
+}
