@@ -1,10 +1,5 @@
 import React from "react"
 import classnames from "classnames"
-
-import NavigationBar from "../NavigationBar/NavigationBar"
-
-import { Link } from "react-router-dom"
-
 import {
   Container,
   Row,
@@ -16,18 +11,66 @@ import {
   TabPane
 } from "reactstrap"
 
+import NavigationBar from "../NavigationBar/NavigationBar"
+
 import "./IssuesBoard.css"
+
+import { Link } from "react-router-dom"
+
+import axios from "axios"
+
+class Issue extends React.Component {
+  render() {
+    return (
+      <div>
+        <li className="thread">
+          <Link
+            to={{
+              pathname: "/propositionpage",
+              issueid: this.props.id,
+              description: this.props.description
+            }}
+          >
+            <h6 className="text-left">{this.props.title}</h6>
+          </Link>
+        </li>
+        <hr />
+      </div>
+    )
+  }
+}
 
 class IssuesBoard extends React.Component {
   //Constructor
   //By default, first tab is selected
   constructor(props) {
     super(props)
-
+    this.displayIssues = this.displayIssues.bind(this)
     this.toggle = this.toggle.bind(this)
     this.state = {
-      activeTab: "1"
+      activeTab: "1",
+      issues: []
     }
+  }
+
+  //Issue display function
+  displayIssues(issue, i) {
+    //Unpack event
+    var id = issue.id
+    var event = issue.event
+    var title = issue.title
+    var description = issue.description
+
+    return (
+      <Issue
+        id={id}
+        title={title}
+        description={description}
+        key={i}
+        index={i}
+        event={event}
+      />
+    )
   }
 
   toggle(tab) {
@@ -36,6 +79,39 @@ class IssuesBoard extends React.Component {
         activeTab: tab
       })
     }
+  }
+
+  getIssues() {
+    //Setup
+    var url = "http://localhost:8000/items/"
+    axios
+      .get(url)
+      .then(response => {
+        const issues = response.data
+        this.setState({ issues })
+      })
+      .catch(error => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message)
+        }
+      })
+  }
+
+  componentDidMount() {
+    //Grab all issues from database
+    this.getIssues()
   }
 
   render() {
@@ -85,20 +161,7 @@ class IssuesBoard extends React.Component {
                 >
                   <TabPane tabId="1">
                     <ul className="thread-list">
-                      <Link to="/propositionpage">
-                        <li className="thread">
-                          <span className="title" style={{ float: "left" }}>
-                            Proposition 15{" "}
-                          </span>
-                          <span className="icon">Icon </span>
-                        </li>
-                      </Link>
-                      <li className="thread">
-                        <span className="title" style={{ float: "left" }}>
-                          Proposition 24{" "}
-                        </span>
-                        <span className="icon">Icon </span>
-                      </li>
+                      {this.state.issues.map(this.displayIssues)}
                     </ul>
                   </TabPane>
                   <TabPane tabId="2">
