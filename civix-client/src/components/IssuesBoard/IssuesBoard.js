@@ -45,7 +45,7 @@ class IssuesBoard extends React.Component {
         <div className="article-list">
           <Container className="container">
             <div className="intro">
-              <h2 className="text-center">Ballot Board</h2>
+              <h2> General Election, November 2018 </h2>
             </div>
           </Container>
         </div>

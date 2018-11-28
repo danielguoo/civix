@@ -225,7 +225,8 @@ class PropositionPage extends React.Component {
         <div className="article-list">
           <Container className="container">
             <div className="intro">
-              <h2 className="text-center">Proposition Page</h2>
+              <h2 className="text-center">Proposition #</h2>
+              <h4>short title.</h4>
             </div>
           </Container>
           <Row>
@@ -234,7 +235,9 @@ class PropositionPage extends React.Component {
               <CommentThread />
             </Col>
             <Col xs="6" sm="4">
-              <h4>Description</h4>
+            <br></br>
+            <br></br>
+              <h4>Detailed Description</h4>
               <p>A description of the proposition.</p>
             </Col>
             <Col sm="4">

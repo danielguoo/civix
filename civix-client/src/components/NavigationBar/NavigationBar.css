@@ -1,0 +1,16 @@
+.CivixTitle {
+  height: 35px;
+}
+
+.Navbar {
+  border-bottom: .5px solid grey;
+}
+
+.NavButton {
+  color: black;
+  margin-left: 20px;
+}
+
+.Navbar a:hover {
+  text-decoration: none;
+}
