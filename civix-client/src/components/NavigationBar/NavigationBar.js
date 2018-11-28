@@ -1,28 +1,21 @@
 import React from "react"
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from "reactstrap"
 
-/*//Import navbar icons
-import communitycalendaricon from "./communitycalendaricon.svg"
-import personalcalendaricon from "./personalcalendaricon.svg"
-import issuesicon from "./issuesicon.svg"
-import contacticon from "./contacticon.svg"*/
-
 import { Link } from "react-router-dom"
 
+//TODO: Add icons
+
 class NavigationBar extends React.Component {
-  constructor(props) {
+  //Constructor
+  /*constructor(props) {
     super(props)
 
     this.toggle = this.toggle.bind(this)
@@ -34,7 +27,7 @@ class NavigationBar extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     })
-  }
+  }*/
   render() {
     return (
       <div>

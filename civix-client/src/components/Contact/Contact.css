@@ -1,0 +1,11 @@
+.card-container {
+  height: 300;
+  min-width: 100%;
+  display: flex;
+  overflow-x: auto;
+}
+
+.card {
+  min-width: 200px;
+  margin: 10px;
+}
