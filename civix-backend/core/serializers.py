@@ -23,7 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'title', 'date', 'briefDescription', 'fullDescription', 'city', 'zipcode', 'state')
+        fields = ('id', 'title', 'date', 'briefDescription', 'fullDescription', 'streetAddress', 'city', 'zipcode', 'state')
 
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
