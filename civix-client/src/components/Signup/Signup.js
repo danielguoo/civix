@@ -81,6 +81,22 @@ class Signup extends React.Component {
         axios.post(profileurl, profilepayload).then(function(profileresponse) {
           console.log("Successfully created profile for user " + global.user_id)
         })
+
+        //Attempt concurrent calendar creation
+        var calendarurl = "http://localhost:8000/calendars/"
+        var calendarpayload = {
+          user: global.user_id,
+          events: []
+        }
+
+        axios
+          .post(calendarurl, calendarpayload)
+          .then(function(calendarresponse) {
+            console.log(
+              "Successfully created personal calendar for user " +
+                global.user_id
+            )
+          })
       })
       .catch(function(error) {
         if (error.response) {
@@ -119,11 +135,7 @@ class Signup extends React.Component {
         <Form className="form">
           <h1 className="text-center">Register</h1>
           <div className="illustration" />
-          {success && (
-            <Alert color="success">
-              Registration successful.
-            </Alert>
-          )}
+          {success && <Alert color="success">Registration successful.</Alert>}
           {error && (
             <Alert error={error} color="danger">
               Registration not successful. Try again.

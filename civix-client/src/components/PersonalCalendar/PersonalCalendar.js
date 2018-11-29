@@ -39,7 +39,7 @@ class CalendarEvent extends React.Component {
     //Bind 'Learn More' toggle function
     this.toggleLearnMore = this.toggleLearnMore.bind(this)
     //Bind function to add event to personal calendar
-    this.toggleMarkAttending = this.toggleMarkAttending.bind(this)
+    this.toggleRemove = this.toggleRemove.bind(this)
   }
 
   //'Learn More' toggle function
@@ -50,18 +50,62 @@ class CalendarEvent extends React.Component {
   }
 
   //'Add to Personal Calendar' function
-  toggleMarkAttending() {
-    this.setState({
-      modal: !this.state.modal
-    })
+  toggleRemove() {
+    this.props.removeEvent(this.props.index)
+
+    //1.) Remove event from display
+    //2.) Update list of events (PUT)
+
+    var url = "http://localhost:8000/calendars/" + global.user_id + "/"
+
+    //alert("Not yet empty, remove from display")
+    var currenteventids = this.props.currenteventids
+    var indexOfEvent = currenteventids.indexOf(this.props.id)
+    var neweventids = currenteventids.splice(indexOfEvent, 1)
+
+    //alert("after removal, we now have just these events: " + neweventids)
+
+    var removalpayload = {
+      user: global.user_id,
+      events: neweventids
+    }
+
+    axios
+      .put(url, removalpayload)
+      .then(function(removalresponse) {
+        console.log(
+          "Successfully removed event from personal calendar for user " +
+            global.user_id
+        )
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message)
+        }
+      })
   }
 
   render() {
+    var unformatteddate = new Date(this.props.date.toString())
+    var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY")
+    var cleantime = moment(unformatteddate).format("h:mm A")
     return (
       <ListGroupItem className="list-group-item" style={{ marginBottom: 10 }}>
         <h3 className="text-left">{this.props.title}</h3>
-        <h5 className="text-left">{this.props.date}</h5>
-        <p className="text-left">{this.props.briefdescription}</p>
+        <h5 className="text-left">{cleandate}</h5>
+        <p className="text-left">{this.props.briefDescription}</p>
         <ButtonGroup className="btn-group float-right" role="group">
           <Button
             className="btn btn-primary"
@@ -77,11 +121,19 @@ class CalendarEvent extends React.Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
               <ModalHeader className="modal-title, text-center">
                 <h3>{this.props.title}</h3>
-                <h5 className="text-muted">{this.props.date}</h5>
-                <h5 className="text-muted">{this.props.time}</h5>
-                <h5 className="text-muted">{this.props.location}</h5>
+                <h5 className="text-muted">{cleandate}</h5>
+                <h5 className="text-muted">{cleantime}</h5>
+                <h5 className="text-muted">
+                  {this.props.streetAddress}
+                  {", "}
+                  {this.props.city}
+                  {", "}
+                  {this.props.state}
+                  {", "}
+                  {this.props.zipcode}
+                </h5>
               </ModalHeader>
-              <ModalBody>{this.props.fulldescription}</ModalBody>
+              <ModalBody>{this.props.fullDescription}</ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={this.toggleLearnMore}>
                   Close
@@ -93,9 +145,9 @@ class CalendarEvent extends React.Component {
             className="btn btn-primary"
             type="button"
             style={{ backgroundColor: "#82db54", border: "none" }}
-            onClick={this.toggleMarkAttending}
+            onClick={this.toggleRemove}
           >
-            Mark Attending
+            Remove
           </Button>
         </ButtonGroup>
       </ListGroupItem>
@@ -108,9 +160,20 @@ class PersonalCalendar extends React.Component {
   constructor(props) {
     super(props)
     this.displayEvents = this.displayEvents.bind(this)
+    this.removeEvent = this.removeEvent.bind(this)
     this.state = {
+      eventids: [],
       events: []
     }
+  }
+
+  //Event removal function
+  removeEvent(idx) {
+    var eventidarr = this.state.eventids
+    var eventarr = this.state.events
+    eventidarr.splice(idx, 1)
+    eventarr.splice(idx, 1)
+    this.setState({ eventidarr: eventidarr, eventarr: eventarr })
   }
 
   //Event display function
@@ -119,36 +182,65 @@ class PersonalCalendar extends React.Component {
     //Unpack event
     var id = event.id
     var title = event.title
-    var unformatteddate = new Date(event.date.toString())
-    var date = moment(unformatteddate).format("dddd, MMMM Do YYYY")
-    var time = moment(unformatteddate).format("h:mm A")
-    var location = "Dummylocation " + event.id
-    var briefdescription = event.description
-    var fulldescription = event.description
+    var date = event.date
+    var briefDescription = event.briefDescription
+    var fullDescription = event.fullDescription
+    var streetAddress = event.streetAddress
+    var city = event.city
+    var state = event.state
+    var zipcode = event.zipcode
 
     return (
       <CalendarEvent
         id={id}
         title={title}
         date={date}
-        time={time}
-        location={location}
-        briefdescription={briefdescription}
-        fulldescription={fulldescription}
+        streetAddress={streetAddress}
+        city={city}
+        state={state}
+        zipcode={zipcode}
+        briefDescription={briefDescription}
+        fullDescription={fullDescription}
         key={i}
         index={i}
+        currenteventids={this.state.eventids}
+        removeEvent={this.removeEvent}
       />
     )
   }
 
   getEvents() {
+            
     //Setup
-    var url = "http://localhost:8000/events/"
+    var calendarurl = "http://localhost:8000/calendars/" + global.user_id + "/"
+    var eventids = []
+    var self = this
+
     axios
-      .get(url)
+      .get(calendarurl)
       .then(response => {
-        const events = response.data
-        this.setState({ events })
+        eventids = response.data.events
+        //alert(eventids)
+        self.setState({ eventids: eventids })
+      })
+      .then(function() {
+        var events = []
+        var promises = []
+
+        //alert("Attempting pushing all events")
+
+        eventids.forEach(function(eventid) {
+          var eventurl = "http://localhost:8000/events/" + eventid + "/"
+          promises.push(axios.get(eventurl))
+        })
+
+        axios.all(promises).then(function(results) {
+          results.forEach(function(response) {
+            events.push(response.data)
+          })
+
+          self.setState({ events: events })
+        })
       })
       .catch(error => {
         if (error.response) {

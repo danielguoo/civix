@@ -51,17 +51,74 @@ class CalendarEvent extends React.Component {
 
   //'Add to Personal Calendar' function
   toggleMarkAttending() {
-    this.setState({
-      modal: !this.state.modal
-    })
+    //1.) Grab list of events for calendar (GET)
+    //2.) Update list of events (PUT)
+    //No new event created!
+
+    //alert(global.user_id)
+
+    var url = "http://localhost:8000/calendars/" + global.user_id + "/"
+    var updatedevents = []
+    var self = this
+
+    //All users start out w/empty, existing calendar, so we know we can request PUT
+    axios
+      .get(url)
+      .then(function(getcalendarresponse) {
+        console.log(
+          "Attempted grab of personal calendar for user " +
+            global.user_id +
+            " with status " +
+            getcalendarresponse.status
+        )
+
+        //Update events list with relevant event id
+        updatedevents = getcalendarresponse.data.events
+        updatedevents.push(self.props.id)
+        //alert("new set: " + updatedevents)
+      })
+      .then(function() {
+        var payload = {
+          user: global.user_id,
+          events: updatedevents
+        }
+        //alert("attempting put")
+        //Attempt update on existing calendar
+        axios.put(url, payload).then(function(updatecalendarresponse) {
+          console.log(
+            "Successfully updated existing personal calendar for " +
+              global.user_id
+          )
+        })
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message)
+        }
+      })
   }
 
   render() {
+    var unformatteddate = new Date(this.props.date.toString())
+    var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY")
+    var cleantime = moment(unformatteddate).format("h:mm A")
     return (
       <ListGroupItem className="list-group-item" style={{ marginBottom: 10 }}>
         <h3 className="text-left">{this.props.title}</h3>
-        <h5 className="text-left">{this.props.date}</h5>
-        <p className="text-left">{this.props.briefdescription}</p>
+        <h5 className="text-left">{cleandate}</h5>
+        <p className="text-left">{this.props.briefDescription}</p>
         <ButtonGroup className="btn-group float-right" role="group">
           <Button
             className="btn btn-primary"
@@ -77,11 +134,19 @@ class CalendarEvent extends React.Component {
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
               <ModalHeader className="modal-title, text-center">
                 <h3>{this.props.title}</h3>
-                <h5 className="text-muted">{this.props.date}</h5>
-                <h5 className="text-muted">{this.props.time}</h5>
-                <h5 className="text-muted">{this.props.location}</h5>
+                <h5 className="text-muted">{cleandate}</h5>
+                <h5 className="text-muted">{cleantime}</h5>
+                <h5 className="text-muted">
+                  {this.props.streetAddress}
+                  {", "}
+                  {this.props.city}
+                  {", "}
+                  {this.props.state}
+                  {", "}
+                  {this.props.zipcode}
+                </h5>
               </ModalHeader>
-              <ModalBody>{this.props.fulldescription}</ModalBody>
+              <ModalBody>{this.props.fullDescription}</ModalBody>
               <ModalFooter>
                 <Button color="primary" onClick={this.toggleLearnMore}>
                   Close
@@ -119,22 +184,25 @@ class CommunityCalendar extends React.Component {
     //Unpack event
     var id = event.id
     var title = event.title
-    var unformatteddate = new Date(event.date.toString())
-    var date = moment(unformatteddate).format("dddd, MMMM Do YYYY")
-    var time = moment(unformatteddate).format("h:mm A")
-    var location = "Dummylocation " + event.id
-    var briefdescription = event.description
-    var fulldescription = event.description
+    var date = event.date
+    var briefDescription = event.briefDescription
+    var fullDescription = event.fullDescription
+    var streetAddress = event.streetAddress
+    var city = event.city
+    var state = event.state
+    var zipcode = event.zipcode
 
     return (
       <CalendarEvent
         id={id}
         title={title}
         date={date}
-        time={time}
-        location={location}
-        briefdescription={briefdescription}
-        fulldescription={fulldescription}
+        streetAddress={streetAddress}
+        city={city}
+        state={state}
+        zipcode={zipcode}
+        briefDescription={briefDescription}
+        fullDescription={fullDescription}
         key={i}
         index={i}
       />
