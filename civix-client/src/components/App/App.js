@@ -7,10 +7,10 @@ import { Switch, Route } from "react-router-dom"
 //App components to route
 import Login from "../Login/Login"
 import Signup from "../Signup/Signup"
-import CommunityCalendar from "../CommunityCalendar/CommunityCalendar"
+import Calendar from "../Calendar/Calendar"
 import PersonalCalendar from "../PersonalCalendar/PersonalCalendar"
-import IssuesBoard from "../IssuesBoard/IssuesBoard"
-import PropositionPage from "../PropositionPage/PropositionPage"
+import Issues from "../Issues/Issues"
+import Issue from "../Issue/Issue"
 import Contact from "../Contact/Contact"
 import Account from "../Account/Account"
 
@@ -23,10 +23,10 @@ class Routes extends Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/communitycalendar" component={CommunityCalendar} />
+          <Route path="/calendar" component={Calendar} />
           <Route path="/personalcalendar" component={PersonalCalendar} />
-          <Route path="/issuesboard" component={IssuesBoard} />
-          <Route path="/propositionpage" component={PropositionPage} />
+          <Route path="/issues" component={Issues} />
+          <Route path="/issue/" component={Issue} />
           <Route path="/contact" component={Contact} />
           <Route path="/account" component={Account} />
           <Route path="/" component={Login} />

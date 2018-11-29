@@ -1,7 +1,68 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
-from core.models import Profile, Event, Item, Post
-from core.serializers import ProfileSerializer, EventSerializer, ItemSerializer, PostSerializer
+from core.models import Profile, Event, Calendar, Item, Post
+from core.serializers import UserSerializer, ProfileSerializer, EventSerializer, CalendarSerializer, ItemSerializer, PostSerializer
+
+class UserList(generics.ListAPIView):
+    """
+    get:
+        Return a list of all users.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    """
+    get:
+        Return a user instance.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class ProfileList(generics.ListCreateAPIView):
+    """
+    get:
+        Return a list of all profiles.
+    post:
+        Create a new profile instance.
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Return a profile instance.
+    put:
+        Update a profile instance.
+    delete:
+        Delete a profile instance.
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class CalendarList(generics.ListCreateAPIView):
+    """
+    get:
+        Return a list of all calendars.
+    post:
+        Create a new calendar instance.
+    """
+    queryset = Calendar.objects.all()
+    serializer_class = CalendarSerializer
+
+class CalendarDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Return a calendar instance.
+    put:
+        Update a calendar instance.
+    delete:
+        Delete a calendar instance.
+    """
+    queryset = Calendar.objects.all()
+    serializer_class = CalendarSerializer
 
 class EventList(generics.ListCreateAPIView):
     """

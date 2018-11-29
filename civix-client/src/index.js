@@ -6,6 +6,8 @@ import * as serviceWorker from "./serviceWorker"
 
 //Bootstrap CSS 
 import "bootstrap/dist/css/bootstrap.min.css"
+//Global storage file
+import "./global.js"
 //React Router
 import { BrowserRouter as Router } from "react-router-dom"
 

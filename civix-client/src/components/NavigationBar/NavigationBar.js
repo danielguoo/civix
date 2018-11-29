@@ -19,8 +19,11 @@ class NavigationBar extends React.Component {
       <div>
         <Navbar className="Navbar" light expand="md">
           <img className="CivixTitle" src={civixtitle} alt="Civix" />
-          <Link className="NavButton" to="/communitycalendar">
+          <Link className="NavButton" to="/calendar">
              <IoIosCalendar/> Calendar 
+          </Link>
+          <Link className="NavButton" to="/personalcalendar">
+             <IoIosCalendar/> Personal Calendar
           </Link>
           <Link className="NavButton" to="/issuesboard">
             <IoMdChatboxes/> Issues 
