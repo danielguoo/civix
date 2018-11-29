@@ -151,7 +151,19 @@ class IssuesBoard extends React.Component {
                         this.toggle("2")
                       }}
                     >
-                      Candidates
+                      Local
+                    </NavLink>
+                  </NavItem>
+                  <NavItem className="nav-item">
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "3"
+                      })}
+                      onClick={() => {
+                        this.toggle("3")
+                      }}
+                    >
+                      State
                     </NavLink>
                   </NavItem>
                 </Nav>

@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {
   Container,
   Row,
@@ -12,31 +12,31 @@ import {
   FormGroup,
   ListGroup,
   ListGroupItem
-} from "reactstrap"
+} from "reactstrap";
 
-import "./PropositionPage.css"
+import "./PropositionPage.css";
 
-import axios from "axios"
+import axios from "axios";
 
-import NavigationBar from "../NavigationBar/NavigationBar"
+import NavigationBar from "../NavigationBar/NavigationBar";
 
 class Comment extends React.Component {
   //Constructor
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       upvotes: this.props.upvotes,
       downvotes: this.props.downvotes
-    }
+    };
 
     //Bind functions for performing upvotes, downvotes
-    this.upvote = this.upvote.bind(this)
-    this.downvote = this.downvote.bind(this)
+    this.upvote = this.upvote.bind(this);
+    this.downvote = this.downvote.bind(this);
   }
 
   updateComments() {
     //Setup
-    var url = "http://localhost:8000/posts/"
+    var url = "http://localhost:8000/posts/";
     var payload = {
       id: this.props.id,
       item: this.props.item,
@@ -44,40 +44,40 @@ class Comment extends React.Component {
       content: this.props.content,
       upvotes: this.state.upvotes,
       downvotes: this.state.downvotes
-    }
+    };
     //Attempt update
     axios
       .put(url, payload)
       .then(function(response) {
-        console.log("Successfully updated post with status " + response.status)
+        console.log("Successfully updated post with status " + response.status);
       })
       .catch(function(error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          console.log(error.request)
+          console.log(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message)
+          console.log("Error", error.message);
         }
-      })
+      });
   }
 
   upvote() {
-    this.setState({ upvotes: this.state.upvotes + 1 })
-    this.updateComments()
+    this.setState({ upvotes: this.state.upvotes + 1 });
+    this.updateComments();
   }
 
   downvote() {
-    this.setState({ downvotes: this.state.downvotes + 1 })
-    this.updateComments()
+    this.setState({ downvotes: this.state.downvotes + 1 });
+    this.updateComments();
   }
 
   render() {
@@ -97,7 +97,7 @@ class Comment extends React.Component {
           </Badge>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -119,7 +119,7 @@ class ForList extends React.Component {
           </ButtonGroup>
         </ListGroupItem>
       </ListGroup>
-    )
+    );
   }
 }
 
@@ -141,63 +141,63 @@ class AgainstList extends React.Component {
           </ButtonGroup>
         </ListGroupItem>
       </ListGroup>
-    )
+    );
   }
 }
 
 class PropositionPage extends React.Component {
   //Constructor
   constructor(props) {
-    super(props)
-    this.displayComments = this.displayComments.bind(this)
-    this.addNewComment = this.addNewComment.bind(this)
-    this.getNewCommentText = this.getNewCommentText.bind(this)
-    this.getNewCommentOnRight = this.getNewCommentOnRight.bind(this)
+    super(props);
+    this.displayComments = this.displayComments.bind(this);
+    this.addNewComment = this.addNewComment.bind(this);
+    this.getNewCommentText = this.getNewCommentText.bind(this);
+    this.getNewCommentOnRight = this.getNewCommentOnRight.bind(this);
     this.state = {
       forcomments: [],
       againstcomments: [],
       newCommentText: "",
       newCommentOnRight: false
-    }
+    };
   }
 
   //store new comment content
   getNewCommentText(e) {
-    this.setState({ newCommentText: e.target.value })
+    this.setState({ newCommentText: e.target.value });
   }
 
   //store new comment alignment (for/against)
   getNewCommentOnRight(e) {
     if (e.target.value === "For") {
-      this.setState({ newCommentOnRight: false })
+      this.setState({ newCommentOnRight: false });
     } else {
-      this.setState({ newCommentOnRight: true })
+      this.setState({ newCommentOnRight: true });
     }
   }
 
   addNewComment() {
-    var newText = this.state.newCommentText
+    var newText = this.state.newCommentText;
     if (newText !== "") {
-      var newOnRight = this.state.newCommentOnRight
+      var newOnRight = this.state.newCommentOnRight;
       var newcomment = {
         user: "2",
         content: newText,
         onRight: newOnRight,
         upvotes: 0,
         downvotes: 0
-      }
+      };
       if (!newOnRight) {
-        var forarr = this.state.forcomments
-        forarr.push(newcomment)
-        this.setState({ forcomments: forarr })
+        var forarr = this.state.forcomments;
+        forarr.push(newcomment);
+        this.setState({ forcomments: forarr });
       } else {
-        var againstarr = this.state.againstcomments
-        againstarr.push(newcomment)
-        this.setState({ againstcomments: againstarr })
+        var againstarr = this.state.againstcomments;
+        againstarr.push(newcomment);
+        this.setState({ againstcomments: againstarr });
       }
 
       //Setup
-      var url = "http://localhost:8000/posts/"
+      var url = "http://localhost:8000/posts/";
       var payload = {
         item: this.props.location.issueid,
         user: "2",
@@ -205,7 +205,7 @@ class PropositionPage extends React.Component {
         onRight: newOnRight,
         upvotes: 0,
         downvotes: 0
-      }
+      };
 
       //Attempt addition
       axios
@@ -213,39 +213,39 @@ class PropositionPage extends React.Component {
         .then(function(response) {
           console.log(
             "Successfully updated post with status " + response.status
-          )
+          );
         })
         .catch(function(error) {
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            console.log(error.response.data)
-            console.log(error.response.status)
-            console.log(error.response.headers)
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
             // http.ClientRequest in node.js
-            console.log(error.request)
+            console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message)
+            console.log("Error", error.message);
           }
-        })
+        });
     } else {
-      alert("Comment must be nonempty.")
+      alert("Comment must be nonempty.");
     }
   }
 
   //Comment display function
   displayComments(comment, i) {
     //Unpack comment
-    var id = comment.id
-    var item = comment.item
-    var user = comment.user
-    var content = comment.content
-    var upvotes = comment.upvotes
-    var downvotes = comment.downvotes
+    var id = comment.id;
+    var item = comment.item;
+    var user = comment.user;
+    var content = comment.content;
+    var upvotes = comment.upvotes;
+    var downvotes = comment.downvotes;
 
     return (
       <Comment
@@ -258,53 +258,53 @@ class PropositionPage extends React.Component {
         key={i}
         index={i}
       />
-    )
+    );
   }
 
   getComments() {
     //Setup
-    var url = "http://localhost:8000/posts/"
-    var self = this
+    var url = "http://localhost:8000/posts/";
+    var self = this;
     axios
       .get(url)
       .then(response => {
-        var allcomments = response.data
+        var allcomments = response.data;
         //filter out only those linked to issue id
         var pagecomments = allcomments.filter(function(e) {
-          return e.item === self.props.location.issueid
-        })
+          return e.item === self.props.location.issueid;
+        });
         //split into those for and those against
         var forcomments = pagecomments.filter(function(e) {
-          return e.onRight === false
-        })
+          return e.onRight === false;
+        });
         var againstcomments = pagecomments.filter(function(e) {
-          return e.onRight === true
-        })
+          return e.onRight === true;
+        });
 
-        this.setState({ forcomments: forcomments })
-        this.setState({ againstcomments: againstcomments })
+        this.setState({ forcomments: forcomments });
+        this.setState({ againstcomments: againstcomments });
       })
       .catch(error => {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          console.log(error.request)
+          console.log(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message)
+          console.log("Error", error.message);
         }
-      })
+      });
   }
 
   componentDidMount() {
-    this.getComments()
+    this.getComments();
   }
 
   render() {
@@ -312,18 +312,16 @@ class PropositionPage extends React.Component {
       <div>
         <NavigationBar />
         <div className="article-list">
-          <Container className="container">
-            <div className="intro">
-              <h2 className="text-center">Proposition #</h2>
-              <h4>short title.</h4>
-            </div>
-          </Container>
           <Row>
             <Col xs="6" sm="3">
               <h3>For</h3>
               {this.state.forcomments.map(this.displayComments)}
             </Col>
             <Col xs="6" sm="6">
+              <div className="intro">
+                <h2 className="text-center">Proposition #</h2>
+                <h4>short title.</h4>
+              </div>
               <h4>Description</h4>
               <p>{this.props.location.description}</p>
               <br />
@@ -376,8 +374,8 @@ class PropositionPage extends React.Component {
           </Row>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default PropositionPage
+export default PropositionPage;
