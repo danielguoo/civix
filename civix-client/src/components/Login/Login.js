@@ -54,10 +54,11 @@ class Login extends React.Component {
       .post(url, payload)
       .then(function(response) {
         console.log("Successfully logged in with status " + response.status)
-        //store user key/ID
+        //store user key/ID/name
         //we do this in signup, but do it again just in case
         global.user_key = response.data.key
         global.user_id = response.data.user
+        global.user_name = self.state.username
         self.props.history.push("/CommunityCalendar")
       })
       .catch(function(error) {

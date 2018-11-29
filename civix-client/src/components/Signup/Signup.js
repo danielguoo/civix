@@ -60,9 +60,10 @@ class Signup extends React.Component {
           "Successfully stored registration information with status " +
             registrationresponse.status
         )
-        //store user key/ID
+        //store user key/ID/name
         global.user_key = registrationresponse.data.key
         global.user_id = registrationresponse.data.user
+        global.user_name = self.state.username
       })
       .then(function() {
         //Attempt profile creation

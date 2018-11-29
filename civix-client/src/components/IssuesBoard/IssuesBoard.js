@@ -1,15 +1,6 @@
 import React from "react"
 import classnames from "classnames"
-import {
-  Container,
-  Row,
-  Col,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane
-} from "reactstrap"
+import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap"
 
 import NavigationBar from "../NavigationBar/NavigationBar"
 
@@ -121,7 +112,7 @@ class IssuesBoard extends React.Component {
         <div className="article-list">
           <Container className="container">
             <div className="intro">
-              <h2> General Election, November 2018 </h2>
+              <h2 className="text-center">Ballot Board</h2>
             </div>
           </Container>
         </div>
@@ -129,58 +120,9 @@ class IssuesBoard extends React.Component {
           <Row>
             <Col md="12" className="col-md-12">
               <div>
-                <Nav tabs className="nav nav-tabs">
-                  <NavItem className="nav-item">
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeTab === "1"
-                      })}
-                      onClick={() => {
-                        this.toggle("1")
-                      }}
-                    >
-                      Propositions
-                    </NavLink>
-                  </NavItem>
-                  <NavItem className="nav-item">
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeTab === "2"
-                      })}
-                      onClick={() => {
-                        this.toggle("2")
-                      }}
-                    >
-                      Candidates
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-                <TabContent
-                  className="tab-content"
-                  activeTab={this.state.activeTab}
-                >
-                  <TabPane tabId="1">
-                    <ul className="thread-list">
-                      {this.state.issues.map(this.displayIssues)}
-                    </ul>
-                  </TabPane>
-                  <TabPane tabId="2">
-                    <ul className="thread-list">
-                      <li className="thread">
-                        <span className="title" style={{ float: "left" }}>
-                          John H.{" "}
-                        </span>
-                        <span className="icon">Icon </span>
-                      </li>
-                      <li className="thread">
-                        <span className="title" style={{ float: "left" }}>
-                          Sam B.{" "}
-                        </span>
-                        <span className="icon">Icon </span>
-                      </li>
-                    </ul>
-                  </TabPane>
-                </TabContent>
+                <ul className="thread-list">
+                  {this.state.issues.map(this.displayIssues)}
+                </ul>
               </div>
             </Col>
           </Row>

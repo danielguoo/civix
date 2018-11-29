@@ -35,8 +35,15 @@ class Comment extends React.Component {
   }
 
   updateComments() {
+    /*alert(
+      "updating, now with " +
+        this.state.upvotes +
+        " upvotes and " +
+        this.state.downvotes +
+        " downvotes..."
+    )*/
     //Setup
-    var url = "http://localhost:8000/posts/"
+    var url = "http://localhost:8000/posts/" + this.props.id + "/"
     var payload = {
       id: this.props.id,
       item: this.props.item,
@@ -45,6 +52,7 @@ class Comment extends React.Component {
       upvotes: this.state.upvotes,
       downvotes: this.state.downvotes
     }
+    //alert("id is " + payload.id + ", item is " + payload.item)
     //Attempt update
     axios
       .put(url, payload)
@@ -71,76 +79,36 @@ class Comment extends React.Component {
   }
 
   upvote() {
-    this.setState({ upvotes: this.state.upvotes + 1 })
-    this.updateComments()
+    this.setState({ upvotes: this.state.upvotes + 1 }, function() {
+      //alert("upvotes now " + this.state.upvotes)
+      this.updateComments()
+    })
   }
 
   downvote() {
-    this.setState({ downvotes: this.state.downvotes + 1 })
-    this.updateComments()
+    this.setState({ downvotes: this.state.downvotes + 1 }, function() {
+      //alert("downvotes now " + this.state.downvotes)
+      this.updateComments()
+    })
   }
 
   render() {
     return (
       <div className="commentContainer">
-        <h6 className="text-left">{this.props.user}</h6>
+        <h6 className="text-left">{this.props.username}</h6>
         <div className="commentText">{this.props.content}</div>
         <div className="text-right">
           <Badge
             onClick={this.upvote}
-            style={{ background: "#ff0000", marginRight: 5 }}
+            style={{ background: "#22c25c", marginRight: 5 }}
           >
             {this.state.upvotes}
           </Badge>
-          <Badge onClick={this.downvote} style={{ background: "#22c25c" }}>
+          <Badge onClick={this.downvote} style={{ background: "#ff0000" }}>
             {this.state.downvotes}
           </Badge>
         </div>
       </div>
-    )
-  }
-}
-
-class ForList extends React.Component {
-  render() {
-    return (
-      <ListGroup className="list-group">
-        <ListGroupItem className="list-group-item" style={{ marginBottom: 6 }}>
-          <p style={{ color: "#000000" }}>
-            <b>Sara Doe</b>: Supportive argument for proposition. <br />
-          </p>
-          <ButtonGroup className="btn-group" role="group">
-            <Button color="primary" className="btn, btn-primary">
-              Upvote <Badge style={{ backgroundColor: "#7fdc4f" }}>4</Badge>
-            </Button>
-            <Button color="primary" className="btn, btn-primary" type="button">
-              Downvote <Badge style={{ backgroundColor: "#ff3a45" }}>2</Badge>
-            </Button>
-          </ButtonGroup>
-        </ListGroupItem>
-      </ListGroup>
-    )
-  }
-}
-
-class AgainstList extends React.Component {
-  render() {
-    return (
-      <ListGroup className="list-group">
-        <ListGroupItem className="list-group-item" style={{ marginBottom: 6 }}>
-          <p style={{ color: "#000000" }}>
-            <b>Phillip Brill</b>: Argument against proposition. <br />
-          </p>
-          <ButtonGroup className="btn-group" role="group">
-            <Button color="primary" className="btn, btn-primary">
-              Upvote <Badge style={{ backgroundColor: "#7fdc4f" }}>4</Badge>
-            </Button>
-            <Button color="primary" className="btn, btn-primary" type="button">
-              Downvote <Badge style={{ backgroundColor: "#ff3a45" }}>2</Badge>
-            </Button>
-          </ButtonGroup>
-        </ListGroupItem>
-      </ListGroup>
     )
   }
 }
@@ -156,8 +124,10 @@ class PropositionPage extends React.Component {
     this.state = {
       forcomments: [],
       againstcomments: [],
+      commentusers: [],
       newCommentText: "",
-      newCommentOnRight: false
+      newCommentOnRight: false,
+      error: false
     }
   }
 
@@ -178,29 +148,16 @@ class PropositionPage extends React.Component {
   addNewComment() {
     var newText = this.state.newCommentText
     if (newText !== "") {
+      this.setState({ error: false })
       var newOnRight = this.state.newCommentOnRight
-      var newcomment = {
-        user: "2",
-        content: newText,
-        onRight: newOnRight,
-        upvotes: 0,
-        downvotes: 0
-      }
-      if (!newOnRight) {
-        var forarr = this.state.forcomments
-        forarr.push(newcomment)
-        this.setState({ forcomments: forarr })
-      } else {
-        var againstarr = this.state.againstcomments
-        againstarr.push(newcomment)
-        this.setState({ againstcomments: againstarr })
-      }
+      var self = this
 
       //Setup
       var url = "http://localhost:8000/posts/"
+      //alert("issueid is " + this.props.location.issueid)
       var payload = {
         item: this.props.location.issueid,
-        user: "2",
+        user: global.user_id,
         content: newText,
         onRight: newOnRight,
         upvotes: 0,
@@ -212,8 +169,27 @@ class PropositionPage extends React.Component {
         .post(url, payload)
         .then(function(response) {
           console.log(
-            "Successfully updated post with status " + response.status
+            "Successfully created new post with status " + response.status
           )
+          if (!newOnRight) {
+            var forarr = self.state.forcomments
+            forarr.push(response.data)
+            self.setState({ forcomments: forarr })
+          } else {
+            var againstarr = self.state.againstcomments
+            againstarr.push(response.data)
+            self.setState({ againstcomments: againstarr })
+          }
+          var commentusers = self.state.commentusers
+          //alert("userid: " + global.user_id + ", username: " + global.user_name)
+          var newcommentuser = {
+            id: global.user_id,
+            username: global.user_name
+          }
+          if (commentusers.indexOf(newcommentuser) === -1) {
+            commentusers.push(newcommentuser)
+          }
+          self.setState({ commentusers: commentusers })
         })
         .catch(function(error) {
           if (error.response) {
@@ -233,7 +209,7 @@ class PropositionPage extends React.Component {
           }
         })
     } else {
-      alert("Comment must be nonempty.")
+      this.setState({ error: true })
     }
   }
 
@@ -246,12 +222,22 @@ class PropositionPage extends React.Component {
     var content = comment.content
     var upvotes = comment.upvotes
     var downvotes = comment.downvotes
+    var commentusers = this.state.commentusers
+    var username = ""
+
+    commentusers.forEach(function(commentuser) {
+      if (commentuser.id === user) {
+        username = commentuser.username
+        //alert("loaded in value " + username)
+      }
+    })
 
     return (
       <Comment
         id={id}
         item={item}
         user={user}
+        username={username}
         content={content}
         upvotes={upvotes}
         downvotes={downvotes}
@@ -260,29 +246,50 @@ class PropositionPage extends React.Component {
       />
     )
   }
-
   getComments() {
     //Setup
     var url = "http://localhost:8000/posts/"
     var self = this
+    var allcomments = []
+
     axios
       .get(url)
       .then(response => {
-        var allcomments = response.data
+        allcomments = response.data
+      })
+      .then(function() {
+        var commentusers = []
+        var promises = []
+        //alert("Attempting pushing all events")
+
         //filter out only those linked to issue id
         var pagecomments = allcomments.filter(function(e) {
           return e.item === self.props.location.issueid
         })
-        //split into those for and those against
-        var forcomments = pagecomments.filter(function(e) {
-          return e.onRight === false
-        })
-        var againstcomments = pagecomments.filter(function(e) {
-          return e.onRight === true
+
+        //get all associated users as well
+        pagecomments.forEach(function(comment) {
+          var commenturl = "http://localhost:8000/users/" + comment.user + "/"
+          promises.push(axios.get(commenturl))
         })
 
-        this.setState({ forcomments: forcomments })
-        this.setState({ againstcomments: againstcomments })
+        axios.all(promises).then(function(results) {
+          results.forEach(function(response) {
+            commentusers.push(response.data)
+          })
+
+          //split into those for and those against
+          var forcomments = pagecomments.filter(function(e) {
+            return e.onRight === false
+          })
+          var againstcomments = pagecomments.filter(function(e) {
+            return e.onRight === true
+          })
+
+          self.setState({ forcomments: forcomments })
+          self.setState({ againstcomments: againstcomments })
+          self.setState({ commentusers: commentusers })
+        })
       })
       .catch(error => {
         if (error.response) {
@@ -308,14 +315,15 @@ class PropositionPage extends React.Component {
   }
 
   render() {
+    //Grab error flag
+    const error = this.state.error
     return (
       <div>
         <NavigationBar />
         <div className="article-list">
           <Container className="container">
             <div className="intro">
-              <h2 className="text-center">Proposition #</h2>
-              <h4>short title.</h4>
+              <h2 className="text-center">Proposition Page</h2>
             </div>
           </Container>
           <Row>
@@ -327,6 +335,7 @@ class PropositionPage extends React.Component {
               <h4>Description</h4>
               <p>{this.props.location.description}</p>
               <br />
+              {error && <Alert color="danger">Comment must be nonempty.</Alert>}
               <div className="shareCommentContainer">
                 <textarea
                   value={this.state.newCommentText}
