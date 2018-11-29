@@ -41,18 +41,23 @@ class Login extends React.Component {
     //Setup
     e.preventDefault()
     this.setState({ error: false })
+
+    //Attempt login
     var url = "http://localhost:8000/rest-auth/login/"
     var payload = {
       username: this.state.username,
       password: this.state.password
     }
     var self = this
-
     //Attempt login
     axios
       .post(url, payload)
       .then(function(response) {
         console.log("Successfully logged in with status " + response.status)
+        //store user key/ID
+        //we do this in signup, but do it again just in case
+        global.user_key = response.data.key
+        global.user_id = response.data.user
         self.props.history.push("/CommunityCalendar")
       })
       .catch(function(error) {
