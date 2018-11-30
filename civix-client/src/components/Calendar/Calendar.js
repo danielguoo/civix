@@ -48,72 +48,8 @@ let CalendarView = ({events, toggleEvent}) => (
 class CalendarEvent extends React.Component {
   //Constructor
   //By default, 'Learn More' modal closed
-  constructor(props) {
-    super(props);
-    //Bind function to add event to personal calendar
-    this.toggleMarkAttending = this.toggleMarkAttending.bind(this);
-  }
 
   //'Add to Personal Calendar' function
-  toggleMarkAttending(user) {
-    //1.) Grab list of events for calendar (GET)
-    //2.) Update list of events (PUT)
-    //No new event created!
-
-    //alert(global.user_id)
-
-    var url = "http://localhost:8000/calendars/" + global.user_id + "/";
-    var updatedevents = [];
-    var self = this;
-
-    //All users start out w/empty, existing calendar, so we know we can request PUT
-    axios
-      .get(url)
-      .then(function(getcalendarresponse) {
-        console.log(
-          "Attempted grab of personal calendar for user " +
-            global.user_id +
-            " with status " +
-            getcalendarresponse.status
-        );
-
-        //Update events list with relevant event id
-        updatedevents = getcalendarresponse.data.events;
-        updatedevents.push(self.props.id);
-        //alert("new set: " + updatedevents)
-      })
-      .then(function() {
-        var payload = {
-          user: global.user_id,
-          events: updatedevents
-        };
-        //alert("attempting put")
-        //Attempt update on existing calendar
-        axios.put(url, payload).then(function(updatecalendarresponse) {
-          console.log(
-            "Successfully updated existing personal calendar for " +
-              global.user_id
-          );
-        });
-      })
-      .catch(function(error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-      });
-  }
 
   render() {
     var unformatteddate = new Date(this.props.date.toString());
@@ -142,9 +78,9 @@ class CalendarEvent extends React.Component {
             className="btn btn-primary"
             type="button"
             style={{ backgroundColor: "#f83842", border: "none" }}
-            onClick={this.toggleMarkAttending}
+            onClick={()=> this.props.toggleMarkAttending(!this.props.currentlyAttending, this.props.id)}
           >
-            Mark Attending
+            {this.props.currentlyAttending ? 'Attending': ' Not Attending'}
           </Button>
         </ButtonGroup>
       </ListGroupItem>
@@ -158,13 +94,84 @@ class Calendar extends React.Component {
     super(props);
     this.displayEvents = this.displayEvents.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.changeEventView = this.changeEventView.bind(this)
     this.toggleEventDetails = this.toggleEventDetails.bind(this);
+    this.toggleMarkAttending = this.toggleMarkAttending.bind(this);
     this.state = {
       events: [],
       CalendarView:true,
       modal: false,
-      currentEvent: null
+      currentEvent: null,
+      myEvents: [],
+      myEventView: true
     };
+  }
+
+  toggleMarkAttending(add, event_id) {
+    //1.) Grab list of events for calendar (GET)
+    //2.) Update list of events (PUT)
+    //No new event created!
+
+    //alert(global.user_id)
+
+    var url = "http://localhost:8000/calendars/" + localStorage.getItem('user_id') + "/";
+    var updatedevents = [];
+    var self = this;
+
+    //All users start out w/empty, existing calendar, so we know we can request PUT
+    axios
+      .get(url)
+      .then(function(getcalendarresponse) {
+        console.log(
+          "Attempted grab of personal calendar for user " +
+          localStorage.getItem('user_id') +
+            " with status " +
+            getcalendarresponse.status
+        );
+
+        //Update events list with relevant event id
+        updatedevents = getcalendarresponse.data.events;
+        console.log(updatedevents, event_id, add)
+        if (add) {
+          updatedevents.push(event_id);
+        } else {
+          updatedevents.pop(event_id);
+        }
+        console.log(updatedevents)
+        //alert("new set: " + updatedevents)
+      })
+      .then(function() {
+        var payload = {
+          user: localStorage.getItem('user_id'),
+          events: updatedevents
+        };
+        //alert("attempting put")
+        //Attempt update on existing calendar
+        axios.put(url, payload).then(function(updatecalendarresponse) {
+          console.log(
+            "Successfully updated existing personal calendar for " +
+            localStorage.getItem('user_id')
+          );
+          self.getMyEvents()
+        });
+      })
+      .catch(function(error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+      });
   }
 
   toggleEventDetails(event) {
@@ -202,7 +209,9 @@ class Calendar extends React.Component {
         fullDescription={fullDescription}
         key={i}
         index={i}
+        currentlyAttending={this.state.myEvents.includes(id)}
         toggleEvent={this.toggleEventDetails}
+        toggleMarkAttending={this.toggleMarkAttending}
       />
     );
   }
@@ -210,6 +219,12 @@ class Calendar extends React.Component {
   changeView(view) {
     this.setState(() => ({
       CalendarView: view === 'calendar'
+    }));
+  }
+
+  changeEventView(view) {
+    this.setState(() => ({
+      myEventView: view === 'myEvents'
     }));
   }
 
@@ -240,9 +255,38 @@ class Calendar extends React.Component {
         }
       });
   }
+  getMyEvents() {
+    //Setup
+    var url = "http://localhost:8000/calendars/" + localStorage.getItem('user_id');
+    axios
+      .get(url)
+      .then(response => {
+        console.log(response)
+        const myEvents = response.data.events;
+        this.setState({ myEvents });
+      })
+      .catch(error => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+      });
+  }
 
   componentDidMount() {
     this.getEvents();
+    this.getMyEvents()
   }
 
   render() {
@@ -256,8 +300,9 @@ class Calendar extends React.Component {
           <Container className="container">
             <div className="intro">
             <div className="firstLine" >
+              <div className="eventToggle">Show: <h5 className={this.state.myEventView ? "selected": null }onClick={() => this.changeEventView('myEvents')}>My Events </h5> | <h5 className={this.state.myEventView ? null: "selected"} onClick={this.changeEventView}>All Events</h5> </div>
               <h2>Community Calendar</h2>
-              <div className="calendarToggle"><h3 onClick={() => this.changeView('calendar')}>Calendar </h3> | <h3 onClick={() => this.changeView('list')}>List</h3> </div>
+              <div className="calendarToggle"><h3  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar </h3> | <h3 className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>List</h3> </div>
               </div>
               <p className="text-center">
                 Upcoming political events near address: ...
@@ -265,14 +310,13 @@ class Calendar extends React.Component {
             </div>
           </Container>
         </div>
-    {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} toggleEvent={this.toggleEventDetails} ></EventModal> }
+    {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} markAttending={this.toggleMarkAttending} toggleEvent={this.toggleEventDetails} currentlyAttending={this.state.myEvents.includes(this.state.currentEvent.id)} ></EventModal> }
         {this.state.CalendarView ? <div className="CalendarChoice">
-          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.events}/>
+          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)) : this.state.events}/>
         </div> : 
         <ListGroup className="list-group" style={{ margin: 44 }}>
-          {this.state.events
-            .sort((a, b) => a.date - b.date)
-            .map(this.displayEvents)}
+          {this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : 
+          this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents)}
         </ListGroup> }
       </div>
     }
@@ -281,7 +325,8 @@ class Calendar extends React.Component {
   }
 }
 
-const EventModal = ({event,open, toggleEvent}) => {
+const EventModal = ({event,open, toggleEvent, markAttending, currentlyAttending}) => {
+  console.log(event, currentlyAttending)
   var unformatteddate = new Date(event.date.toString());
     var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY");
     var cleantime = moment(unformatteddate).format("h:mm A");
@@ -304,9 +349,11 @@ const EventModal = ({event,open, toggleEvent}) => {
 </ModalHeader>
 <ModalBody>{event.fullDescription}</ModalBody>
 <ModalFooter>
-<Button onClick={(event)=>toggleEvent(event)}color="primary">
-    Attending
-  </Button>
+  {currentlyAttending ? <Button onClick={()=>markAttending(false, event.id)}color="primary"> Attending
+</Button>: <Button onClick={()=>markAttending(true, event.id)}color="primary"> Not Attending
+</Button>}
+  
+
   <Button onClick={(event)=>toggleEvent(event)}color="primary">
     Close
   </Button>

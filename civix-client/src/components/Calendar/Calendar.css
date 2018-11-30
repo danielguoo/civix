@@ -3,10 +3,16 @@
   margin-bottom: 40px;
 }
 
+.selected {
+  color: blue;
+  text-decoration: underline;
+}
+
 .firstLine {
   position: relative;
   padding: 0;
-  margin: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -17,6 +23,15 @@
   position: absolute;
   font-family: Garamond;
   text-align: center;
+}
+
+.eventToggle {
+  position: absolute;
+  left: 0;
+  float: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
 }
 .calendarToggle{
   padding: 5px; 

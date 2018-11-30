@@ -60,7 +60,7 @@ class Login extends React.Component {
         console.log(response.data)
         localStorage.setItem('user_key', response.data.key)
         localStorage.setItem('user_id', response.data.user)
-        localStorage.setItem('user_name', response.data.username)
+        localStorage.setItem('user_name', self.state.username)
         global.user_key = response.data.key
         global.user_id = response.data.user
         global.user_name = self.state.username
