@@ -22,10 +22,7 @@ class NavigationBar extends React.Component {
           <Link className="NavButton" to="/calendar">
              <IoIosCalendar/> Calendar 
           </Link>
-          <Link className="NavButton" to="/personalcalendar">
-             <IoIosCalendar/> Personal Calendar
-          </Link>
-          <Link className="NavButton" to="/issuesboard">
+          <Link className="NavButton" to="/issues">
             <IoMdChatboxes/> Issues 
           </Link>
           <Link className="NavButton" to="/contact">

@@ -26,7 +26,7 @@ class Routes extends Component {
           <Route path="/calendar" component={Calendar} />
           <Route path="/personalcalendar" component={PersonalCalendar} />
           <Route path="/issues" component={Issues} />
-          <Route path="/issue/" component={Issue} />
+          <Route path="/issue/:id" component={Issue} />
           <Route path="/contact" component={Contact} />
           <Route path="/account" component={Account} />
           <Route path="/" component={Login} />

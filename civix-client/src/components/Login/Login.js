@@ -59,7 +59,7 @@ class Login extends React.Component {
         global.user_key = response.data.key
         global.user_id = response.data.user
         global.user_name = self.state.username
-        self.props.history.push("/CommunityCalendar")
+        self.props.history.push("/Calendar")
       })
       .catch(function(error) {
         if (error.response) {
