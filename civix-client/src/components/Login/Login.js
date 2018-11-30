@@ -24,15 +24,15 @@ const Logo = posed.img({
 
 class Login extends React.Component {
   //Constructor
-  constructor() {
+  constructor(props) {
     super()
     this.state = {
       username: "",
       password: "",
       error: false
     }
-
     //Bind submit function
+    this.assignUser = props.assignUser
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
@@ -49,6 +49,7 @@ class Login extends React.Component {
       password: this.state.password
     }
     var self = this
+    console.log(self.props)
     //Attempt login
     axios
       .post(url, payload)
@@ -56,6 +57,7 @@ class Login extends React.Component {
         console.log("Successfully logged in with status " + response.status)
         //store user key/ID/name
         //we do this in signup, but do it again just in case
+        self.props.assignUser(response.data.user)
         global.user_key = response.data.key
         global.user_id = response.data.user
         global.user_name = self.state.username
@@ -84,9 +86,9 @@ class Login extends React.Component {
   render() {
     //Grab error flag
     const { error } = this.state
-
+    console.log(this)
     return (
-      <div className="login-clean">
+      <div log={console.log(this.props)} className="login-clean">
         <Form className="form" error={error} onSubmit={this.onFormSubmit}>
           <div className="illustration">
             <Logo src={civixlogo} style={{ width: 200, height: 200 }} />
