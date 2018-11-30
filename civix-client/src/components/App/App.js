@@ -27,7 +27,6 @@ class App extends Component {
     this.setState((state) => ({
       user: account
     }));
-    console.log(this.state)
   }
 
   render() {

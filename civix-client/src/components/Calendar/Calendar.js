@@ -43,34 +43,24 @@ let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 // var state = event.state;
 // var zipcode = event.zipcode;
 
-let CalendarView = ({events}) => (
+let CalendarView = ({events, toggleEvent}) => (
   <BigCalendar titleAccessor={event=> event.title} 
+    onSelectEvent={(event)=> toggleEvent(event)}
    views={['month']}
     startAccessor={(event) => { return moment(event.date) }}
     endAccessor={(event) => { return moment(event.date) }}
-    events={events} views={allViews} step={60} localizer={localizer} />
+    events={events} step={60} localizer={localizer} />
 );
+
+
 
 class CalendarEvent extends React.Component {
   //Constructor
   //By default, 'Learn More' modal closed
   constructor(props) {
     super(props);
-    this.state = {
-      modal: false
-    };
-
-    //Bind 'Learn More' toggle function
-    this.toggleLearnMore = this.toggleLearnMore.bind(this);
     //Bind function to add event to personal calendar
     this.toggleMarkAttending = this.toggleMarkAttending.bind(this);
-  }
-
-  //'Learn More' toggle function
-  toggleLearnMore() {
-    this.setState({
-      modal: !this.state.modal
-    });
   }
 
   //'Add to Personal Calendar' function
@@ -152,31 +142,10 @@ class CalendarEvent extends React.Component {
               backgroundColor: "#27a0f8",
               border: "none"
             }}
-            onClick={this.toggleLearnMore}
+            onClick={(event) => this.props.toggleEvent(this.props.event)}
           >
             Learn More...
-            <Modal isOpen={this.state.modal} toggle={this.toggle}>
-              <ModalHeader className="modal-title, text-center">
-                <h3>{this.props.title}</h3>
-                <h5 className="text-muted">{cleandate}</h5>
-                <h5 className="text-muted">{cleantime}</h5>
-                <h5 className="text-muted">
-                  {this.props.streetAddress}
-                  {", "}
-                  {this.props.city}
-                  {", "}
-                  {this.props.state}
-                  {", "}
-                  {this.props.zipcode}
-                </h5>
-              </ModalHeader>
-              <ModalBody>{this.props.fullDescription}</ModalBody>
-              <ModalFooter>
-                <Button color="primary" onClick={this.toggleLearnMore}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </Modal>
+            
           </Button>
           <Button
             className="btn btn-primary"
@@ -197,11 +166,23 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.displayEvents = this.displayEvents.bind(this);
+    this.changeView = this.changeView.bind(this);
+    this.toggleEventDetails = this.toggleEventDetails.bind(this);
     this.state = {
-      events: []
+      events: [],
+      CalendarView:true,
+      modal: false,
+      currentEvent: null
     };
   }
 
+  toggleEventDetails(event) {
+    this.setState({
+      currentEvent: event,
+      modal: !this.state.modal
+    });
+    console.log(this.state)
+  }
   //Event display function
   //Takes the fields per event and index
   displayEvents(event, i) {
@@ -218,6 +199,7 @@ class Calendar extends React.Component {
 
     return (
       <CalendarEvent
+        event={event}
         id={id}
         title={title}
         date={date}
@@ -229,8 +211,15 @@ class Calendar extends React.Component {
         fullDescription={fullDescription}
         key={i}
         index={i}
+        toggleEvent={this.toggleEventDetails}
       />
     );
+  }
+
+  changeView(view) {
+    this.setState(() => ({
+      CalendarView: view === 'calendar'
+    }));
   }
 
   getEvents() {
@@ -268,28 +257,60 @@ class Calendar extends React.Component {
   render() {
     return (
       <div>
-        <div className="article-list">
+        <div>
           <NavigationBar />
           <Container className="container">
             <div className="intro">
-              <h2 className="text-center">Community Calendar</h2>
+            <div className="firstLine" >
+              <h2>Community Calendar</h2>
+              <div className="calendarToggle"><h3 onClick={() => this.changeView('calendar')}>Calendar </h3> | <h3 onClick={() => this.changeView('list')}>List</h3> </div>
+              </div>
               <p className="text-center">
                 Upcoming political events near address: ...
               </p>
             </div>
           </Container>
         </div>
-        <div className="CalendarChoice">
-          <CalendarView events={this.state.events}/>
-        </div>
+    {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} toggleEvent={this.toggleEventDetails} ></EventModal> }
+        {this.state.CalendarView ? <div className="CalendarChoice">
+          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.events}/>
+        </div> : 
         <ListGroup className="list-group" style={{ margin: 44 }}>
           {this.state.events
             .sort((a, b) => a.date - b.date)
             .map(this.displayEvents)}
-        </ListGroup>
+        </ListGroup> }
       </div>
     );
   }
+}
+
+const EventModal = ({event,open, toggleEvent}) => {
+  return (
+   <Modal isOpen={open} > 
+     {/* toggle={this.toggle} */}
+<ModalHeader className="modal-title, text-center">
+  <h3>{event.title}</h3>
+  {/* <h5 className="text-muted">{cleandate}</h5>
+  <h5 className="text-muted">{cleantime}</h5> */}
+  <h5 className="text-muted">
+    {event.streetAddress}
+    {", "}
+    {event.city}
+    {", "}
+    {event.state}
+    {", "}
+    {event.zipcode}
+  </h5>
+</ModalHeader>
+<ModalBody>{event.fullDescription}</ModalBody>
+<ModalFooter>
+  <Button onClick={(event)=>toggleEvent(event)}color="primary">
+    Close
+  </Button>
+</ModalFooter>
+</Modal>
+  )
 }
 
 export default Calendar;

@@ -1,5 +1,34 @@
 .CalendarChoice {
   height: 500px;
+  margin-bottom: 40px;
+}
+
+.firstLine {
+  position: relative;
+  padding: 0;
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.firstLine h2 {
+  position: absolute;
+  font-family: Garamond;
+  text-align: center;
+}
+.calendarToggle{
+  padding: 5px; 
+  position: absolute;
+  right: 0;
+  border: solid black .5px;
+  cursor: pointer;
+  float:right;
+}
+
+.calendarToggle h3 {
+  display: inline;
 }
 .article-list {
   color: #313437;
