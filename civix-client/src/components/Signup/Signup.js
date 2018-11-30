@@ -9,6 +9,8 @@ import {
   Alert
 } from "reactstrap"
 
+import axios from "axios"
+
 import "./Signup.css"
 
 import { Link } from "react-router-dom"
