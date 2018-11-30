@@ -140,7 +140,7 @@ class Issue extends React.Component {
     }
   }
 
-  addNewComment() {
+  addNewComment(user) {
     var newText = this.state.newCommentText;
     if (newText !== "") {
       this.setState({ error: false })
@@ -151,8 +151,8 @@ class Issue extends React.Component {
       var url = "http://localhost:8000/posts/"
       //alert("issueid is " + this.props.location.issueid)
       var payload = {
-        item: this.props.location.pathname.substring(-1),
-        user: global.user_id,
+        item: parseInt(this.props.location.pathname.substr(-1)),
+        user: parseInt(localStorage.getItem('user_id')),
         content: newText,
         onRight: newOnRight,
         upvotes: 0,

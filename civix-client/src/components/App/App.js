@@ -13,6 +13,7 @@ import Issues from "../Issues/Issues";
 import Issue from "../Issue/Issue";
 import Contact from "../Contact/Contact";
 import Account from "../Account/Account";
+import UserContext from '../context.js'
 
 //Routes
 //Default to login
@@ -27,6 +28,7 @@ class App extends Component {
     this.setState((state) => ({
       user: account
     }));
+    console.log(this.state)
   }
 
   render() {
@@ -34,8 +36,9 @@ class App extends Component {
 
     return (
       <div className="app-routes">
+      <UserContext.Provider value= {this.state.user}>
         <Switch>
-          <Route log={console.log(this)} path="/login" render={() => <Login assignUser={assignUser} ohoho="abc" />} />
+          <Route log={console.log(this)} path="/login" render={() => <Login assignUser={assignUser} />} />
           <Route path="/signup" component={Signup} />
           <Route path="/calendar" component={Calendar} />
           <Route path="/personalcalendar" component={PersonalCalendar} />
@@ -45,6 +48,7 @@ class App extends Component {
           <Route path="/account" component={Account} />
           <Route path="/" component={Login} />
         </Switch>
+        </UserContext.Provider>
       </div>
     );
   }

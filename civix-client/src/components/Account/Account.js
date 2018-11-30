@@ -2,9 +2,13 @@ import React from "react"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 
-const Account = () => (
+
+const Account = ({user}) => (
   <div>
-    <Typography variant="h6" align="left" style={{ marginLeft: 30 }}>
+  {localStorage.getItem('user_key')}> <br></br>
+  {localStorage.getItem('user_id')}
+  {localStorage.getItem('user_name')}
+    {/* <Typography variant="h6" align="left" style={{ marginLeft: 30 }}>
       <b>Username:</b> Joe Schmoe
     </Typography>
     <Typography variant="h6" align="left" style={{ marginLeft: 30 }}>
@@ -22,7 +26,7 @@ const Account = () => (
       style={{ marginLeft: 30, marginBottom: 15 }}
     >
       <b>Political Affiliation:</b> Independent
-    </Typography>
+    </Typography> */}
 
     <Button
       variant="contained"

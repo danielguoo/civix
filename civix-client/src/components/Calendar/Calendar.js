@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import NavigationBar from "../NavigationBar/NavigationBar";
+import UserContext from '../context.js'
 
 const localizer = BigCalendar.momentLocalizer(moment);
 //An individual calendar event
@@ -31,17 +32,7 @@ const localizer = BigCalendar.momentLocalizer(moment);
 //-'Learn More' button
 //-'Mark Attending' button
 
-let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
-// var id = event.id;
-// var title = event.title;
-// var date = event.date;
-// var briefDescription = event.briefDescription;
-// var fullDescription = event.fullDescription;
-// var streetAddress = event.streetAddress;
-// var city = event.city;
-// var state = event.state;
-// var zipcode = event.zipcode;
 
 let CalendarView = ({events, toggleEvent}) => (
   <BigCalendar titleAccessor={event=> event.title} 
@@ -64,7 +55,7 @@ class CalendarEvent extends React.Component {
   }
 
   //'Add to Personal Calendar' function
-  toggleMarkAttending() {
+  toggleMarkAttending(user) {
     //1.) Grab list of events for calendar (GET)
     //2.) Update list of events (PUT)
     //No new event created!
@@ -256,6 +247,9 @@ class Calendar extends React.Component {
 
   render() {
     return (
+      <UserContext.Consumer>
+    {user=>
+  
       <div>
         <div>
           <NavigationBar />
@@ -281,18 +275,23 @@ class Calendar extends React.Component {
             .map(this.displayEvents)}
         </ListGroup> }
       </div>
+    }
+      </UserContext.Consumer>
     );
   }
 }
 
 const EventModal = ({event,open, toggleEvent}) => {
+  var unformatteddate = new Date(event.date.toString());
+    var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY");
+    var cleantime = moment(unformatteddate).format("h:mm A");
   return (
    <Modal isOpen={open} > 
      {/* toggle={this.toggle} */}
 <ModalHeader className="modal-title, text-center">
   <h3>{event.title}</h3>
-  {/* <h5 className="text-muted">{cleandate}</h5>
-  <h5 className="text-muted">{cleantime}</h5> */}
+  <h5 className="text-muted">{cleandate}</h5>
+  <h5 className="text-muted">{cleantime}</h5>
   <h5 className="text-muted">
     {event.streetAddress}
     {", "}
@@ -305,11 +304,15 @@ const EventModal = ({event,open, toggleEvent}) => {
 </ModalHeader>
 <ModalBody>{event.fullDescription}</ModalBody>
 <ModalFooter>
+<Button onClick={(event)=>toggleEvent(event)}color="primary">
+    Attending
+  </Button>
   <Button onClick={(event)=>toggleEvent(event)}color="primary">
     Close
   </Button>
 </ModalFooter>
 </Modal>
+
   )
 }
 

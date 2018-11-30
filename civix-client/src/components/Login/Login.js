@@ -57,7 +57,10 @@ class Login extends React.Component {
         console.log("Successfully logged in with status " + response.status)
         //store user key/ID/name
         //we do this in signup, but do it again just in case
-        self.props.assignUser(response.data.user)
+        console.log(response.data)
+        localStorage.setItem('user_key', response.data.key)
+        localStorage.setItem('user_id', response.data.user)
+        localStorage.setItem('user_name', response.data.username)
         global.user_key = response.data.key
         global.user_id = response.data.user
         global.user_name = self.state.username
