@@ -10,8 +10,7 @@ import civixlogo from "./civixlogo.png"
 import posed from "react-pose"
 
 import axios from "axios"
-
-//Animation setup for logo
+//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
 const Logo = posed.img({
   hoverable: true,
   init: {
@@ -22,7 +21,7 @@ const Logo = posed.img({
   }
 })
 
-class Login extends React.Component {
+class Forgot extends React.Component {
   //Constructor
   constructor() {
     super()
@@ -43,23 +42,18 @@ class Login extends React.Component {
     this.setState({ error: false })
 
     //Attempt login
-    var url = "http://localhost:8000/rest-auth/login/"
+    var url = "http://localhost:8000/rest-auth/password/reset/ "
     var payload = {
-      username: this.state.username,
-      password: this.state.password
+      email: this.state.username,
     }
     var self = this
     //Attempt login
     axios
       .post(url, payload)
       .then(function(response) {
-        console.log("Successfully logged in with status " + response.status)
+        console.log(response)
         //store user key/ID/name
         //we do this in signup, but do it again just in case
-        global.user_key = response.data.key
-        global.user_id = response.data.user
-        global.user_name = self.state.username
-        self.props.history.push("/CommunityCalendar")
       })
       .catch(function(error) {
         if (error.response) {
@@ -93,7 +87,7 @@ class Login extends React.Component {
           </div>
           {error && (
             <Alert error={error} color="danger">
-              Username/password combination is incorrect or does not exist.
+              Username does not exist.
             </Alert>
           )}
           <FormGroup className="form-group">
@@ -107,31 +101,21 @@ class Login extends React.Component {
               onChange={e => this.setState({ username: e.target.value })}
             />
           </FormGroup>
-          <FormGroup className="form-group">
-            <Input
-              className="form-control"
-              type="password"
-              name="password"
-              required
-              placeholder="Password"
-              value={this.state.password}
-              onChange={e => this.setState({ password: e.target.value })}
-            />
-          </FormGroup>
+
           <FormGroup className="form-group">
             <Button
               style={{ background: "#d900ff", marginLeft: "auto" }}
               className="btn btn-primary btn-block"
               type="submit"
             >
-              Log In
+              Request Password Email
             </Button>
           </FormGroup>
           <Link to="/signup" style={{ color: "#515a63" }} className="forgot">
             Not registered yet? Register here.
           </Link>
-          <Link to="/forgot" style={{ color: "#515a63" }} className="forgot">
-            Forgot Password ?
+          <Link to="/login" style={{ color: "#515a63" }} className="forgot">
+            Login
           </Link>
         </Form>
       </div>
@@ -139,4 +123,4 @@ class Login extends React.Component {
   }
 }
 
-export default withRouter(Login)
+export default withRouter(Forgot)

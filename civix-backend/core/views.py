@@ -2,7 +2,15 @@ from rest_framework import generics
 from django.contrib.auth.models import User
 from core.models import Profile, Event, Calendar, Item, Post
 from core.serializers import UserSerializer, ProfileSerializer, EventSerializer, CalendarSerializer, ItemSerializer, PostSerializer
-
+from django.core.mail import send_mail
+from django.conf import settings
+def email(request,user,password):
+    subject = 'Forgot your password? Here it is'
+    message = ' Dear user  ' + user + 'her is your password:  ' +  password
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [user]
+    send_mail( subject, message, email_from, recipient_list )
+    # return redirect('redirect to a new page')
 class UserList(generics.ListAPIView):
     """
     get:
