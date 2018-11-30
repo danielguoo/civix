@@ -1,7 +1,5 @@
 import React from "react"
 import {
-  ListGroup,
-  ListGroupItem,
   Card,
   CardImg,
   CardText,
