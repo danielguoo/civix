@@ -13,14 +13,12 @@ import "./Signup.css"
 
 import { Link } from "react-router-dom"
 
-import axios from "axios"
-
 class Signup extends React.Component {
   //Constructor
   constructor() {
     super()
     this.state = {
-      user: "",
+      username: "",
       password: "",
       email: "",
       dob: "",
@@ -41,63 +39,30 @@ class Signup extends React.Component {
     //Setup
     e.preventDefault()
 
-    var registrationurl = "http://localhost:8000/rest-auth/registration/"
-    var registrationpayload = {
+    var url = "http://localhost:8000/rest-auth/registration/"
+    var fulladdress = this.state.address.split(", ")
+    var payload = {
       username: this.state.username,
-      password1: this.state.password,
-      password2: this.state.password,
-      email: this.state.email
+      password: this.state.password,
+      email: this.state.email,
+      dob: this.state.dob,
+      streetaddress: this.state.fulladdress[0],
+      city: this.state.fulladdress[1],
+      state: this.state.fulladdress[2],
+      zipcode: this.state.fulladdress[3],
+      poliID: this.state.poliID
     }
-
     var self = this
 
-    //Attempt registration
+    //Attempt login
     axios
-      .post(registrationurl, registrationpayload)
-      .then(function(registrationresponse) {
+      .post(url, payload)
+      .then(function(response) {
         self.setState({ success: true })
         console.log(
           "Successfully stored registration information with status " +
-            registrationresponse.status
+            response.status
         )
-        //store user key/ID/name
-        global.user_key = registrationresponse.data.key
-        global.user_id = registrationresponse.data.user
-        global.user_name = self.state.username
-      })
-      .then(function() {
-        //Attempt profile creation
-        var profileurl = "http://localhost:8000/profiles/"
-        var fulladdress = self.state.address.split(", ")
-        var profilepayload = {
-          user: global.user_id,
-          dob: self.state.dob,
-          poliID: self.state.poliID,
-          streetAddress: fulladdress[0],
-          city: fulladdress[1],
-          zipcode: fulladdress[3],
-          state: fulladdress[2]
-        }
-        //Attempt concurrent profile creation
-        axios.post(profileurl, profilepayload).then(function(profileresponse) {
-          console.log("Successfully created profile for user " + global.user_id)
-        })
-
-        //Attempt concurrent calendar creation
-        var calendarurl = "http://localhost:8000/calendars/"
-        var calendarpayload = {
-          user: global.user_id,
-          events: []
-        }
-
-        axios
-          .post(calendarurl, calendarpayload)
-          .then(function(calendarresponse) {
-            console.log(
-              "Successfully created personal calendar for user " +
-                global.user_id
-            )
-          })
       })
       .catch(function(error) {
         if (error.response) {
@@ -136,7 +101,11 @@ class Signup extends React.Component {
         <Form className="form">
           <h1 className="text-center">Register</h1>
           <div className="illustration" />
-          {success && <Alert color="success">Registration successful.</Alert>}
+          {success && (
+            <Alert error={error} color="danger">
+              Registration successful.
+            </Alert>
+          )}
           {error && (
             <Alert error={error} color="danger">
               Registration not successful. Try again.
@@ -242,7 +211,6 @@ class Signup extends React.Component {
               className="btn btn-primary btn-block"
               type="submit"
               style={{ backgroundColor: "#d900ff", marginLeft: "auto" }}
-              onClick={this.onFormSubmit}
             >
               Sign Up
             </Button>
