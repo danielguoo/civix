@@ -14,18 +14,18 @@ import {
 import "./Contact.css"
 
 import axios from "axios"
-
+import { IoMdCall, IoIosMail } from "react-icons/io"
 import NavigationBar from "../NavigationBar/NavigationBar"
 
 class ContactCard extends React.Component {
   render() {
     return (
       <div>
-        <Card style={{ minWidth: 318 }}>
+        <Card style={{ width: 260 }}>
           <CardImg
             top
-            width="100%"
-            height="350vw"
+            width="80%"
+            height="270vw"
             src={this.props.photolink}
             alt="Card image cap"
           />
@@ -37,19 +37,19 @@ class ContactCard extends React.Component {
             <ButtonGroup className="btn-group" role="group">
               <Button
                 className="btn, btn-primary"
-                style={{ backgroundColor: "#ff0000", border: "none" }}
+                style={{ backgroundColor: "rgb(39, 160, 248)", border: "none" }}
               >
                 <a href={this.props.phonelink} style={{ color: "#ffffff" }}>
-                  Call
+                  <IoMdCall/> Call
                 </a>
               </Button>
               <Button
                 className="btn, btn-primary"
                 type="button"
-                style={{ backgroundColor: "#00ff00", border: "none" }}
+                style={{ backgroundColor: "#E85a4f", border: "none" }}
               >
                 <a href={this.props.emaillink} style={{ color: "#ffffff" }}>
-                  Email
+                  <IoIosMail/> Email
                 </a>
               </Button>
             </ButtonGroup>

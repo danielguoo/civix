@@ -62,14 +62,15 @@ class NavigationBar extends React.Component {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <ButtonDropdown
+              direction="left"
                 isOpen={this.state.dropdownOpen}
                 toggle={this.toggle}
               >
-                <DropdownToggle caret>{localStorage.getItem("user_name")}</DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem header><Link
+                <DropdownToggle caret size="sm" color="info" >{localStorage.getItem("user_name")}</DropdownToggle>
+                <DropdownMenu className="dropdown">
+                  <DropdownItem><Link
                 to="/account"
-                style={{ color: "#000000", fontWeight: "bold" }}
+                style={{ color: "#000000" }}
               >
               Account
               </Link></DropdownItem>

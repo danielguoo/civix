@@ -14,3 +14,11 @@
 .Navbar a:hover {
   text-decoration: none;
 }
+
+.ml-auto DropdownToggle {
+  color: black;
+}
+
+.dropdown DropdownItem {
+  width: 10px;
+}

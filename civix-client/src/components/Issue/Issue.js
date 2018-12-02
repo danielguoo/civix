@@ -201,6 +201,7 @@ class Issue extends React.Component {
     } else {
       this.setState({ error: true });
     }
+    this.setState({newCommentText: ""})
   }
 
   //Comment display function
@@ -315,7 +316,7 @@ class Issue extends React.Component {
             </Col>
             <Col xs="6" sm="4">
               <div className="intro">
-                <h2 className="text-center">{this.props.location.title}</h2>
+                <h4 className="text-center">{this.props.location.title}</h4>
               </div>
               <h4>Description:</h4>
               <p>{this.props.location.description}</p>

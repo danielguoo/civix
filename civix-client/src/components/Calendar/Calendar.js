@@ -103,7 +103,9 @@ class Calendar extends React.Component {
       modal: false,
       currentEvent: null,
       myEvents: [],
-      myEventView: true
+      myEventView: true,
+      profile:{},
+      eventsFilter: 'USA'
     };
   }
 
@@ -228,43 +230,23 @@ class Calendar extends React.Component {
     }));
   }
 
+
   getEvents() {
     //Setup
-    var url = "http://localhost:8000/events/";
-    axios
-      .get(url)
-      .then(response => {
-        const events = response.data;
-        this.setState({ events });
-      })
-      .catch(error => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-      });
-  }
-  getMyEvents() {
-    //Setup
-    var url = "http://localhost:8000/calendars/" + localStorage.getItem('user_id');
-    axios
-      .get(url)
-      .then(response => {
-        console.log(response)
+    const eventsurl = "http://localhost:8000/events/";
+    const url = "http://localhost:8000/calendars/" + localStorage.getItem('user_id');
+    const profilesurl = "http://localhost:8000/profiles/" + localStorage.getItem('user_id')
+    axios.all([
+      axios.get(eventsurl),
+      axios.get(profilesurl),
+      axios.get(url)
+    ])
+      .then(axios.spread((eventsresponse, profilessresponse,response) => {
+        const events = eventsresponse.data;
         const myEvents = response.data.events;
-        this.setState({ myEvents });
-      })
+        const profile = profilessresponse.data;
+        this.setState({ events, myEvents, profile });
+      }))
       .catch(error => {
         if (error.response) {
           // The request was made and the server responded with a status code
@@ -286,7 +268,6 @@ class Calendar extends React.Component {
 
   componentDidMount() {
     this.getEvents();
-    this.getMyEvents()
   }
 
   render() {
@@ -303,8 +284,8 @@ class Calendar extends React.Component {
               <div><h4>Political Calendar</h4></div>
               <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>Agenda</span> </h5> </div>
             </div>
-              <p className="text-center">
-                Upcoming political events near address: ...
+              <p log={console.log(this.state.profile)} className="text-center">
+                Upcoming political events in: <span className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
               </p>
             </div>
         </div>
@@ -335,13 +316,13 @@ const EventModal = ({event,open, toggleEvent, markAttending, currentlyAttending}
   <h5 className="text-muted">{cleandate}</h5>
   <h5 className="text-muted">{cleantime}</h5>
   <h5 className="text-muted">
-    {event.streetAddress}
-    {", "}
-    {event.city}
-    {", "}
-    {event.state}
-    {", "}
-    {event.zipcode}
+    {event.streetAddress
+    + ", " + 
+    event.city +
+    ", " +
+    event.state + 
+    ", " + 
+    event.zipcode}
   </h5>
 </ModalHeader>
 <ModalBody>{event.fullDescription}</ModalBody>

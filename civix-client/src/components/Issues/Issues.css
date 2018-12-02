@@ -7,12 +7,10 @@
   color: #7d8285;
 }
 
-.article-list h2 {
-  font-weight: bold;
+.article-list h2 { 
   margin-bottom: 40px;
   padding-top: 40px;
   color: inherit;
-  font-family: Garamond;
 }
 
 @media (max-width: 767px) {
@@ -44,7 +42,6 @@
 }
 
 .article-list .item .name {
-  font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
   color: inherit;
