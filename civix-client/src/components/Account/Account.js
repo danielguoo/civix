@@ -78,9 +78,9 @@ class Account extends React.Component {
           <b>Username:</b> {localStorage.getItem("user_name")}
         </Typography>
         <Typography variant="h6" align="left" style={{ marginLeft: 30 }}>
-          <b>Address:</b> {this.state.userInfo.streetAddress} + ", " +{" "}
-          {this.state.userInfo.city} + ", " {this.state.userInfo.state} + ", " +{" "}
-          {this.state.userInfo.zipcode}
+          <b>Address:</b> {this.state.userInfo.streetAddress + ", " +
+          this.state.userInfo.city + ", " + this.state.userInfo.state + ", " +
+          this.state.userInfo.zipcode}
         </Typography>
         <Typography variant="h6" align="left" style={{ marginLeft: 30 }}>
           <b>Date of Birth:</b> {this.state.userInfo.dob}
