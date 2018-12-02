@@ -1,14 +1,16 @@
 import React from "react"
 import { Button, Form, FormGroup, Input, Alert } from "reactstrap"
-
 import "./Login.css"
+import civixlogo from "./civixlogo.png"
 
+//Routing components
 import { Link } from "react-router-dom"
 import { withRouter } from "react-router-dom"
 
-import civixlogo from "./civixlogo.png"
+//Animation components
 import posed from "react-pose"
 
+//axios for HTTP requests
 import axios from "axios"
 
 //Animation setup for logo
@@ -22,8 +24,11 @@ const Logo = posed.img({
   }
 })
 
+/**
+ * Represents the login page.
+ * @param {Object} props - React props
+ */
 class Login extends React.Component {
-  //Constructor
   constructor(props) {
     super()
     this.state = {
@@ -31,39 +36,38 @@ class Login extends React.Component {
       password: "",
       error: false
     }
-    //Bind submit function
-    this.assignUser = props.assignUser
     this.onFormSubmit = this.onFormSubmit.bind(this)
   }
 
-  //Submit function
+  /**
+   * Handle login attempt
+   * @param {Event} e - Event that triggers handler (clicking "Log In" after filling out username/password)
+   */
   onFormSubmit(e) {
     //Setup
     e.preventDefault()
     this.setState({ error: false })
+    var self = this
 
-    //Attempt login
+    //Build URL/payload
     var url = "http://localhost:8000/rest-auth/login/"
     var payload = {
       username: this.state.username,
       password: this.state.password
     }
-    var self = this
-    console.log(self.props)
-    //Attempt login
+    console.log("Props at this point: " + self.props)
+
+    //Attempt login by sending login information to application database
     axios
       .post(url, payload)
       .then(function(response) {
         console.log("Successfully logged in with status " + response.status)
         //store user key/ID/name
         //we do this in signup, but do it again just in case
-        console.log(response.data)
-        localStorage.setItem('user_key', response.data.key)
-        localStorage.setItem('user_id', response.data.user)
-        localStorage.setItem('user_name', self.state.username)
-        global.user_key = response.data.key
-        global.user_id = response.data.user
-        global.user_name = self.state.username
+        localStorage.setItem("user_key", response.data.key)
+        localStorage.setItem("user_id", response.data.user)
+        localStorage.setItem("user_name", self.state.username)
+        //On success, redirect to Calendar dashboard
         self.props.history.push("/Calendar")
       })
       .catch(function(error) {
@@ -82,16 +86,24 @@ class Login extends React.Component {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message)
         }
+        //Set error flag
         self.setState({ error: true })
       })
   }
 
+  /**
+   * Render login page.
+   * @return {ReactComponent} - Login page component to display
+   */
   render() {
     //Grab error flag
     const { error } = this.state
     console.log(this)
     return (
-      <div log={console.log(this.props)} className="login-clean">
+      <div
+        log={console.log("Props at render: " + this.props)}
+        className="login-clean"
+      >
         <Form className="form" error={error} onSubmit={this.onFormSubmit}>
           <div className="illustration">
             <Logo src={civixlogo} style={{ width: 200, height: 200 }} />
