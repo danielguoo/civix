@@ -120,10 +120,10 @@ class Issue extends React.Component {
     this.state = {
       forcomments: [],
       againstcomments: [],
-      commentusers: [],
       newCommentText: "",
       newCommentOnRight: false,
-      error: false
+      error: false,
+      users: []
     }
   }
 
@@ -218,16 +218,7 @@ class Issue extends React.Component {
     var content = comment.content
     var upvotes = comment.upvotes
     var downvotes = comment.downvotes
-    var commentusers = this.state.commentusers
-    var username = ""
-
-
-    commentusers.forEach(function(commentuser) {
-      if (commentuser.id === user) {
-        username = commentuser.username
-        //alert("loaded in value " + username)
-      }
-    })
+    var username = this.state.users.find(user => user.id === comment.user).username
 
     return (
       <Comment
@@ -243,20 +234,25 @@ class Issue extends React.Component {
       />
     );
   }
+
   getComments() {
     //Setup
+    var userurl = "http://localhost:8000/users/";
     var url = "http://localhost:8000/posts/"
     var self = this
     var allcomments = []
-    console.log(this.props)
 
-    axios
-      .get(url)
-      .then(response => {
+    axios.all([
+      axios.get(userurl),
+      axios.get(url)
+    ])
+      
+      .then(axios.spread((userresponse,response) => {
+        const users = userresponse.data;
+        this.setState({ users });
         allcomments = response.data
-      })
+      }))
       .then(function() {
-        var commentusers = []
         var promises = []
         //alert("Attempting pushing all events")
 
@@ -266,15 +262,9 @@ class Issue extends React.Component {
         })
 
         //get all associated users as well
-        pagecomments.forEach(function(comment) {
-          var commenturl = "http://localhost:8000/users/" + comment.user + "/"
-          promises.push(axios.get(commenturl))
-        })
 
         axios.all(promises).then(function(results) {
-          results.forEach(function(response) {
-            commentusers.push(response.data)
-          })
+
 
           //split into those for and those against
           var forcomments = pagecomments.filter(function(e) {
@@ -286,7 +276,6 @@ class Issue extends React.Component {
 
           self.setState({ forcomments: forcomments })
           self.setState({ againstcomments: againstcomments })
-          self.setState({ commentusers: commentusers })
         })
       })
       .catch(error => {
@@ -305,7 +294,7 @@ class Issue extends React.Component {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message);
         }
-      });
+      })
   }
 
   componentDidMount() {
@@ -321,7 +310,7 @@ class Issue extends React.Component {
         <div className="article-list">
           <Row>
             <Col xs="6" sm="3">
-              <h3 log={console.log(this.state.forcomments)} className="issueSide">For</h3>
+              <h3 className="issueSide">For</h3>
               {this.state.forcomments.sort((a,b)=>b.upvotes - b.downvotes - a.upvotes + a.downvotes).map(this.displayComments)}
             </Col>
             <Col xs="6" sm="6">
