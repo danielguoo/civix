@@ -31,9 +31,10 @@ class App extends Component {
    * /signup -> signup page
    * /calendar -> calendar dashboard (with community & personal calendar)
    * /issues -> ballot board
+   * /issue/:id -> specific ballot board thread, as specified by id
    * /contact -> representatives hub
    * /account -> profile page
-   * @return the application component, with the login page displayed by default
+   * @return The application component, with the login page displayed by default
    */
   render() {
     return (
