@@ -91,6 +91,7 @@ class Comment extends React.Component {
     return (
       <div className="commentContainer">
         <h6 className="text-left">{this.props.username}</h6>
+        <h6 className="text-right">{this.props.poliId}</h6>
         <div className="commentText">{this.props.content}</div>
         <div className="text-right">
           <Badge
@@ -220,6 +221,7 @@ class Issue extends React.Component {
     var commentusers = this.state.commentusers
     var username = ""
 
+
     commentusers.forEach(function(commentuser) {
       if (commentuser.id === user) {
         username = commentuser.username
@@ -246,6 +248,7 @@ class Issue extends React.Component {
     var url = "http://localhost:8000/posts/"
     var self = this
     var allcomments = []
+    console.log(this.props)
 
     axios
       .get(url)
@@ -318,15 +321,14 @@ class Issue extends React.Component {
         <div className="article-list">
           <Row>
             <Col xs="6" sm="3">
-              <h3 className="issueSide">For</h3>
-              {this.state.forcomments.map(this.displayComments)}
+              <h3 log={console.log(this.state.forcomments)} className="issueSide">For</h3>
+              {this.state.forcomments.sort((a,b)=>b.upvotes - b.downvotes - a.upvotes + a.downvotes).map(this.displayComments)}
             </Col>
             <Col xs="6" sm="6">
               <div className="intro">
-                <h2 className="text-center">{this.props.title}</h2>
-                <h4>short title.</h4>
+                <h2 className="text-center">{this.props.location.title}</h2>
               </div>
-              <h4>Description</h4>
+              <h4>Description:</h4>
               <p>{this.props.location.description}</p>
               <br />
               {error && <Alert color="danger">Comment must be nonempty.</Alert>}
@@ -374,7 +376,7 @@ class Issue extends React.Component {
             </Col>
             <Col sm="3">
               <h3 className="issueSide">Against</h3>
-              {this.state.againstcomments.map(this.displayComments)}
+              {this.state.againstcomments.sort((a,b)=>b.upvotes - b.downvotes - a.upvotes + a.downvotes).map(this.displayComments)}
             </Col>
           </Row>
         </div>

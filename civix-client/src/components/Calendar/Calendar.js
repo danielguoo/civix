@@ -297,26 +297,24 @@ class Calendar extends React.Component {
       <div>
         <div>
           <NavigationBar />
-          <Container className="container">
             <div className="intro">
             <div className="firstLine" >
-              <div className="eventToggle">Show: <h5 className={this.state.myEventView ? "selected": null }onClick={() => this.changeEventView('myEvents')}>My Events </h5> | <h5 className={this.state.myEventView ? null: "selected"} onClick={this.changeEventView}>All Events</h5> </div>
-              <h2>Community Calendar</h2>
-              <div className="calendarToggle"><h3  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar </h3> | <h3 className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>List</h3> </div>
-              </div>
+              <div><h5 className="eventToggle"> <span className={this.state.myEventView ? "selected": null }onClick={() => this.changeEventView('myEvents')}>My Events</span> | <span className={this.state.myEventView ? null: "selected"} onClick={this.changeEventView}>All Events</span> </h5></div>
+              <div><h4>Political Calendar</h4></div>
+              <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>Agenda</span> </h5> </div>
+            </div>
               <p className="text-center">
                 Upcoming political events near address: ...
               </p>
             </div>
-          </Container>
         </div>
     {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} markAttending={this.toggleMarkAttending} toggleEvent={this.toggleEventDetails} currentlyAttending={this.state.myEvents.includes(this.state.currentEvent.id)} ></EventModal> }
         {this.state.CalendarView ? <div className="CalendarChoice">
           <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)) : this.state.events}/>
         </div> : 
-        <ListGroup className="list-group" style={{ margin: 44 }}>
-          {this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : 
-          this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents)}
+        <ListGroup className="list-group">
+          {this.state.myEventView ? (this.state.myEvents.length !== 0 ? this.state.events.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
+          this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents) }
         </ListGroup> }
       </div>
     }

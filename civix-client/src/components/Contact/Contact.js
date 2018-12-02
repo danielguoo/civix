@@ -82,7 +82,7 @@ class Contact extends React.Component {
     var position = representative.office
     var party = representative.party
     var phonelink = "tel:" + representative.phones[0]
-    var url = representative.urls[0]
+    var url = representative.urls && representative.urls[0] || null
     var emaillink = url
     if (representative.emails !== undefined) {
       console.log("email exists for this rep")
@@ -112,14 +112,14 @@ class Contact extends React.Component {
   getRepresentatives() {
     //replace later
     //localStorage.getItem("user_id")
-    var profileurl = "http://localhost:8000/profiles/" + 4
+    var profileurl = "http://localhost:8000/profiles/" + localStorage.getItem("user_id")
     var address = ""
     var self = this
 
     axios
       .get(profileurl)
       .then(function(response) {
-        console.log("Successfully retrieved profile information for user " + 4)
+        console.log("Successfully retrieved profile information for user " + localStorage.getItem("user_id"))
         var streetAddress = response.data.streetAddress
         var city = response.data.city
         var state = response.data.state

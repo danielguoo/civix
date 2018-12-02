@@ -8,7 +8,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "../Login/Login";
 import Signup from "../Signup/Signup";
 import Calendar from "../Calendar/Calendar";
-import PersonalCalendar from "../PersonalCalendar/PersonalCalendar";
 import Issues from "../Issues/Issues";
 import Issue from "../Issue/Issue";
 import Contact from "../Contact/Contact";
@@ -23,7 +22,6 @@ class App extends Component {
 
 
   render() {
-    const assignUser = this.assignUser
 
     return (
       <div className="app-routes">
