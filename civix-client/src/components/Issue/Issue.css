@@ -59,6 +59,7 @@
 /*Comment*/
 .commentContainer {
   position: relative;
+  word-wrap: break-word;
   height: auto;
   margin: 10px;
   padding: 10px;
@@ -70,8 +71,8 @@
   cursor: pointer;
 }
 
-.commentText {
-  min-height: 30px;
+.commentContainer commentText {
+  min-height: 50px;
   border-radius: 3px;
   font-family: inherit;
   font-size: 14px;
