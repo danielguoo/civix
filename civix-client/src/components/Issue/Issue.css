@@ -40,6 +40,15 @@
   cursor: pointer;
   background-color: #008000;
 }
+.commentinfo {
+  display: flex;
+  justify-content: space-between
+}
+
+.scrolling {
+  height: 450px;
+  overflow-y:scroll;
+}
 
 /*Comment*/
 .commentContainer {
@@ -49,6 +58,10 @@
   padding: 10px;
   border: 1px solid #1a19193a;
   border-radius: 2px;
+}
+
+.commentContainer Badge {
+  cursor: pointer;
 }
 
 .commentText {
@@ -88,15 +101,6 @@
   background-color: #0b920b;
 }
 
-.commentContainer button-upvote:hover {
-  cursor: pointer;
-  background-color: #0b920b;
-}
-
-.commentContainer button-downvote:hover {
-  cursor: pointer;
-  background-color: #920b0b;
-}
 
 .commentContainer button-downvote {
   margin-right: 10px;

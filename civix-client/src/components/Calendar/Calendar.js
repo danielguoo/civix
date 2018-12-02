@@ -324,7 +324,6 @@ class Calendar extends React.Component {
 }
 
 const EventModal = ({event,open, toggleEvent, markAttending, currentlyAttending}) => {
-  console.log(event, currentlyAttending)
   var unformatteddate = new Date(event.date.toString());
     var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY");
     var cleantime = moment(unformatteddate).format("h:mm A");

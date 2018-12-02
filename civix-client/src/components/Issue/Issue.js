@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  Row,
-  Col,
-  Badge,
-  Alert,
-  Label,
-  Input,
-} from "reactstrap";
-import {IoIosThumbsUp, IoIosThumbsDown} from 'react-icons/io'
+import { Row, Col, Badge, Alert, Label, Input } from "reactstrap";
+import { IoIosThumbsUp, IoIosThumbsDown } from "react-icons/io";
 
 import "./Issue.css";
 
@@ -38,7 +31,7 @@ class Comment extends React.Component {
         " downvotes..."
     )*/
     //Setup
-    var url = "http://localhost:8000/posts/" + this.props.id + "/"
+    var url = "http://localhost:8000/posts/" + this.props.id + "/";
     var payload = {
       id: this.props.id,
       item: this.props.item,
@@ -46,7 +39,7 @@ class Comment extends React.Component {
       content: this.props.content,
       upvotes: this.state.upvotes,
       downvotes: this.state.downvotes
-    }
+    };
     //alert("id is " + payload.id + ", item is " + payload.item)
     //Attempt update
     axios
@@ -76,34 +69,35 @@ class Comment extends React.Component {
   upvote() {
     this.setState({ upvotes: this.state.upvotes + 1 }, function() {
       //alert("upvotes now " + this.state.upvotes)
-      this.updateComments()
-    })
+      this.updateComments();
+    });
   }
 
   downvote() {
     this.setState({ downvotes: this.state.downvotes + 1 }, function() {
       //alert("downvotes now " + this.state.downvotes)
-      this.updateComments()
-    })
+      this.updateComments();
+    });
   }
 
   render() {
     return (
       <div className="commentContainer">
-        <h6 className="text-left">{this.props.username}</h6>
-        <h6 className="text-right">{this.props.poliId}</h6>
-        <div className="commentText">{this.props.content}</div>
-        <div className="text-right">
+        <div className= "commentinfo">
+          <h6 className="text-left">{this.props.username}</h6>
+          <div>
           <Badge
             onClick={this.upvote}
             style={{ background: "#22c25c", marginRight: 5 }}
           >
-            <IoIosThumbsUp/> {this.state.upvotes}
+            <IoIosThumbsUp /> {this.state.upvotes}
           </Badge>
           <Badge onClick={this.downvote} style={{ background: "#ff0000" }}>
-          <IoIosThumbsDown/> {this.state.downvotes} 
+            <IoIosThumbsDown /> {this.state.downvotes}
           </Badge>
+          </div>
         </div>
+        <div className="commentText">{this.props.content}</div>
       </div>
     );
   }
@@ -124,7 +118,7 @@ class Issue extends React.Component {
       newCommentOnRight: false,
       error: false,
       users: []
-    }
+    };
   }
 
   //store new comment content
@@ -144,16 +138,16 @@ class Issue extends React.Component {
   addNewComment(user) {
     var newText = this.state.newCommentText;
     if (newText !== "") {
-      this.setState({ error: false })
-      var newOnRight = this.state.newCommentOnRight
-      var self = this
+      this.setState({ error: false });
+      var newOnRight = this.state.newCommentOnRight;
+      var self = this;
 
       //Setup
-      var url = "http://localhost:8000/posts/"
+      var url = "http://localhost:8000/posts/";
       //alert("issueid is " + this.props.location.issueid)
       var payload = {
         item: parseInt(this.props.location.pathname.substr(-1)),
-        user: parseInt(localStorage.getItem('user_id')),
+        user: parseInt(localStorage.getItem("user_id")),
         content: newText,
         onRight: newOnRight,
         upvotes: 0,
@@ -166,26 +160,26 @@ class Issue extends React.Component {
         .then(function(response) {
           console.log(
             "Successfully created new post with status " + response.status
-          )
+          );
           if (!newOnRight) {
-            var forarr = self.state.forcomments
-            forarr.push(response.data)
-            self.setState({ forcomments: forarr })
+            var forarr = self.state.forcomments;
+            forarr.push(response.data);
+            self.setState({ forcomments: forarr });
           } else {
-            var againstarr = self.state.againstcomments
-            againstarr.push(response.data)
-            self.setState({ againstcomments: againstarr })
+            var againstarr = self.state.againstcomments;
+            againstarr.push(response.data);
+            self.setState({ againstcomments: againstarr });
           }
-          var commentusers = self.state.commentusers
+          var commentusers = self.state.commentusers;
           //alert("userid: " + global.user_id + ", username: " + global.user_name)
           var newcommentuser = {
             id: global.user_id,
             username: global.user_name
-          }
+          };
           if (commentusers.indexOf(newcommentuser) === -1) {
-            commentusers.push(newcommentuser)
+            commentusers.push(newcommentuser);
           }
-          self.setState({ commentusers: commentusers })
+          self.setState({ commentusers: commentusers });
         })
         .catch(function(error) {
           if (error.response) {
@@ -205,20 +199,21 @@ class Issue extends React.Component {
           }
         });
     } else {
-      this.setState({ error: true })
+      this.setState({ error: true });
     }
   }
 
   //Comment display function
   displayComments(comment, i) {
     //Unpack comment
-    var id = comment.id
-    var item = comment.item
-    var user = comment.user
-    var content = comment.content
-    var upvotes = comment.upvotes
-    var downvotes = comment.downvotes
-    var username = this.state.users.find(user => user.id === comment.user).username
+    var id = comment.id;
+    var item = comment.item;
+    var user = comment.user;
+    var content = comment.content;
+    var upvotes = comment.upvotes;
+    var downvotes = comment.downvotes;
+    var username = this.state.users.find(user => user.id === comment.user)
+      .username;
 
     return (
       <Comment
@@ -238,45 +233,43 @@ class Issue extends React.Component {
   getComments() {
     //Setup
     var userurl = "http://localhost:8000/users/";
-    var url = "http://localhost:8000/posts/"
-    var self = this
-    var allcomments = []
+    var url = "http://localhost:8000/posts/";
+    var self = this;
+    var allcomments = [];
 
-    axios.all([
-      axios.get(userurl),
-      axios.get(url)
-    ])
-      
-      .then(axios.spread((userresponse,response) => {
-        const users = userresponse.data;
-        this.setState({ users });
-        allcomments = response.data
-      }))
+    axios
+      .all([axios.get(userurl), axios.get(url)])
+
+      .then(
+        axios.spread((userresponse, response) => {
+          const users = userresponse.data;
+          this.setState({ users });
+          allcomments = response.data;
+        })
+      )
       .then(function() {
-        var promises = []
+        var promises = [];
         //alert("Attempting pushing all events")
 
         //filter out only those linked to issue id
         var pagecomments = allcomments.filter(function(e) {
-          return e.item === parseInt(self.props.location.pathname.substr(-1))
-        })
+          return e.item === parseInt(self.props.location.pathname.substr(-1));
+        });
 
         //get all associated users as well
 
         axios.all(promises).then(function(results) {
-
-
           //split into those for and those against
           var forcomments = pagecomments.filter(function(e) {
-            return e.onRight === false
-          })
+            return e.onRight === false;
+          });
           var againstcomments = pagecomments.filter(function(e) {
-            return e.onRight === true
-          })
+            return e.onRight === true;
+          });
 
-          self.setState({ forcomments: forcomments })
-          self.setState({ againstcomments: againstcomments })
-        })
+          self.setState({ forcomments: forcomments });
+          self.setState({ againstcomments: againstcomments });
+        });
       })
       .catch(error => {
         if (error.response) {
@@ -294,7 +287,7 @@ class Issue extends React.Component {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message);
         }
-      })
+      });
   }
 
   componentDidMount() {
@@ -303,17 +296,24 @@ class Issue extends React.Component {
 
   render() {
     //Grab error flag
-    const error = this.state.error
+    const error = this.state.error;
     return (
       <div>
         <NavigationBar />
         <div className="article-list">
           <Row>
-            <Col xs="6" sm="3">
+            <Col xs="6" sm="4">
               <h3 className="issueSide">For</h3>
-              {this.state.forcomments.sort((a,b)=>b.upvotes - b.downvotes - a.upvotes + a.downvotes).map(this.displayComments)}
+              <div className="scrolling">
+                {" "}
+                {this.state.forcomments
+                  .sort(
+                    (a, b) => b.upvotes - b.downvotes - a.upvotes + a.downvotes
+                  )
+                  .map(this.displayComments)}{" "}
+              </div>
             </Col>
-            <Col xs="6" sm="6">
+            <Col xs="6" sm="4">
               <div className="intro">
                 <h2 className="text-center">{this.props.location.title}</h2>
               </div>
@@ -363,9 +363,16 @@ class Issue extends React.Component {
                 </div>
               </div>
             </Col>
-            <Col sm="3">
+            <Col sm="4">
               <h3 className="issueSide">Against</h3>
-              {this.state.againstcomments.sort((a,b)=>b.upvotes - b.downvotes - a.upvotes + a.downvotes).map(this.displayComments)}
+              <div className="scrolling">
+                {" "}
+                {this.state.againstcomments
+                  .sort(
+                    (a, b) => b.upvotes - b.downvotes - a.upvotes + a.downvotes
+                  )
+                  .map(this.displayComments)}{" "}
+              </div>
             </Col>
           </Row>
         </div>

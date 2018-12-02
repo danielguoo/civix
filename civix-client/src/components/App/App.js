@@ -21,9 +21,6 @@ class App extends Component {
   /**
    * Creates an instance of the application component.
    */
-  constructor(props) {
-    super(props)
-  }
 
   /**
    * Renders the application component on the screen, routed as follows:
@@ -47,7 +44,7 @@ class App extends Component {
           <Route path="/issue/:id" component={Issue} />
           <Route path="/contact" component={Contact} />
           <Route path="/account" component={Account} />
-          <Route path="/" component={Login} />
+          <Route path="/" component={ localStorage.getItem("user_id") ? Calendar : Login} />
         </Switch>
       </div>
     )

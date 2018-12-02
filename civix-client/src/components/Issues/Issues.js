@@ -1,5 +1,4 @@
 import React from "react"
-import classnames from "classnames"
 import { Container, Row, Col, Table } from "reactstrap"
 
 import NavigationBar from "../NavigationBar/NavigationBar"
@@ -10,18 +9,6 @@ import { Link } from "react-router-dom"
 
 import axios from "axios"
 
-class IssueLink extends React.Component {
-  render() {
-    return (
-      <div>
-        <li className="thread">
-          
-        </li>
-        <hr />
-      </div>
-    )
-  }
-}
 
 class Issues extends React.Component {
   //Constructor
@@ -29,7 +16,6 @@ class Issues extends React.Component {
   constructor(props) {
     super(props)
     this.toggle = this.toggle.bind(this)
-    this.getEvents = this.getEvents.bind(this)
     this.state = {
       activeTab: "1",
       issues: [],
@@ -45,43 +31,19 @@ class Issues extends React.Component {
     }
   }
 
-  getEvents() {
-    //Setup
-    var url = "http://localhost:8000/events/";
-    axios
-      .get(url)
-      .then(response => {
-        const events = response.data;
-        this.setState({ events });
-      })
-      .catch(error => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
-        }
-      });
-  }
-
   getIssues() {
     //Setup
+    var eventsurl = "http://localhost:8000/events/";
     var url = "http://localhost:8000/items/"
-    axios
-      .get(url)
-      .then(response => {
+    axios.all([
+      axios.get(eventsurl),
+      axios.get(url)
+    ])
+      .then(axios.spread((eventsresponse,response) => {
         const issues = response.data
-        this.setState({ issues })
-      })
+        const events = eventsresponse.data;
+        this.setState({ issues, events })
+      }))
       .catch(error => {
         if (error.response) {
           // The request was made and the server responded with a status code
@@ -103,7 +65,6 @@ class Issues extends React.Component {
 
   componentDidMount() {
     //Grab all issues from database
-    this.getEvents()
     this.getIssues()
     
   }
@@ -133,7 +94,7 @@ class Issues extends React.Component {
           {this.state.issues.map((issue, i) => 
             <tr>
             <td>{issue.title}</td>
-            <td>{ this.state.events[issue.event-1].title}</td>
+            <td>{ this.state.events.find(event => event.id === issue.event).title}</td>
             <td>{issue.description.substring(0,15)}...</td>
             <td> <Link
             to={{
