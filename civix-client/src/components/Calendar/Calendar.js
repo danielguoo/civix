@@ -154,7 +154,7 @@ class Calendar extends React.Component {
             "Successfully updated existing personal calendar for " +
             localStorage.getItem('user_id')
           );
-          self.getMyEvents()
+          self.getEvents()
         });
       })
       .catch(function(error) {
