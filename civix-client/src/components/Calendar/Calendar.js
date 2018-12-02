@@ -137,7 +137,10 @@ class Calendar extends React.Component {
         if (add) {
           updatedevents.push(event_id);
         } else {
-          updatedevents.pop(event_id);
+            console.log("Should be popping " + event_id)
+            var index = updatedevents.indexOf(event_id)
+            console.log("@ position " + index)
+          updatedevents.splice(index, 1);
         }
         console.log(updatedevents)
         //alert("new set: " + updatedevents)
