@@ -3,128 +3,128 @@ from django.contrib.auth.models import User
 from core.models import Profile, Event, Calendar, Item, Post
 from core.serializers import UserSerializer, ProfileSerializer, EventSerializer, CalendarSerializer, ItemSerializer, PostSerializer
 
-class UserList(generics.ListAPIView):
+class GetUsers(generics.ListAPIView):
     """
-    get:
+    GET:
         Return a list of all users.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
+class GetUser(generics.RetrieveAPIView):
     """
-    get:
+    GET:
         Return a user instance.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class ProfileList(generics.ListCreateAPIView):
+class CreateOrGetProfiles(generics.ListCreateAPIView):
     """
-    get:
+    GET:
         Return a list of all profiles.
-    post:
+    POST:
         Create a new profile instance.
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDeleteProfile(generics.RetrieveUpdateDestroyAPIView):
     """
-    get:
+    GET:
         Return a profile instance.
-    put:
+    PUT:
         Update a profile instance.
-    delete:
+    DELETE:
         Delete a profile instance.
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class CalendarList(generics.ListCreateAPIView):
+class CreateOrGetCalendars(generics.ListCreateAPIView):
     """
-    get:
+    GET:
         Return a list of all calendars.
-    post:
+    POST:
         Create a new calendar instance.
     """
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
-class CalendarDetail(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDeleteCalendar(generics.RetrieveUpdateDestroyAPIView):
     """
-    get:
+    GET:
         Return a calendar instance.
-    put:
+    PUT:
         Update a calendar instance.
-    delete:
+    DELETE:
         Delete a calendar instance.
     """
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
-class EventList(generics.ListCreateAPIView):
+class CreateOrGetEvents(generics.ListCreateAPIView):
     """
-    get:
+    GET:
         Return a list of all events.
-    post:
+    POST:
         Create a new event instance.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDeleteEvent(generics.RetrieveUpdateDestroyAPIView):
     """
-    get:
+    GET:
         Return an event instance.
-    put:
+    PUT:
         Update an event instance.
-    delete:
+    DELETE:
         Delete an event instance.
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-class ItemList(generics.ListCreateAPIView):
+class CreateOrGetItems(generics.ListCreateAPIView):
     """
-    get:
+    GET:
         Return a list of all items.
-    post:
+    POST:
         Create a new item instance.
     """
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDeleteItem(generics.RetrieveUpdateDestroyAPIView):
     """
-    get:
+    GET:
         Return an item instance.
-    put:
+    PUT:
         Update an item instance.
-    delete:
+    DELETE:
         Delete an item instance.
     """
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 
-class PostList(generics.ListCreateAPIView):
+class CreateOrGetPosts(generics.ListCreateAPIView):
     """
-    get:
+    GET:
         Return a list of all posts.
-    post:
+    POST:
         Create a new post instance.
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDeletePost(generics.RetrieveUpdateDestroyAPIView):
     """
-    get:
+    GET:
         Return a post instance.
-    put:
+    PUT:
         Update a post instance.
-    delete:
+    DELETE:
         Delete a post instance.
     """
     queryset = Post.objects.all()

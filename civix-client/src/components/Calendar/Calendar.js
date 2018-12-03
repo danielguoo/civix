@@ -142,7 +142,6 @@ class Calendar extends React.Component {
             console.log("@ position " + index)
           updatedevents.splice(index, 1);
         }
-        console.log(updatedevents)
         //alert("new set: " + updatedevents)
       })
       .then(function() {
@@ -184,7 +183,6 @@ class Calendar extends React.Component {
       currentEvent: event,
       modal: !this.state.modal
     });
-    console.log(this.state)
   }
   //Event display function
   //Takes the fields per event and index
@@ -227,12 +225,17 @@ class Calendar extends React.Component {
     }));
   }
 
+  change
+
   changeEventView(view) {
     this.setState(() => ({
       myEventView: view === 'myEvents'
     }));
   }
 
+  changeFilter(eventsFilter) {
+    this.setState({eventsFilter})
+  }
 
   getEvents() {
     //Setup
@@ -274,10 +277,9 @@ class Calendar extends React.Component {
   }
 
   render() {
+    const currentEvents = this.state.eventsFilter === 'USA' ? this.state.events : this.state.events.filter((event)=> event.city === this.state.eventsFilter || event.state === this.state.eventsFilter )
     return (
-      <UserContext.Consumer>
-    {user=>
-  
+
       <div>
         <div>
           <NavigationBar />
@@ -287,22 +289,20 @@ class Calendar extends React.Component {
               <div><h4>Political Calendar</h4></div>
               <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>Agenda</span> </h5> </div>
             </div>
-              <p log={console.log(this.state.profile)} className="text-center">
-                Upcoming political events in: <span className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
+              <p className="toggle">
+                Upcoming political events in: <span onClick={()=>this.changeFilter(this.state.profile.city)} className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span onClick={()=>this.changeFilter(this.state.profile.state)} className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span onClick={()=>this.changeFilter('USA')} className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
               </p>
             </div>
         </div>
     {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} markAttending={this.toggleMarkAttending} toggleEvent={this.toggleEventDetails} currentlyAttending={this.state.myEvents.includes(this.state.currentEvent.id)} ></EventModal> }
         {this.state.CalendarView ? <div className="CalendarChoice">
-          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)) : this.state.events}/>
+          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? currentEvents.filter(j => this.state.myEvents.includes(j.id)) : currentEvents}/>
         </div> : 
         <ListGroup className="list-group">
-          {this.state.myEventView ? (this.state.myEvents.length !== 0 ? this.state.events.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
-          this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents) }
+          {this.state.myEventView ? (this.state.myEvents.length !== 0 ? currentEvents.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
+          currentEvents.sort((a, b) => a.date - b.date).map(this.displayEvents) }
         </ListGroup> }
       </div>
-    }
-      </UserContext.Consumer>
     );
   }
 }

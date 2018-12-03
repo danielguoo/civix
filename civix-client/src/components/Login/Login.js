@@ -1,17 +1,17 @@
-import React from "react"
-import { Button, Form, FormGroup, Input, Alert } from "reactstrap"
-import "./Login.css"
-import civixlogo from "./civixlogo.png"
+import React from "react";
+import { Button, Form, FormGroup, Input, Alert } from "reactstrap";
+import "./Login.css";
+import civixlogo from "./civixlogo.png";
 
 //Routing components
-import { Link } from "react-router-dom"
-import { withRouter } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 //Animation components
-import posed from "react-pose"
+import posed from "react-pose";
 
 //axios for HTTP requests
-import axios from "axios"
+import axios from "axios";
 
 //Animation setup for logo
 const Logo = posed.img({
@@ -22,7 +22,7 @@ const Logo = posed.img({
   hover: {
     scale: 1.05
   }
-})
+});
 
 /**
  * Represents the login page.
@@ -30,13 +30,13 @@ const Logo = posed.img({
  */
 class Login extends React.Component {
   constructor(props) {
-    super()
+    super();
     this.state = {
       username: "",
       password: "",
       error: false
-    }
-    this.onFormSubmit = this.onFormSubmit.bind(this)
+    };
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   /**
@@ -45,50 +45,50 @@ class Login extends React.Component {
    */
   onFormSubmit(e) {
     //Setup
-    e.preventDefault()
-    this.setState({ error: false })
-    var self = this
+    e.preventDefault();
+    this.setState({ error: false });
+    var self = this;
 
     //Build URL/payload
-    var url = "http://localhost:8000/rest-auth/login/"
+    var url = "http://localhost:8000/rest-auth/login/";
     var payload = {
       username: this.state.username,
       password: this.state.password
-    }
-    console.log("Props at this point: " + self.props)
+    };
+    console.log("Props at this point: " + self.props);
 
     //Attempt login by sending login information to application database
     axios
       .post(url, payload)
       .then(function(response) {
-        console.log("Successfully logged in with status " + response.status)
+        console.log("Successfully logged in with status " + response.status);
         //store user key/ID/name
         //we do this in signup, but do it again just in case
-        localStorage.setItem("user_key", response.data.key)
-        localStorage.setItem("user_id", response.data.user)
-        localStorage.setItem("user_name", self.state.username)
+        localStorage.setItem("user_key", response.data.key);
+        localStorage.setItem("user_id", response.data.user);
+        localStorage.setItem("user_name", self.state.username);
         //On success, redirect to Calendar dashboard
-        self.props.history.push("/Calendar")
+        self.props.history.push("/Calendar");
       })
       .catch(function(error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          console.log(error.request)
+          console.log(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message)
+          console.log("Error", error.message);
         }
         //Set error flag
-        self.setState({ error: true })
-      })
+        self.setState({ error: true });
+      });
   }
 
   /**
@@ -97,8 +97,8 @@ class Login extends React.Component {
    */
   render() {
     //Grab error flag
-    const { error } = this.state
-    console.log(this)
+    const { error } = this.state;
+    console.log(this);
     return (
       <div
         log={console.log("Props at render: " + this.props)}
@@ -149,8 +149,8 @@ class Login extends React.Component {
           </Link>
         </Form>
       </div>
-    )
+    );
   }
 }
 
-export default withRouter(Login)
+export default withRouter(Login);
