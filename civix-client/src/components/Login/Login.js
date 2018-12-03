@@ -125,6 +125,7 @@ class Login extends React.Component {
           </FormGroup>
           <FormGroup className="form-group">
             <Input
+              id='password'
               className="form-control"
               type="password"
               name="password"
