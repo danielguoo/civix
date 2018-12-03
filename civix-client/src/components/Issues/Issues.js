@@ -1,14 +1,16 @@
 import React from "react";
-import { Container, Row, Col, Table } from "reactstrap";
-
+import { Container, Table } from "reactstrap";
 import NavigationBar from "../NavigationBar/NavigationBar";
-
 import "./Issues.css";
 
 import { Link } from "react-router-dom";
 
 import axios from "axios";
 
+/**
+ * Represents the Issues page.
+ * @param {Object} props - React props
+ */
 class Issues extends React.Component {
   //Constructor
   //By default, first tab is selected
@@ -22,14 +24,9 @@ class Issues extends React.Component {
     };
   }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  }
-
+  /**
+   * Gets all issues and associated events using axios.
+   */
   getIssues() {
     //Setup
     var eventsurl = "http://localhost:8000/events/";
@@ -62,11 +59,18 @@ class Issues extends React.Component {
       });
   }
 
+  /**
+   * React function that calls setup functions when the component is first mounted. We need to get all issues to be displayed.
+   */
   componentDidMount() {
     //Grab all issues from database
     this.getIssues();
   }
 
+  /**
+   * Render issues page.
+   * @return {ReactComponent} - Issues page component to display
+   */
   render() {
     return (
       <div>
@@ -102,7 +106,7 @@ class Issues extends React.Component {
                   {" "}
                   <Link
                     to={{
-                      pathname: "/issue/" + issue.id,
+                      pathname: "/issue/" + issue.id
                     }}
                   >
                     {" "}

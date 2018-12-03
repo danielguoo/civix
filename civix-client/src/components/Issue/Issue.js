@@ -8,18 +8,22 @@ import axios from "axios";
 
 import NavigationBar from "../NavigationBar/NavigationBar";
 
+/**
+ * Represents each Comment in a post
+ * @param {Object} props - React props
+ * @param {int} props.upvotes - current count of upvotes
+ * @param {int} props.downvotes = current count of downvotes
+ * @param {string} props.username - user who posted the comment
+ * @param {string} props.content - content of comment
+ * 
+ */
 class Comment extends React.Component {
-  //Constructor
 
+    /**
+   * updates comments if likes/dislikes changes
+   * @param {Boolean} upvote - if the update is a upvote or downvote for comment
+   */
   updateComments(upvote) {
-    /*alert(
-      "updating, now with " +
-        this.state.upvotes +
-        " upvotes and " +
-        this.state.downvotes +
-        " downvotes..."
-    )*/
-    //Setup
     var url = "http://localhost:8000/posts/" + this.props.id + "/";
     var self = this
     const newUp = upvote ? this.props.upvotes + 1 : this.props.upvotes
@@ -58,7 +62,10 @@ class Comment extends React.Component {
         }
       });
   }
-
+  /**
+   * Render comment component
+   * @return {ReactComponent} - Comment component to display
+   */
   render() {
     return (
       <div className="commentContainer">
@@ -82,6 +89,10 @@ class Comment extends React.Component {
   }
 }
 
+/**
+ * Represents the Issue page.
+ * @param {Object} props - React props
+ */
 class Issue extends React.Component {
   //Constructor
   constructor(props) {
@@ -103,12 +114,18 @@ class Issue extends React.Component {
     };
   }
 
-  //store new comment content
+  /**
+   * if the input is typed in, this updates the state to hold the input
+   * @param {Object} e - the event- user typing in input box
+   */
   getNewCommentText(e) {
     this.setState({ newCommentText: e.target.value });
   }
 
-  //store new comment alignment (for/against)
+  /**
+   * If the for or against option is selected for input, this updates the state
+   * @param {Object} e - the event- user choosing their side
+   */
   getNewCommentOnRight(e) {
     if (e.target.value === "For") {
       this.setState({ newCommentOnRight: false });
@@ -117,7 +134,11 @@ class Issue extends React.Component {
     }
   }
 
-  addNewComment(user) {
+  /**
+   * adds a new Comment when the user submits their valid input. Gets the input from the state, 
+   * which two above functions updated
+   */
+  addNewComment() {
     var newText = this.state.newCommentText;
     if (newText !== "" && newText.length <= 280) {
       this.setState({ error: false });
@@ -178,7 +199,12 @@ class Issue extends React.Component {
     this.getComments()
   }
 
-  //Comment display function
+  /**
+   * Displays the comments for each issue side
+   * @param {Object} comment - the comment being displayed
+   * @param {int} i - index of comment
+   * @return {ReactComponent} - the Comment component is returned
+   */
   displayComments(comment, i) {
     //Unpack comment
     var id = comment.id;
@@ -206,6 +232,9 @@ class Issue extends React.Component {
     );
   }
 
+  /**
+   * gets Comments when component first rendered, using axios. also gets user info to see who wrote each comment
+   */
   getComments() {
     //Setup
     var userurl = "http://localhost:8000/users/";
@@ -259,10 +288,17 @@ class Issue extends React.Component {
       });
   }
 
+  /**
+   * React function that calls setup functions when the component is first mounted. We need to get all comments to be displayed
+   */
   componentDidMount() {
     this.getComments();
   }
 
+  /**
+   * Render issue page.
+   * @return {ReactComponent} - Issue page component to display
+   */
   render() {
     //Grab error flag
     const error = this.state.error;

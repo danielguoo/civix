@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {
   Button,
   Form,
@@ -7,18 +7,22 @@ import {
   Input,
   FormText,
   Alert
-} from "reactstrap"
+} from "reactstrap";
 
-import "./Signup.css"
+import "./Signup.css";
 
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-import axios from "axios"
+import axios from "axios";
 
+/**
+ * Represents the signup page.
+ * @param {Object} props - React props
+ */
 class Signup extends React.Component {
   //Constructor
   constructor() {
-    super()
+    super();
     this.state = {
       user: "",
       password: "",
@@ -28,109 +32,121 @@ class Signup extends React.Component {
       poliID: "",
       error: false,
       success: false
-    }
+    };
 
     //Bind submit function
-    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this);
     //Bind radio button selection function
-    this.onRadioSelect = this.onRadioSelect.bind(this)
+    this.onRadioSelect = this.onRadioSelect.bind(this);
   }
 
-  //Submit function
+  /**
+   * Handle signup submit attempt
+   * @param {Event} e - Event that triggers handler (clicking "Submit" after filling out account details)
+   */
   onFormSubmit(e) {
     //Setup
-    e.preventDefault()
+    e.preventDefault();
 
-    var registrationurl = "http://localhost:8000/rest-auth/registration/"
+    var registrationurl = "http://localhost:8000/rest-auth/registration/";
     var registrationpayload = {
       username: this.state.username,
       password1: this.state.password,
       password2: this.state.password,
       email: this.state.email
-    }
+    };
 
-    var self = this
+    var self = this;
 
     //Attempt registration
     axios
       .post(registrationurl, registrationpayload)
       .then(function(registrationresponse) {
-        self.setState({error: false})
-        self.setState({ success: true })
+        self.setState({ error: false });
+        self.setState({ success: true });
         console.log(
           "Successfully stored registration information with status " +
             registrationresponse.status
-        )
+        );
         //store user key/ID/name
-        localStorage.setItem('user_key', registrationresponse.data.key)
-        localStorage.setItem('user_id', registrationresponse.data.user)
-        localStorage.setItem('user_name',  self.state.username)
+        localStorage.setItem("user_key", registrationresponse.data.key);
+        localStorage.setItem("user_id", registrationresponse.data.user);
+        localStorage.setItem("user_name", self.state.username);
       })
       .then(function() {
         //Attempt profile creation
-        var profileurl = "http://localhost:8000/profiles/"
-        var fulladdress = self.state.address.split(", ")
+        var profileurl = "http://localhost:8000/profiles/";
+        var fulladdress = self.state.address.split(", ");
         var profilepayload = {
-          user: localStorage.getItem('user_id'),
+          user: localStorage.getItem("user_id"),
           dob: self.state.dob,
           poliID: self.state.poliID,
           streetAddress: fulladdress[0],
           city: fulladdress[1],
           zipcode: fulladdress[3],
           state: fulladdress[2]
-        }
+        };
         //Attempt concurrent profile creation
         axios.post(profileurl, profilepayload).then(function(profileresponse) {
-          console.log("Successfully created profile for user " + global.user_id)
-        })
+          console.log(
+            "Successfully created profile for user " + global.user_id
+          );
+        });
 
         //Attempt concurrent calendar creation
-        var calendarurl = "http://localhost:8000/calendars/"
+        var calendarurl = "http://localhost:8000/calendars/";
         var calendarpayload = {
-          user: localStorage.getItem('user_id'),
+          user: localStorage.getItem("user_id"),
           events: []
-        }
+        };
 
         axios
           .post(calendarurl, calendarpayload)
           .then(function(calendarresponse) {
             console.log(
               "Successfully created personal calendar for user " +
-                localStorage.getItem('user_id')
-            )
-          })
+                localStorage.getItem("user_id")
+            );
+          });
       })
       .catch(function(error) {
-        self.setState({ error: true })
+        self.setState({ error: true });
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          console.log(error.request)
+          console.log(error.request);
         } else {
           // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message)
+          console.log("Error", error.message);
         }
-      })
+      });
   }
 
-  //Radio button select function
+  /**
+   * Handles selection of political party
+   * @param {Event} e - Event that triggers handler (clicking which political party to be affiliated with)
+   */
   onRadioSelect(e) {
     this.setState({
       poliID: e.target.value
-    })
+    });
   }
 
+  /**
+   * Render signup page.
+   * @return {ReactComponent} - Signup page component to display
+   */
   render() {
     //Grab error/success flags
-    const { error } = this.state
-    const { success } = this.state
+    const { error } = this.state;
+    const { success } = this.state;
     return (
       <div className="login-clean">
         <Form log={console.log(error)} className="form">
@@ -252,8 +268,8 @@ class Signup extends React.Component {
           </Link>
         </Form>
       </div>
-    )
+    );
   }
 }
 
-export default Signup
+export default Signup;

@@ -21,6 +21,13 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
+
+/**
+ * Represents the Calendar Event box used in list view.
+ * @param {Function} toggleEvent - toggles the event modal when an even is clicked on
+ * @param {Array} events - list of events to display in calendar
+ * @return {ReactComponent} BigCalendar - Component taken from react-big-calendar to render calendar
+ */
 let CalendarView = ({ events, toggleEvent }) => (
   <BigCalendar
     titleAccessor={event => event.title}
@@ -48,9 +55,6 @@ let CalendarView = ({ events, toggleEvent }) => (
  * @param {Function} props.toggleMarkAttending - toggles if the user will attend the event
  */
 class CalendarEvent extends React.Component {
-  //Constructor
-  //By default, 'Learn More' modal closed
-
   /**
    * Render login page.
    * @return {ReactComponent} - CalendarEvent page component to display
@@ -116,7 +120,7 @@ class CalendarEvent extends React.Component {
 }
 
 /**
- * Represents the login page.
+ * Represents the calendar page.
  * @param {Object} props - React props
  */
 class Calendar extends React.Component {
