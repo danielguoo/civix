@@ -98,7 +98,6 @@ class Login extends React.Component {
   render() {
     //Grab error flag
     const { error } = this.state;
-    console.log(this);
     return (
       <div
         log={console.log("Props at render: " + this.props)}
