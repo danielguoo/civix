@@ -35,7 +35,6 @@ class NavigationBar extends React.Component {
 
 
   logout(){
-    console.log("HIIIII")
     localStorage.setItem('user_key', null)
     localStorage.setItem('user_id', null)
     localStorage.setItem('user_name', null)
@@ -46,7 +45,7 @@ class NavigationBar extends React.Component {
 
   render() {
     return (
-      <div log={console.log(this.state.redirect)}>
+      <div>
         {this.state.redirect && <Redirect to='/login'/>}
         <Navbar className="Navbar" light expand="md">
           <img className="CivixTitle" src={civixtitle} alt="Civix" />

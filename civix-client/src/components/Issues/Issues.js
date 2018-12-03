@@ -103,9 +103,6 @@ class Issues extends React.Component {
                   <Link
                     to={{
                       pathname: "/issue/" + issue.id,
-                      issueid: issue.id,
-                      title: issue.title,
-                      description: issue.description
                     }}
                   >
                     {" "}

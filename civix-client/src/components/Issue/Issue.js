@@ -10,19 +10,8 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 
 class Comment extends React.Component {
   //Constructor
-  constructor(props) {
-    super(props);
-    this.state = {
-      upvotes: this.props.upvotes,
-      downvotes: this.props.downvotes
-    };
 
-    //Bind functions for performing upvotes, downvotes
-    this.upvote = this.upvote.bind(this);
-    this.downvote = this.downvote.bind(this);
-  }
-
-  updateComments() {
+  updateComments(upvote) {
     /*alert(
       "updating, now with " +
         this.state.upvotes +
@@ -32,13 +21,16 @@ class Comment extends React.Component {
     )*/
     //Setup
     var url = "http://localhost:8000/posts/" + this.props.id + "/";
+    var self = this
+    const newUp = upvote ? this.props.upvotes + 1 : this.props.upvotes
+    const newDown = upvote ? this.props.downvotes : this.props.downvotes + 1
     var payload = {
       id: this.props.id,
       item: this.props.item,
       user: this.props.user,
       content: this.props.content,
-      upvotes: this.state.upvotes,
-      downvotes: this.state.downvotes
+      upvotes: newUp,
+      downvotes: newDown
     };
     //alert("id is " + payload.id + ", item is " + payload.item)
     //Attempt update
@@ -46,6 +38,7 @@ class Comment extends React.Component {
       .put(url, payload)
       .then(function(response) {
         console.log("Successfully updated post with status " + response.status);
+        self.props.getComments()
       })
       .catch(function(error) {
         if (error.response) {
@@ -66,20 +59,6 @@ class Comment extends React.Component {
       });
   }
 
-  upvote() {
-    this.setState({ upvotes: this.state.upvotes + 1 }, function() {
-      //alert("upvotes now " + this.state.upvotes)
-      this.updateComments();
-    });
-  }
-
-  downvote() {
-    this.setState({ downvotes: this.state.downvotes + 1 }, function() {
-      //alert("downvotes now " + this.state.downvotes)
-      this.updateComments();
-    });
-  }
-
   render() {
     return (
       <div className="commentContainer">
@@ -87,13 +66,13 @@ class Comment extends React.Component {
           <h6 className="text-left">{this.props.username}</h6>
           <div>
             <Badge
-              onClick={this.upvote}
+              onClick={()=>this.updateComments(true)}
               style={{ background: "#22c25c", marginRight: 5 }}
             >
-              <IoIosThumbsUp /> {this.state.upvotes}
+              <IoIosThumbsUp /> {this.props.upvotes}
             </Badge>
-            <Badge onClick={this.downvote} style={{ background: "#ff0000" }}>
-              <IoIosThumbsDown /> {this.state.downvotes}
+            <Badge onClick={()=>this.updateComments(false)} style={{ background: "#ff0000" }}>
+              <IoIosThumbsDown /> {this.props.downvotes}
             </Badge>
           </div>
         </div>
@@ -111,13 +90,16 @@ class Issue extends React.Component {
     this.addNewComment = this.addNewComment.bind(this);
     this.getNewCommentText = this.getNewCommentText.bind(this);
     this.getNewCommentOnRight = this.getNewCommentOnRight.bind(this);
+    this.getComments = this.getComments.bind(this);
     this.state = {
       forcomments: [],
       againstcomments: [],
       newCommentText: "",
       newCommentOnRight: false,
       error: false,
-      users: []
+      users: [],
+      description: "",
+      title: ""
     };
   }
 
@@ -170,6 +152,7 @@ class Issue extends React.Component {
             againstarr.push(response.data);
             self.setState({ againstcomments: againstarr });
           }
+          console.log(this.state.forcomments, this.state.againstcomments)
         })
         .catch(function(error) {
           if (error.response) {
@@ -192,6 +175,7 @@ class Issue extends React.Component {
       this.setState({ error: true });
     }
     this.setState({ newCommentText: "" });
+    this.getComments()
   }
 
   //Comment display function
@@ -208,6 +192,7 @@ class Issue extends React.Component {
 
     return (
       <Comment
+        getComments={this.getComments}
         id={id}
         item={item}
         user={user}
@@ -224,33 +209,26 @@ class Issue extends React.Component {
   getComments() {
     //Setup
     var userurl = "http://localhost:8000/users/";
+    var eventurl =
+      "http://localhost:8000/items/" +
+      parseInt(this.props.location.pathname.substr(-1));
     var url = "http://localhost:8000/posts/";
     var self = this;
     var allcomments = [];
 
     axios
-      .all([axios.get(userurl), axios.get(url)])
+      .all([axios.get(userurl), axios.get(url), axios.get(eventurl)])
 
       .then(
-        axios.spread((userresponse, response) => {
+        axios.spread((userresponse, response, eventresponse) => {
           const users = userresponse.data;
-          this.setState({ users });
+          const title = eventresponse.data.title;
+          const description = eventresponse.data.description;
+          this.setState({ users, title, description });
           allcomments = response.data;
-        })
-      )
-      .then(function() {
-        var promises = [];
-        //alert("Attempting pushing all events")
-
-        //filter out only those linked to issue id
-        var pagecomments = allcomments.filter(function(e) {
-          return e.item === parseInt(self.props.location.pathname.substr(-1));
-        });
-
-        //get all associated users as well
-
-        axios.all(promises).then(function(results) {
-          //split into those for and those against
+          var pagecomments = allcomments.filter(function(e) {
+            return e.item === parseInt(self.props.location.pathname.substr(-1));
+          });
           var forcomments = pagecomments.filter(function(e) {
             return e.onRight === false;
           });
@@ -260,8 +238,8 @@ class Issue extends React.Component {
 
           self.setState({ forcomments: forcomments });
           self.setState({ againstcomments: againstcomments });
-        });
-      })
+        })
+      )
       .catch(error => {
         if (error.response) {
           // The request was made and the server responded with a status code
@@ -306,21 +284,29 @@ class Issue extends React.Component {
             </Col>
             <Col xs="6" sm="4">
               <div className="intro">
-                <h4 className="text-center">{this.props.location.title}</h4>
+                <h4 className="text-center">{this.state.title}</h4>
               </div>
               <h4>Description:</h4>
-              <p>{this.props.location.description}</p>
+              <p>{this.state.description}</p>
               <br />
-              {error && <Alert color="danger">Comment must be nonempty and a maximum of 280 characters.</Alert>}
+              {error && (
+                <Alert color="danger">
+                  Comment must be nonempty and a maximum of 280 characters.
+                </Alert>
+              )}
               <div className="shareCommentContainer">
                 <textarea
                   value={this.state.newCommentText}
                   onChange={this.getNewCommentText}
                   placeholder="Write a comment.."
                 />
-            <div style={{float: "right", marginRight: 5, fontWeight: "bold"}}>
-            {(280 - this.state.newCommentText.length) >= 0 ? (280 - this.state.newCommentText.length) : 0}
-                 </div>
+                <div
+                  style={{ float: "right", marginRight: 5, fontWeight: "bold" }}
+                >
+                  {280 - this.state.newCommentText.length >= 0
+                    ? 280 - this.state.newCommentText.length
+                    : 0}
+                </div>
                 <div>
                   <button
                     onClick={this.addNewComment}
