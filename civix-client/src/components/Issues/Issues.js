@@ -16,7 +16,6 @@ class Issues extends React.Component {
   //By default, first tab is selected
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: "1",
       issues: [],
