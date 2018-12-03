@@ -14,9 +14,9 @@ class CivixEventsTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-        e = Event.objects.create(title='Fire in the disco', date=timezone.now(), description='Outta control')
-        Event.objects.create(title='CO2 at the fire', date=timezone.now(), description='In control')
-        Event.objects.create(title='this is boring', date=timezone.now(), description='there is no control in this deterministic universe, alright?')
+        e = Event.objects.create(title='Fire in the disco', date=timezone.now(), briefDescription='Outta control')
+        Event.objects.create(title='CO2 at the fire', date=timezone.now(), briefDescription='In control')
+        Event.objects.create(title='this is boring', date=timezone.now(), briefDescription='there is no control in this deterministic universe, alright?')
 
     '''
     Success Tests
@@ -33,7 +33,7 @@ class CivixEventsTest(TestCase):
         self.assertEqual(body[0]["title"], 'Fire in the disco')
 
     def test_Events_create(self):
-        newEvent = {'title': 'Prop 60', 'date':timezone.now(), 'description': 'Legalize ranch'}
+        newEvent = {'title': 'Prop 60', 'date':timezone.now(), 'briefDescription': 'Legalize ranch'}
         res = self.client.post('/events/', newEvent, content_type='application/json', follow=True)
 
         #Success indicates status code of 201, 4 objects in the DB, and title of "Prop 60" in the new object
@@ -53,7 +53,7 @@ class CivixEventsTest(TestCase):
         self.assertEqual(self.getItemsInDB('/events/'), 2)
 
     def test_Events_update(self):
-        updateEvent = {'title': 'No fire', 'date':timezone.now(), 'description': 'Meh'}
+        updateEvent = {'title': 'No fire', 'date':timezone.now(), 'briefDescription': 'Meh'}
         res = self.client.put('/events/1/', updateEvent, content_type='application/json', follow=True)
         
         #Success indicates status code of 200, 3 objects in the DB, and title of "No fire"        
@@ -82,8 +82,8 @@ class CivixEventsTest(TestCase):
     # 2) Trying to push to an event to particular URL inaccessible to POST requests - Results in 404
     #Returns a bad request body and doesn't change the number of objects in the table
     def test_Events_create_failure(self):
-        newEvent = {'title': 'Prop 60', 'description': 'Legalize ranch'}
-        forceNewEvent = {'title': 'Prop 60', 'date':timezone.now(), 'description': 'Legalize ranch'}
+        newEvent = {'title': 'Prop 60', 'briefDescription': 'Legalize ranch'}
+        forceNewEvent = {'title': 'Prop 60', 'date':timezone.now(), 'briefDescription': 'Legalize ranch'}
         
         res1 = self.client.post('/events/', newEvent, content_type='application/json', follow=True)
         res2 = self.client.post('/events/666', forceNewEvent, content_type='application/json', follow=True)
@@ -105,7 +105,7 @@ class CivixEventsTest(TestCase):
     # 1) Inserting data into Event that doesn't exist - Results in 404
     # 2) Inserting data into wrong url - Results in 405
     def test_Events_update_failure(self):
-        rightUpdateEvent = {'title': 'No fire', 'date':timezone.now(), 'description': 'Meh'}
+        rightUpdateEvent = {'title': 'No fire', 'date':timezone.now(), 'briefDescription': 'Meh'}
 
         res1 = self.client.put('/events/666/', rightUpdateEvent, content_type='application/json', follow=True)
         res2 = self.client.put('/events/', rightUpdateEvent, content_type='application/json', follow=True)
