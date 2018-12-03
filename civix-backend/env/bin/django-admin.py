@@ -1,4 +1,4 @@
-#!/mnt/c/dev/civix/civix-backend/env/bin/python
+#!/Users/mjaneduan/Desktop/civix/civix-backend/env/bin/python3.7
 from django.core import management
 
 if __name__ == "__main__":
