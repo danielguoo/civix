@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Container,
   ListGroup,
   ListGroupItem,
   Button,
@@ -9,7 +8,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalBody,
-  Card
 } from "reactstrap";
 
 import BigCalendar from "react-big-calendar";
@@ -17,11 +15,9 @@ import moment from "moment";
 
 import "./Calendar.css";
 
-import { Link } from "react-router-dom";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import NavigationBar from "../NavigationBar/NavigationBar";
-import UserContext from '../context.js'
 
 const localizer = BigCalendar.momentLocalizer(moment);
 //An individual calendar event

@@ -100,6 +100,7 @@ class Signup extends React.Component {
           })
       })
       .catch(function(error) {
+        self.setState({ error: true })
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
@@ -114,7 +115,6 @@ class Signup extends React.Component {
         } else {
           // Something happened in setting up the request that triggered an Error
           console.log("Error", error.message)
-          self.setState({ error: true })
         }
       })
   }
@@ -130,10 +130,9 @@ class Signup extends React.Component {
     //Grab error/success flags
     const { error } = this.state
     const { success } = this.state
-
     return (
       <div className="login-clean">
-        <Form className="form">
+        <Form log={console.log(error)} className="form">
           <h1 className="text-center">Register</h1>
           <div className="illustration" />
           {success && <Alert color="success">Registration successful.</Alert>}
