@@ -68,19 +68,26 @@ class CalendarEvent extends React.Component {
               backgroundColor: "#27a0f8",
               border: "none"
             }}
-            onClick={(event) => this.props.toggleEvent(this.props.event)}
+            onClick={() => this.props.toggleEvent(this.props.event)}
           >
             Learn More...
             
           </Button>
-          <Button
+          
+            {this.props.currentlyAttending ? <Button
             className="btn btn-primary"
             type="button"
-            style={{ backgroundColor: "#f83842", border: "none" }}
+            color="success"
+            style={{ border: "none" }}
             onClick={()=> this.props.toggleMarkAttending(!this.props.currentlyAttending, this.props.id)}
-          >
-            {this.props.currentlyAttending ? 'Attending': ' Not Attending'}
-          </Button>
+          >Attending </Button>: <Button
+          className="btn btn-primary"
+          type="button"
+          color="danger"
+          style={{ border: "none" }}
+          onClick={()=> this.props.toggleMarkAttending(!this.props.currentlyAttending, this.props.id)}
+        > Not Attending </Button>}
+          
         </ButtonGroup>
       </ListGroupItem>
     );
@@ -329,8 +336,8 @@ const EventModal = ({event,open, toggleEvent, markAttending, currentlyAttending}
 </ModalHeader>
 <ModalBody>{event.fullDescription}</ModalBody>
 <ModalFooter>
-  {currentlyAttending ? <Button onClick={()=>markAttending(false, event.id)}color="primary"> Attending
-</Button>: <Button onClick={()=>markAttending(true, event.id)}color="primary"> Not Attending
+  {currentlyAttending ? <Button onClick={()=>markAttending(false, event.id)}color="success"> Attending
+</Button>: <Button onClick={()=>markAttending(true, event.id)}color="danger"> Not Attending
 </Button>}
   
 
