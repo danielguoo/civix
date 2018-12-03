@@ -70,7 +70,7 @@ class Signup extends React.Component {
         var profileurl = "http://localhost:8000/profiles/"
         var fulladdress = self.state.address.split(", ")
         var profilepayload = {
-          user: global.user_id,
+          user: localStorage.getItem('user_id'),
           dob: self.state.dob,
           poliID: self.state.poliID,
           streetAddress: fulladdress[0],
@@ -86,7 +86,7 @@ class Signup extends React.Component {
         //Attempt concurrent calendar creation
         var calendarurl = "http://localhost:8000/calendars/"
         var calendarpayload = {
-          user: global.user_id,
+          user: localStorage.getItem('user_id'),
           events: []
         }
 
@@ -95,7 +95,7 @@ class Signup extends React.Component {
           .then(function(calendarresponse) {
             console.log(
               "Successfully created personal calendar for user " +
-                global.user_id
+                localStorage.getItem('user_id')
             )
           })
       })
