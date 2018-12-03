@@ -16,7 +16,7 @@ class CivixPostTest(TestCase):
         usr = User.objects.create_user('theBurn', 'chaddy@gmail.com', 'banana')
         usr2 = User.objects.create_user('theWet', 'chaddy@gmail.com', 'fineapple')
 
-        e = Event.objects.create(title='Fire in the disco', date=timezone.now(), description='Outta control')
+        e = Event.objects.create(title='Fire in the disco', date=timezone.now(), briefDescription='Outta control')
         i = Item.objects.create(title='Extinguish fire', description='Umm, ykno', event=e)
 
         p = Post.objects.create(item=i, user=usr, content='coughcough', onRight=True, upvotes=4, downvotes=0)

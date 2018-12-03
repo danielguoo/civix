@@ -10,10 +10,6 @@ import axios from "axios";
  * @param {Object} props - React props
  */
 class Account extends React.Component {
-  /**
-   * Creates an instance of a profile component.
-   * By default, the component holds no user information in userInfo..
-   */
   constructor(props) {
     super(props);
     this.getUserInfo = this.getUserInfo.bind(this);
@@ -23,15 +19,14 @@ class Account extends React.Component {
   }
 
   /**
-   * Retrieves user information immediately upon profile component insertion into DOM tree.
-   * @see getUserInfo()
+   * React function that calls setup functions when the component is first mounted. We need to get the user information to be displayed.
    */
   componentDidMount() {
     this.getUserInfo();
   }
 
   /**
-   * Retrieves user information from the application database and stores it in state variable userInfo.
+   * Retrieves user information using axios.
    */
   getUserInfo() {
     //Build URL
@@ -68,7 +63,7 @@ class Account extends React.Component {
   }
   /**
    * Renders the profile component
-   * @return The profile component, with one field displayed per line
+   * @return {ReactComponent} - Account component to display as profile
    */
   render() {
     return (

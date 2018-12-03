@@ -18,13 +18,13 @@ import { IoMdCall, IoIosMail } from "react-icons/io";
 import NavigationBar from "../NavigationBar/NavigationBar";
 
 /**
- * Represents the contact component.
+ * Represents the representative profile component.
  * @param {Object} props - React props
- * @param {string} props.name - name of the contact
- * @param {string} props.position - position of the contact
- * @param {string} props.party - political party of the contact
- * @param {string} props.phonelink - phone contact
- * @param {string} props.emaillink - email contact
+ * @param {string} props.name - name of the representative
+ * @param {string} props.position - position of the representative
+ * @param {string} props.party - political party of the representative
+ * @param {string} props.phonelink - phone number link for representative
+ * @param {string} props.emaillink - email link for representative
  */
 class ContactCard extends React.Component {
   /**

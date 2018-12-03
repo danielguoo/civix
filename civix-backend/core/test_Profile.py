@@ -17,7 +17,7 @@ class CivixProfileTest(TestCase):
         usr2 = User.objects.create_user('theWet', 'chaddy@gmail.com', 'fineapple')
 
         p = Profile.objects.create(user = self.usr, dob=timezone.now(), poliID = 1, 
-        address="10 Downing St", city="NYC", zipcode = "90210", state="WY")
+        streetAddress="10 Downing St", city="NYC", zipcode = "90210", state="WY")
 
     # Login client return true if the profile logs in, false otherwise
     def test_Profile_login(self):

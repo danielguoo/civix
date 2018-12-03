@@ -14,8 +14,10 @@ import "./NavigationBar.css";
 import { IoIosCalendar, IoMdChatboxes } from "react-icons/io";
 import { MdPeopleOutline } from "react-icons/md";
 
-//TODO: Add icons
-
+/**
+ * Represents the application navigation bar. 
+ * @param {Object} props - React props
+ */
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
@@ -27,13 +29,18 @@ class NavigationBar extends React.Component {
       redirect: false
     };
   }
+    /**
+     * Toggles the dropdown menu from open to closed or closed to open.
+     */
   toggle() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
     });
   }
 
-
+    /**
+     * Logs out a logged-in user.
+     */
   logout(){
     localStorage.setItem('user_key', null)
     localStorage.setItem('user_id', null)
@@ -43,6 +50,10 @@ class NavigationBar extends React.Component {
     });
   }
 
+    /**
+     * Renders the navigation bar component. 
+     * @return {ReactComponent} - NavigationBar component to display
+     */
   render() {
     return (
       <div>
