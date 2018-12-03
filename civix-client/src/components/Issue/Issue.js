@@ -137,7 +137,7 @@ class Issue extends React.Component {
 
   addNewComment(user) {
     var newText = this.state.newCommentText;
-    if (newText !== "") {
+    if (newText !== "" && newText.length <= 280) {
       this.setState({ error: false });
       var newOnRight = this.state.newCommentOnRight;
       var self = this;
@@ -311,13 +311,16 @@ class Issue extends React.Component {
               <h4>Description:</h4>
               <p>{this.props.location.description}</p>
               <br />
-              {error && <Alert color="danger">Comment must be nonempty.</Alert>}
+              {error && <Alert color="danger">Comment must be nonempty and a maximum of 280 characters.</Alert>}
               <div className="shareCommentContainer">
                 <textarea
                   value={this.state.newCommentText}
                   onChange={this.getNewCommentText}
                   placeholder="Write a comment.."
                 />
+            <div style={{float: "right", marginRight: 5, fontWeight: "bold"}}>
+            {(280 - this.state.newCommentText.length) >= 0 ? (280 - this.state.newCommentText.length) : 0}
+                 </div>
                 <div>
                   <button
                     onClick={this.addNewComment}
