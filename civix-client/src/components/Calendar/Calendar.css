@@ -18,17 +18,17 @@
   display: flex;
 }
 .firstLine div {
-  width: 90%;
+  width: 90vw;
 }
 
 .eventToggle {
   cursor: pointer;
   float: left;
+  margin-left: 9vw;
 
 }
 .calendarToggle{
   cursor: pointer;
-  margin-right: -20vw;
 }
 
 .article-list {

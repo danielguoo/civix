@@ -20,13 +20,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import NavigationBar from "../NavigationBar/NavigationBar";
 
 const localizer = BigCalendar.momentLocalizer(moment);
-//An individual calendar event
-//Components are:
-//-Event name
-//-Event date
-//-Brief event description
-//-'Learn More' button
-//-'Mark Attending' button
 
 let CalendarView = ({ events, toggleEvent }) => (
   <BigCalendar
@@ -58,8 +51,10 @@ class CalendarEvent extends React.Component {
   //Constructor
   //By default, 'Learn More' modal closed
 
-  //'Add to Personal Calendar' function
-
+  /**
+   * Render login page.
+   * @return {ReactComponent} - CalendarEvent page component to display
+   */
   render() {
     var unformatteddate = new Date(this.props.date.toString());
     var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY");

@@ -6,7 +6,8 @@ import NavigationBar from "../NavigationBar/NavigationBar"
 import axios from "axios"
 
 /**
- * Represents a user profile
+ * Represents the account  page.
+ * @param {Object} props - React props
  */
 class Account extends React.Component {
   /**
