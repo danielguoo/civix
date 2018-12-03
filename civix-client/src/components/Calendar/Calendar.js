@@ -21,7 +21,6 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
-
 /**
  * Represents the Calendar Event box used in list view.
  * @param {Function} toggleEvent - toggles the event modal when an even is clicked on
