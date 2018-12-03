@@ -1,4 +1,4 @@
-#!/Users/mjaneduan/Desktop/civix/civix-backend/env/bin/python
+#!/mnt/c/Users/Michael/Desktop/temp/civix/civix-backend/env/bin/python
 
 import sys
 import getopt
