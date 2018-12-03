@@ -48,7 +48,7 @@ class ContactCard extends React.Component {
                 type="button"
                 style={{ backgroundColor: "#E85a4f", border: "none" }}
               >
-                <a href={this.props.emaillink} style={{ color: "#ffffff" }}>
+                <a href= { this.props.emaillink} style={{ color: "#ffffff" }}>
                   <IoIosMail/> Email
                 </a>
               </Button>
@@ -82,11 +82,11 @@ class Contact extends React.Component {
     var position = representative.office
     var party = representative.party
     var phonelink = "tel:" + representative.phones[0]
-    var url = representative.urls && representative.urls[0] || null
+    var url = representative.urls ? representative.urls[0] : null
     var emaillink = url
     if (representative.emails !== undefined) {
       console.log("email exists for this rep")
-      emaillink = "mailto" + representative.emails[0]
+      emaillink = "mailto:" + representative.emails[0] 
     }
     var photolink =
       "https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg"

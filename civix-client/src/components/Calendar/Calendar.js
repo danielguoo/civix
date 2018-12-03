@@ -54,7 +54,6 @@ class CalendarEvent extends React.Component {
   render() {
     var unformatteddate = new Date(this.props.date.toString());
     var cleandate = moment(unformatteddate).format("dddd, MMMM Do YYYY");
-    var cleantime = moment(unformatteddate).format("h:mm A");
     return (
       <ListGroupItem className="list-group-item" style={{ marginBottom: 10 }}>
         <h3 className="text-left">{this.props.title}</h3>
@@ -285,9 +284,9 @@ class Calendar extends React.Component {
           <NavigationBar />
             <div className="intro">
             <div className="firstLine" >
-              <div><h5 className="eventToggle"> <span className={this.state.myEventView ? "selected": null }onClick={() => this.changeEventView('myEvents')}>My Events</span> | <span className={this.state.myEventView ? null: "selected"} onClick={this.changeEventView}>All Events</span> </h5></div>
-              <div><h4>Political Calendar</h4></div>
-              <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>Agenda</span> </h5> </div>
+              <div><h5 className="eventToggle"> <span className={this.state.myEventView ? "selected": null }onClick={() => this.changeEventView('myEvents')}>Personal</span> | <span className={this.state.myEventView ? null: "selected"} onClick={this.changeEventView}>Community</span> </h5></div>
+              <div><h4>Calendar Dashboard</h4></div>
+              <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>List</span> </h5> </div>
             </div>
               <p className="toggle">
                 Upcoming political events in: <span onClick={()=>this.changeFilter(this.state.profile.city)} className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span onClick={()=>this.changeFilter(this.state.profile.state)} className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span onClick={()=>this.changeFilter('USA')} className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
@@ -300,7 +299,7 @@ class Calendar extends React.Component {
         </div> : 
         <ListGroup className="list-group">
           {this.state.myEventView ? (this.state.myEvents.length !== 0 ? currentEvents.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
-          currentEvents.sort((a, b) => a.date - b.date).map(this.displayEvents) }
+          currentEvents.sort((a, b) => new Date(a.date.toString()) - new Date(b.date.toString())).map(this.displayEvents) }
         </ListGroup> }
       </div>
     );

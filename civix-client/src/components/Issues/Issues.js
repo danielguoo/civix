@@ -74,7 +74,7 @@ class Issues extends React.Component {
         <div className="article-list">
           <Container className="container">
             <div className="intro">
-              <h4 className="text-center">Hot Issues</h4>
+              <h4 className="text-center">Ballot Board</h4>
             </div>
           </Container>
         </div>

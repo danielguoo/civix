@@ -2,7 +2,6 @@
 
 .issueSide {
   margin-top: 15px; 
-  font-family: Garamond;
 }
 
 .intro h4 { 
@@ -52,7 +51,7 @@
 }
 
 .scrolling {
-  height: 390px;
+  height: 90%;
   overflow-y:scroll;
 }
 

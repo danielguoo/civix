@@ -1,5 +1,5 @@
 .CalendarChoice {
-  height: 500px;
+  height: 40vw;
   margin: 20px;
   background-color: #fff;
 }
@@ -14,12 +14,11 @@
 
 .firstLine {
   padding: 0;
-  margin: 30px;
+  margin: 20px;
   display: flex;
-  justify-content: space-between;
 }
 .firstLine div {
-  width: 198px;
+  width: 90%;
 }
 
 .eventToggle {
@@ -29,6 +28,7 @@
 }
 .calendarToggle{
   cursor: pointer;
+  margin-right: -20vw;
 }
 
 .article-list {
@@ -86,6 +86,10 @@
   font-size: 14px;
   margin-top: 15px;
   margin-bottom: 0;
+}
+
+.list-group-item {
+  margin: 5px;
 }
 
 .article-list .item .action {

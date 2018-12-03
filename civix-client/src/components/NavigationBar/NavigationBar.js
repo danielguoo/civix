@@ -54,10 +54,10 @@ class NavigationBar extends React.Component {
             <IoIosCalendar /> Calendar
           </Link>
           <Link className="NavButton" to="/issues">
-            <IoMdChatboxes /> Issues
+            <IoMdChatboxes /> Ballot Board
           </Link>
           <Link className="NavButton" to="/contact">
-            <MdPeopleOutline /> Your Reps
+            <MdPeopleOutline /> Representatives Hub
           </Link>
           <Nav className="ml-auto" navbar>
             <NavItem>
