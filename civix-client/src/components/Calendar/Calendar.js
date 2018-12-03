@@ -142,7 +142,6 @@ class Calendar extends React.Component {
             console.log("@ position " + index)
           updatedevents.splice(index, 1);
         }
-        console.log(updatedevents)
         //alert("new set: " + updatedevents)
       })
       .then(function() {
@@ -184,7 +183,6 @@ class Calendar extends React.Component {
       currentEvent: event,
       modal: !this.state.modal
     });
-    console.log(this.state)
   }
   //Event display function
   //Takes the fields per event and index
@@ -279,8 +277,7 @@ class Calendar extends React.Component {
   }
 
   render() {
-    console.log(this.state.events)
-    // const currentEvents = this.state.events.filter((event)=> event[this.])
+    const currentEvents = this.state.eventsFilter === 'USA' ? this.state.events : this.state.events.filter((event)=> event.city === this.state.eventsFilter || event.state === this.state.eventsFilter )
     return (
 
       <div>
@@ -299,11 +296,11 @@ class Calendar extends React.Component {
         </div>
     {this.state.modal && <EventModal open={this.state.modal} event={this.state.currentEvent} markAttending={this.toggleMarkAttending} toggleEvent={this.toggleEventDetails} currentlyAttending={this.state.myEvents.includes(this.state.currentEvent.id)} ></EventModal> }
         {this.state.CalendarView ? <div className="CalendarChoice">
-          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? this.state.events.filter(j => this.state.myEvents.includes(j.id)) : this.state.events}/>
+          <CalendarView toggleEvent={this.toggleEventDetails} events={this.state.myEventView ? currentEvents.filter(j => this.state.myEvents.includes(j.id)) : currentEvents}/>
         </div> : 
         <ListGroup className="list-group">
-          {this.state.myEventView ? (this.state.myEvents.length !== 0 ? this.state.events.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
-          this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents) }
+          {this.state.myEventView ? (this.state.myEvents.length !== 0 ? currentEvents.filter(j => this.state.myEvents.includes(j.id)).sort((a, b) => a.date - b.date).map(this.displayEvents) : <h3>Your calendar is currently empty.</h3>) : 
+          currentEvents.sort((a, b) => a.date - b.date).map(this.displayEvents) }
         </ListGroup> }
       </div>
     );
