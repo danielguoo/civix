@@ -18,19 +18,8 @@ import Account from "../Account/Account"
  */
 class App extends Component {
   /**
-   * Creates an instance of the application component.
-   */
-
-  /**
-   * Renders the application component on the screen, routed as follows:
-   * /login -> login page
-   * /signup -> signup page
-   * /calendar -> calendar dashboard (with community & personal calendar)
-   * /issues -> ballot board
-   * /issue/:id -> specific ballot board thread, as specified by id
-   * /contact -> representatives hub
-   * /account -> profile page
-   * @return The application component, with the login page displayed by default
+   * Renders a properly routed application component.
+   * @return {ReactComponent} - The application component to display
    */
   render() {
     return (

@@ -12,9 +12,9 @@ import NavigationBar from "../NavigationBar/NavigationBar";
  * Represents each Comment in a post
  * @param {Object} props - React props
  * @param {int} props.upvotes - current count of upvotes
- * @param {int} props.downvotes = current count of downvotes
- * @param {string} props.username - user who posted the comment
- * @param {string} props.content - content of comment
+ * @param {int} props.downvotes - current count of downvotes
+ * @param {String} props.username - user who posted the comment
+ * @param {String} props.content - content of comment
  * 
  */
 class Comment extends React.Component {
