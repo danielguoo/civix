@@ -1,6 +1,5 @@
 import React from "react"
 import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
 import NavigationBar from "../NavigationBar/NavigationBar"
 
 //axios for HTTP requests

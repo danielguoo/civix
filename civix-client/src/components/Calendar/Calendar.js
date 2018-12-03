@@ -90,6 +90,7 @@ class CalendarEvent extends React.Component {
   }
 }
 
+
 class Calendar extends React.Component {
   //Constructor
   constructor(props) {

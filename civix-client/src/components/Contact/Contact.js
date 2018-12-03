@@ -80,7 +80,7 @@ class Contact extends React.Component {
     //alert(JSON.stringify(this.state.representatives))
     //alert("at index " + i)
     var position = representative.office
-    var party = representative.party
+    var party = representative.party ? representative.party :  <br></br>
     var phonelink = "tel:" + representative.phones[0]
     var url = representative.urls ? representative.urls[0] : null
     var emaillink = url

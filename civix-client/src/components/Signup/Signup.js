@@ -55,6 +55,7 @@ class Signup extends React.Component {
     axios
       .post(registrationurl, registrationpayload)
       .then(function(registrationresponse) {
+        self.setState({error: false})
         self.setState({ success: true })
         console.log(
           "Successfully stored registration information with status " +
