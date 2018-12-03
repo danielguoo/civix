@@ -2,13 +2,12 @@ import React, { Component } from "react"
 import "./App.css"
 
 //Router components
-import { Switch, Route, Redirect } from "react-router-dom"
+import { Switch, Route, } from "react-router-dom"
 
 //App components to route
 import Login from "../Login/Login"
 import Signup from "../Signup/Signup"
 import Calendar from "../Calendar/Calendar"
-import PersonalCalendar from "../PersonalCalendar/PersonalCalendar"
 import Issues from "../Issues/Issues"
 import Issue from "../Issue/Issue"
 import Contact from "../Contact/Contact"
