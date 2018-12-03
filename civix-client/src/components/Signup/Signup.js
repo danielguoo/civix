@@ -86,10 +86,11 @@ class Signup extends React.Component {
           zipcode: fulladdress[3],
           state: fulladdress[2]
         };
+        console.log(profilepayload)
         //Attempt concurrent profile creation
         axios.post(profileurl, profilepayload).then(function(profileresponse) {
           console.log(
-            "Successfully created profile for user " + global.user_id
+            "Successfully created profile for user " + localStorage.getItem("user_id")
           );
         });
 

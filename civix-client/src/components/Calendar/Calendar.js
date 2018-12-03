@@ -351,7 +351,8 @@ class Calendar extends React.Component {
         : this.state.events.filter(
             event =>
               event.city === this.state.eventsFilter ||
-              event.state === this.state.eventsFilter
+              event.state === this.state.eventsFilter ||
+              event.state === 'DC'
           );
     return (
       <div>

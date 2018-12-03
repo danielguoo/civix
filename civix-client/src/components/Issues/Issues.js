@@ -16,9 +16,7 @@ class Issues extends React.Component {
   //By default, first tab is selected
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1",
       issues: [],
       events: []
     };
@@ -101,7 +99,7 @@ class Issues extends React.Component {
                       .title
                   }
                 </td>
-                <td>{issue.description.substring(0, 15)}...</td>
+                <td>{issue.description.substring(0, 50)}...</td>
                 <td>
                   {" "}
                   <Link

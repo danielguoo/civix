@@ -149,7 +149,7 @@ class Issue extends React.Component {
       var url = "http://localhost:8000/posts/";
       //alert("issueid is " + this.props.location.issueid)
       var payload = {
-        item: parseInt(this.props.location.pathname.substr(-1)),
+        item: parseInt(this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1)),
         user: parseInt(localStorage.getItem("user_id")),
         content: newText,
         onRight: newOnRight,
@@ -173,7 +173,6 @@ class Issue extends React.Component {
             againstarr.push(response.data);
             self.setState({ againstcomments: againstarr });
           }
-          console.log(this.state.forcomments, this.state.againstcomments)
         })
         .catch(function(error) {
           if (error.response) {
@@ -240,8 +239,8 @@ class Issue extends React.Component {
     var userurl = "http://localhost:8000/users/";
     var eventurl =
       "http://localhost:8000/items/" +
-      parseInt(this.props.location.pathname.substr(-1));
-    var url = "http://localhost:8000/posts/";
+      parseInt(this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1));
+    var url = "http://localhost:8000/posts/" ;
     var self = this;
     var allcomments = [];
 
@@ -250,6 +249,7 @@ class Issue extends React.Component {
 
       .then(
         axios.spread((userresponse, response, eventresponse) => {
+          console.log(eventresponse)
           const users = userresponse.data;
           const title = eventresponse.data.title;
           const description = eventresponse.data.description;
