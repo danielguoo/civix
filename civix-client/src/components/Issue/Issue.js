@@ -83,18 +83,18 @@ class Comment extends React.Component {
   render() {
     return (
       <div className="commentContainer">
-        <div className= "commentinfo">
+        <div className="commentinfo">
           <h6 className="text-left">{this.props.username}</h6>
           <div>
-          <Badge
-            onClick={this.upvote}
-            style={{ background: "#22c25c", marginRight: 5 }}
-          >
-            <IoIosThumbsUp /> {this.state.upvotes}
-          </Badge>
-          <Badge onClick={this.downvote} style={{ background: "#ff0000" }}>
-            <IoIosThumbsDown /> {this.state.downvotes}
-          </Badge>
+            <Badge
+              onClick={this.upvote}
+              style={{ background: "#22c25c", marginRight: 5 }}
+            >
+              <IoIosThumbsUp /> {this.state.upvotes}
+            </Badge>
+            <Badge onClick={this.downvote} style={{ background: "#ff0000" }}>
+              <IoIosThumbsDown /> {this.state.downvotes}
+            </Badge>
           </div>
         </div>
         <div className="commentText">{this.props.content}</div>
@@ -170,16 +170,6 @@ class Issue extends React.Component {
             againstarr.push(response.data);
             self.setState({ againstcomments: againstarr });
           }
-          var commentusers = self.state.commentusers;
-          //alert("userid: " + global.user_id + ", username: " + global.user_name)
-          var newcommentuser = {
-            id: global.user_id,
-            username: global.user_name
-          };
-          if (commentusers.indexOf(newcommentuser) === -1) {
-            commentusers.push(newcommentuser);
-          }
-          self.setState({ commentusers: commentusers });
         })
         .catch(function(error) {
           if (error.response) {
@@ -201,7 +191,7 @@ class Issue extends React.Component {
     } else {
       this.setState({ error: true });
     }
-    this.setState({newCommentText: ""})
+    this.setState({ newCommentText: "" });
   }
 
   //Comment display function

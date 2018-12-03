@@ -4,6 +4,10 @@
   background-color: #fff;
 }
 
+.toggle span {
+  cursor: pointer;
+}
+
 .selected {
   color:#E85a4f;
 }

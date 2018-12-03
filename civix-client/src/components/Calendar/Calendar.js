@@ -224,12 +224,17 @@ class Calendar extends React.Component {
     }));
   }
 
+  change
+
   changeEventView(view) {
     this.setState(() => ({
       myEventView: view === 'myEvents'
     }));
   }
 
+  changeFilter(eventsFilter) {
+    this.setState({eventsFilter})
+  }
 
   getEvents() {
     //Setup
@@ -271,10 +276,10 @@ class Calendar extends React.Component {
   }
 
   render() {
+    console.log(this.state.events)
+    // const currentEvents = this.state.events.filter((event)=> event[this.])
     return (
-      <UserContext.Consumer>
-    {user=>
-  
+
       <div>
         <div>
           <NavigationBar />
@@ -284,8 +289,8 @@ class Calendar extends React.Component {
               <div><h4>Political Calendar</h4></div>
               <div><h5 className="calendarToggle"><span  className={this.state.CalendarView ? "selected": null } onClick={() => this.changeView('calendar')}>Calendar</span> | <span className={this.state.CalendarView ? null : "selected" } onClick={() => this.changeView('list')}>Agenda</span> </h5> </div>
             </div>
-              <p log={console.log(this.state.profile)} className="text-center">
-                Upcoming political events in: <span className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
+              <p className="toggle">
+                Upcoming political events in: <span onClick={()=>this.changeFilter(this.state.profile.city)} className={this.state.eventsFilter === this.state.profile.city ? "selected" : null }>{this.state.profile.city} </span>| <span onClick={()=>this.changeFilter(this.state.profile.state)} className={this.state.eventsFilter === this.state.profile.state ? "selected" : null }>{this.state.profile.state}</span>  | <span onClick={()=>this.changeFilter('USA')} className={this.state.eventsFilter === 'USA' ? "selected" : null }>USA</span>
               </p>
             </div>
         </div>
@@ -298,8 +303,6 @@ class Calendar extends React.Component {
           this.state.events.sort((a, b) => a.date - b.date).map(this.displayEvents) }
         </ListGroup> }
       </div>
-    }
-      </UserContext.Consumer>
     );
   }
 }
