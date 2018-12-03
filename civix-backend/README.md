@@ -4,35 +4,12 @@
 
 * Python version 3 or greater
 
-### Set up a virtual environment
+#### Make sure you are in the /civix-backend/ directory
 
-#### Create a virtual environment 
-
-```
-/civix/civix-backend$ virtualenv env
-```
-
-#### Activates the virtual environment
+#### Activate the virtual environment
 
 ```
 source env/bin/activate
-```
-
-#### Install dependencies
-
-```
-pip install django
-pip install djangorestframework
-pip install django-rest-swagger
-pip install django-rest-auth
-pip install django-allauth
-pip install django-cors-headers
-```
-
-#### Setup database
-
-```
-python3 manage.py migrate
 ```
 
 #### Start the server
@@ -41,7 +18,7 @@ python3 manage.py migrate
 python3 manage.py runserver
 ```
 
-#### Create a superuser
+#### Create a superuser (needed to access http://localhost:8000/admin/)
 
 ```
 python3 manage.py createsuperuser
