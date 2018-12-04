@@ -28,7 +28,32 @@ civix-backend/
 #### Civix- Frontend Structure
 civix-client/src
 * index.js - main entry point for frontend, where React is initialized
-* compenents/ - contains a seperate folder for each component. Each folder contains a Javascript file for the component
+* components/ - contains a seperate folder for each component. Each folder contains a Javascript file for the component
 * and its corresponding CSS file
 * components/App - entry component for App, encompasses everything else
-* components/Navbar - uses React Router to creates routes for app.
+* components/NavigationBar - navigation bar component
+* components/Account - profile page component
+* components/Contact - Representatives Hub component
+* components/Issues - Ballot Board component
+* components/Issue - Ballot Board thread component
+* components/Login - login page component
+* components/Signup - registration page component
+* components/Calendar - calendar dashboard component
+
+civix-client/docs 
+* index.html - HTML frontend documentation, auto-generated using DocumentationJS 
+
+To regenerate documentation for all frontend components in src directory, run commands: 
+
+#### Install command
+
+```
+npm install -g documentation 
+```
+#### Regenerate documentation with returned path 
+
+```
+/returned/path/to/command build src/** -f html -o docs 
+```
+Run command 
+
