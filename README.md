@@ -55,5 +55,3 @@ npm install -g documentation
 ```
 /returned/path/to/command build src/** -f html -o docs 
 ```
-Run command 
-
