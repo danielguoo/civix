@@ -2,7 +2,7 @@
 
 Team Members:
 
-Daniel Guo 
+Daniel Guo
 
 Michael Grieve 
 
@@ -12,18 +12,25 @@ Deven Agrawal
 
 Kunjan Patel
 
+
 #### Civix-Backend Directory Structure
 
 civix-backend/
-* manage.py -> manages database and server
 
-* backend/settings.py -> contains the settings and list of installed apps for the project
-* backend/urls.py -> main entry points for API, urls for admin, authentication, and core
-
+* manage.py -> manages database and used to start server
+* db.sqlite3 -> database
+---
+* backend/settings.py -> contains the settings and installed apps for the project
+* backend/urls.py -> main entry points for API: urls for admin, authentication, and core app
+---
 * core/urls.py -> endpoints for CRUD operations on database models
-* core/views.py -> methods for handling HTTP requests, serializes JSON data to retrieve and alter objects in database
+* core/views.py -> methods for handling HTTP requests
 * core/models.py -> defines database models for project
 * core/serializers.py -> serializes data for models to be received and sent as JSON
+* core/ -> contains tests for each database model
+---
+* /docs/_build/html/modules/views.html -> documentation for endpoint methods
+* /docs/_build/html/modules/models.html -> documentation for database classes
 
 #### Civix- Frontend Structure
 civix-client/src
