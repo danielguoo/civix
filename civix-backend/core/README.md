@@ -20,7 +20,7 @@ The following command will run all the test cases across all the test modules. <
 $ cd civix/civix-backend
 $ python3 manage.py test
 ```
-This will run 26 different test cases scrutinizing the apis being used
+This will run 30 different test cases scrutinizing the apis being used
 
 ## Reading the test cases
 
@@ -35,4 +35,4 @@ The comments within each test case contain a written test oracle, while the `ass
 * Individual test cases aren't executed in any particular order. 
 * The test database created in the `setUp()` function is used by every test case -- the actions of one test case are independent of other test cases. The database has no side-effects.
 * This implies that when there is a successful post request, the number of items in the database goes from 3 -> 4. If this is followed by a delete request, the number of items in the database goes from 3 -> 2, not 4 -> 3. 
-* The Profile API isn't fully functional. 
+* The names correspond to the entity being tested

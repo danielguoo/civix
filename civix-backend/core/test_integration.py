@@ -26,6 +26,9 @@ class CivixIntegrationTest(TestCase):
     '''
 
     def test_Integration_registration_login(self):
+        # First step - register a user
+        #Success is status = 201
+        #Anything else is failure        
         newuser = {
             "username": "LaddyC",
             "email": "no@yes.com",
@@ -43,15 +46,9 @@ class CivixIntegrationTest(TestCase):
         resget = self.client.get('/users/', follow=True)
         body = resget.json()
 
-        # First step - Create a user
-        #Success is status = 201, 3 objects in reply and the respective titles below.
-        #Anything else is failure
         self.assertEqual(res.status_code, 201)
         self.assertEqual(res2.status_code, 201)
         self.assertEqual(len(body), 3)
-        # print(body2)
-        # self.assertEqual(body[0]["title"], 'Extinguish fire')
-        # self.assertEqual(body[2]["title"], 'No')
 
         loginuser = {
             "username": "LaddyA",
@@ -59,11 +56,12 @@ class CivixIntegrationTest(TestCase):
             "password": "Coming2Home!"
         }
 
+        # Second step - login a user
+        #Success is status != 401
+        #Anything else is failure
         res = self.client.post('/rest-auth/login/', loginuser, content_type='application/json', confollow=True)
         body = res.json()
-        # print(res.COOKIES[0])
         self.assertFalse(res.status_code == 401)
-        # self.assertEqual(res, "")
 
     def test_Integration_newEvent_Item_Calendar(self):
         newEvent = {'title': 'Prop 60', 'date':timezone.now(), 'briefDescription': 'Legalize ranch'}
@@ -73,19 +71,27 @@ class CivixIntegrationTest(TestCase):
             "password1": "Coming2Home!",
             "password2": "Coming2Home!"
         }        
-        
+        #First step - create an event
+        #Success is status = 201
+        #Anything else is failure
         res = self.client.post('/events/', newEvent, content_type='application/json', follow=True)
         res3 = self.client.get('/events/', follow=True)
         self.assertEqual(res.status_code, 201)
         self.assertEqual(len(res3.json()), 2)
         self.assertEqual(res.status_code, 201)
-
+        
+        #second step - register a user
+        #Success is status = 201
+        #Anything else is failure
         res = self.client.post('/rest-auth/registration/', newuser2, content_type='application/json', follow=True)
         self.assertEqual(res.status_code, 201)
 
         res = self.client.get('/users/', follow=True)
         self.assertEqual(len(res.json()), 2)
 
+        #Third step - create a new calendar
+        #Success is status = 201
+        #Anything else is failure
         newcalendar = {"user":1, "events":[]}
         res = self.client.post('/calendars/', newcalendar, content_type="application/json", follow=True)
         self.assertEqual(res.status_code, 201)
@@ -94,6 +100,9 @@ class CivixIntegrationTest(TestCase):
         #Anything else is failure
 
     def test_Integration_newuser_profile(self):
+        # First step - register a user
+        #Success is status = 201
+        #Anything else is failure
         newuser = {
             "username": "LaddyC",
             "email": "no@yes.com",
@@ -115,34 +124,47 @@ class CivixIntegrationTest(TestCase):
             "zipcode" : 90024,
             "state" : "CA"
         }
+        #Success is status = 201
+        #Anything else is failure
         res = self.client.post('/profiles/', newprofile, content_type="application/json", follow=True)
         self.assertEqual(res.status_code, 201)
 
     def test_Integration_create_update_calendar(self):
-        newEvent = {'title': 'Prop 60', 'date':timezone.now(), 'briefDescription': 'Legalize ranch'}
-        newuser2 = {
-            "username": "LaddyA",
-            "email": "no1@yes.com",
-            "password1": "Coming2Home!",
-            "password2": "Coming2Home!"
-        }        
+        # First step - create an event
+        #Success is status = 201, number of events 2
+        #Anything else is failure
         
+        newEvent = {'title': 'Prop 60', 'date':timezone.now(), 'briefDescription': 'Legalize ranch'}
         res = self.client.post('/events/', newEvent, content_type='application/json', follow=True)
         res3 = self.client.get('/events/', follow=True)
         self.assertEqual(res.status_code, 201)
         self.assertEqual(len(res3.json()), 2)
         self.assertEqual(res.status_code, 201)
 
+        #Second step - register a user
+        #Success is status = 201, two users
+        #Anything else is failure
+        newuser2 = {
+            "username": "LaddyA",
+            "email": "no1@yes.com",
+            "password1": "Coming2Home!",
+            "password2": "Coming2Home!"
+        }        
         res = self.client.post('/rest-auth/registration/', newuser2, content_type='application/json', follow=True)
         self.assertEqual(res.status_code, 201)
-
         res = self.client.get('/users/', follow=True)
         self.assertEqual(len(res.json()), 2)
 
+        #Third Step - create calendar
+        #Success is status = 201
+        #Anything else is failure
         newcalendar = {"user":2, "events":[]}
         res = self.client.post('/calendars/', newcalendar, content_type="application/json", follow=True)
         self.assertEqual(res.status_code, 201)
 
+        #Fourth step - update calendar
+        #Success - 200 for the update, and confirm the first body element is 1 and second element is 2
+        #Anything else is failure
         updatecalendar = {"user":2, "events":[1, 2]}
         res = self.client.put('/calendars/2/', updatecalendar, content_type="application/json", follow=True)
         self.assertEqual(res.status_code, 200)
