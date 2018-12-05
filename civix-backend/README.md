@@ -12,9 +12,9 @@ See instruction below to generate documentation files
 
 * Python version 3 or greater
 
-#### Make sure you are in the /civix-backend/ directory
-
 #### Create a virtual environment
+
+Make sure you are in the /civix-backend/ directory
 
 ```
 virtualenv env
@@ -69,6 +69,6 @@ make html
 ### Special Endpoints
 
 * http://localhost:8000/admin/ - Manage objects in the database
-* http://localhost:8000/docs/ - Documentation for client-side endpoints
+* http://localhost:8000/docs/ - Documentation for client-side endpoints (View all endpts)
 
 
