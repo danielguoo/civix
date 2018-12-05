@@ -1,0 +1,109 @@
+core package
+============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    core.migrations
+
+Submodules
+----------
+
+core.admin module
+-----------------
+
+.. automodule:: core.admin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.apps module
+----------------
+
+.. automodule:: core.apps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.models module
+------------------
+
+.. automodule:: core.models
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.serializers module
+-----------------------
+
+.. automodule:: core.serializers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.test\_Events module
+------------------------
+
+.. automodule:: core.test_Events
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.test\_Items module
+-----------------------
+
+.. automodule:: core.test_Items
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.test\_Login module
+-----------------------
+
+.. automodule:: core.test_Login
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.test\_Posts module
+-----------------------
+
+.. automodule:: core.test_Posts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.test\_Profile module
+-------------------------
+
+.. automodule:: core.test_Profile
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.urls module
+----------------
+
+.. automodule:: core.urls
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+core.views module
+-----------------
+
+.. automodule:: core.views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: core
+    :members:
+    :undoc-members:
+    :show-inheritance:
