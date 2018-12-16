@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Models &#8212; core 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-core.models">
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-core.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="core.models.Calendar">
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Calendar</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Calendar" title="Permalink to this definition">¶</a></dt>
+<dd><p>The saved events for a single user.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>user (auth.User): the owner of the calendar</li>
+<li>events (Event): a collection of saved events</li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="core.models.Calendar.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Calendar.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="core.models.Calendar.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Calendar.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.models.Event">
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Event</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elections and other political events that can be followed
+by users.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>title (string): title of event</li>
+<li>date (string): date of event</li>
+<li>briefDescription (string): short summary of event</li>
+<li>fullDescription (string): complete summary of event</li>
+<li>streetAddress (string): address of event location</li>
+<li>city (string): city of event</li>
+<li>zipcode (int): zipcode of event</li>
+<li>state (string): state of event</li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="core.models.Event.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Event.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="core.models.Event.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Event.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.models.Item">
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Item</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Item" title="Permalink to this definition">¶</a></dt>
+<dd><p>A candidate, law, or proposition up for election.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>title (string): title of item</li>
+<li>description (string): summary of item</li>
+<li>event (Event): the event that contains this item</li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="core.models.Item.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Item.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="core.models.Item.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Item.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.models.Post">
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Post</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Post" title="Permalink to this definition">¶</a></dt>
+<dd><p>A user’s post on a single item.</p>
+<dl class="docutils">
+<dt>Attributes</dt>
+<dd><ul class="first last simple">
+<li>item (Item): item that contains this post</li>
+<li>user (auth.User): user that owns this post</li>
+<li>content (string): text content</li>
+<li>onRight (bool): whether the Post will be displayed on right</li>
+<li>upvotes (int): number of upvotes for post</li>
+<li>downvotes (int): number of downvotes for post</li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="core.models.Post.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Post.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="core.models.Post.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Post.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.models.Profile">
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Profile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend the User class to include date of birth, political identification, and
+place of residency.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><ul class="first last simple">
+<li>user (auth.User): the related user object which Profile extends</li>
+<li>dob (datefield): the date of birth of the user</li>
+<li>poliID (string): the political identification of the user</li>
+<li>streetAddress (string): street address of user</li>
+<li>city (string): city of residence for user</li>
+<li>zipcode (int): zipcode of user</li>
+<li>state (string): state of residence for user</li>
+</ul>
+</dd>
+</dl>
+<dl class="exception">
+<dt id="core.models.Profile.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Profile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="core.models.Profile.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Profile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">core</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mike Grieve.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,373 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Views &#8212; core 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-core.views">
+<span id="views"></span><h1>Views<a class="headerlink" href="#module-core.views" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="core.views.CreateOrGetCalendars">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateOrGetCalendars</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateOrGetCalendars" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all calendars.</dd>
+<dt>POST:</dt>
+<dd>Create a new calendar instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.CreateOrGetCalendars.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.CreateOrGetCalendars.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.CreateOrGetCalendars.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.CreateOrGetCalendars.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.CalendarSerializer" title="core.serializers.CalendarSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.CalendarSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.CreateOrGetEvents">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateOrGetEvents</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateOrGetEvents" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all events.</dd>
+<dt>POST:</dt>
+<dd>Create a new event instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.CreateOrGetEvents.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.CreateOrGetEvents.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.CreateOrGetEvents.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.CreateOrGetEvents.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.EventSerializer" title="core.serializers.EventSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.EventSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.CreateOrGetItems">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateOrGetItems</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateOrGetItems" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all items.</dd>
+<dt>POST:</dt>
+<dd>Create a new item instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.CreateOrGetItems.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.CreateOrGetItems.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.CreateOrGetItems.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.CreateOrGetItems.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.ItemSerializer" title="core.serializers.ItemSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.ItemSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.CreateOrGetPosts">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateOrGetPosts</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateOrGetPosts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all posts.</dd>
+<dt>POST:</dt>
+<dd>Create a new post instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.CreateOrGetPosts.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.CreateOrGetPosts.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.CreateOrGetPosts.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.CreateOrGetPosts.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.PostSerializer" title="core.serializers.PostSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.PostSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.CreateOrGetProfiles">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateOrGetProfiles</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateOrGetProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all profiles.</dd>
+<dt>POST:</dt>
+<dd>Create a new profile instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.CreateOrGetProfiles.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.CreateOrGetProfiles.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.CreateOrGetProfiles.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.CreateOrGetProfiles.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.ProfileSerializer" title="core.serializers.ProfileSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.ProfileSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUpdateDeleteCalendar">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUpdateDeleteCalendar</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUpdateDeleteCalendar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a calendar instance.</dd>
+<dt>PUT:</dt>
+<dd>Update a calendar instance.</dd>
+<dt>DELETE:</dt>
+<dd>Delete a calendar instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteCalendar.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUpdateDeleteCalendar.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteCalendar.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUpdateDeleteCalendar.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.CalendarSerializer" title="core.serializers.CalendarSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.CalendarSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUpdateDeleteEvent">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUpdateDeleteEvent</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUpdateDeleteEvent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return an event instance.</dd>
+<dt>PUT:</dt>
+<dd>Update an event instance.</dd>
+<dt>DELETE:</dt>
+<dd>Delete an event instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteEvent.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUpdateDeleteEvent.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteEvent.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUpdateDeleteEvent.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.EventSerializer" title="core.serializers.EventSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.EventSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUpdateDeleteItem">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUpdateDeleteItem</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUpdateDeleteItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return an item instance.</dd>
+<dt>PUT:</dt>
+<dd>Update an item instance.</dd>
+<dt>DELETE:</dt>
+<dd>Delete an item instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteItem.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUpdateDeleteItem.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteItem.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUpdateDeleteItem.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.ItemSerializer" title="core.serializers.ItemSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.ItemSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUpdateDeletePost">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUpdateDeletePost</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUpdateDeletePost" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a post instance.</dd>
+<dt>PUT:</dt>
+<dd>Update a post instance.</dd>
+<dt>DELETE:</dt>
+<dd>Delete a post instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeletePost.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUpdateDeletePost.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeletePost.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUpdateDeletePost.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.PostSerializer" title="core.serializers.PostSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.PostSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUpdateDeleteProfile">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUpdateDeleteProfile</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUpdateDeleteProfile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a profile instance.</dd>
+<dt>PUT:</dt>
+<dd>Update a profile instance.</dd>
+<dt>DELETE:</dt>
+<dd>Delete a profile instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteProfile.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUpdateDeleteProfile.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUpdateDeleteProfile.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUpdateDeleteProfile.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.ProfileSerializer" title="core.serializers.ProfileSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.ProfileSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUser">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUser</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a user instance.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUser.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUser.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUser.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUser.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.UserSerializer" title="core.serializers.UserSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.UserSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.GetUsers">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">GetUsers</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.GetUsers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>GET:</dt>
+<dd>Return a list of all users.</dd>
+</dl>
+<dl class="attribute">
+<dt id="core.views.GetUsers.queryset">
+<code class="descname">queryset</code><em class="property"> = &lt;QuerySet []&gt;</em><a class="headerlink" href="#core.views.GetUsers.queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.GetUsers.serializer_class">
+<code class="descname">serializer_class</code><a class="headerlink" href="#core.views.GetUsers.serializer_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="../core.html#core.serializers.UserSerializer" title="core.serializers.UserSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.serializers.UserSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">core</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Mike Grieve.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/views.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
